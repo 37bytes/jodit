@@ -38,7 +38,8 @@ export interface TabOption {
 export const TabsWidget = (
 	editor: IJodit,
 	tabs: TabOption[],
-	state?: { __activeTab: string }
+	state?: { __activeTab: string },
+	visibleTabs: boolean = true
 ): HTMLDivElement => {
 	const box: HTMLDivElement = editor.c.div('jodit-tabs'),
 		tabBox: HTMLDivElement = editor.c.div('jodit-tabs__wrapper'),
@@ -48,6 +49,10 @@ export const TabsWidget = (
 			tab: HTMLElement;
 		}> = {},
 		buttonList: IUIButton[] = [];
+
+	if (!visibleTabs) {
+		buttons.classList.add('jodit-tabs__buttons_hide');
+	}
 
 	let firstTab: string = '',
 		tabcount: number = 0;

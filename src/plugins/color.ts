@@ -155,7 +155,7 @@ Config.prototype.controls.brush = {
 			tabs = tabs.reverse();
 		}
 
-		return TabsWidget(editor, tabs, currentElement as any);
+		return TabsWidget(editor, tabs, currentElement as any, editor.o.showTabsColorPicker);
 	},
 	exec(jodit: IJodit, current, { button }): void | false {
 		const mode = dataBind(button, 'color-mode'),

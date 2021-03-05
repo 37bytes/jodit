@@ -68,7 +68,7 @@ export function applyStyles(html: string): string {
 
 				collection.forEach((elm: HTMLElement) => {
 					elm.style.cssText = normalizeCSS(
-						rules[idx].style.cssText + ';' + elm.style.cssText
+						`${elm.style.cssText}; ${rules[idx].style.cssText}`
 					);
 				});
 			}
