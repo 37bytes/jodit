@@ -548,6 +548,11 @@ export class Select {
 			this.focus();
 		}
 
+		// region изменено из-за проблем с таблицей
+		if (node && node.nodeName === 'TABLE' && this.j.e) {
+			this.j.e.fire('onInsertingNodeIsTable');
+		}
+		// endregion
 		const sel = this.sel;
 
 		if (!this.isCollapsed()) {
@@ -592,6 +597,12 @@ export class Select {
 		if (this.j.events) {
 			this.j.e.fire('afterInsertNode', node);
 		}
+
+		// region изменено из-за проблем с таблицей
+		if (node && node.nodeName === 'TABLE' && this.j.e) {
+			this.j.e && this.j.e.fire('stopKeepTable');
+		}
+		// endregion
 	}
 
 	/**

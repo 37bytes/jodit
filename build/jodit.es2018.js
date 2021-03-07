@@ -179,6 +179,7 @@ class Config {
                 '#4C1130'
             ]
         };
+        this.showTabsColorPicker = false;
         this.colorPickerDefaultTab = 'background';
         this.imageDefaultWidth = 300;
         this.removeButtons = [];
@@ -1634,7 +1635,7 @@ function applyStyles(html) {
                 }
                 collection = $$(rules[idx].selectorText, iframeDoc.body);
                 collection.forEach((elm) => {
-                    elm.style.cssText = normalizeCSS(rules[idx].style.cssText + ';' + elm.style.cssText);
+                    elm.style.cssText = normalizeCSS(`${elm.style.cssText}; ${rules[idx].style.cssText}`);
                 });
             }
             dom/* Dom.each */.i.each(iframeDoc.body, node => {
@@ -11393,8 +11394,11 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
 
 
 
-const TabsWidget = (editor, tabs, state) => {
+const TabsWidget = (editor, tabs, state, visibleTabs = true) => {
     const box = editor.c.div('jodit-tabs'), tabBox = editor.c.div('jodit-tabs__wrapper'), buttons = editor.c.div('jodit-tabs__buttons'), nameToTab = {}, buttonList = [];
+    if (!visibleTabs) {
+        buttons.classList.add('jodit-tabs__buttons_hide');
+    }
     let firstTab = '', tabcount = 0;
     box.appendChild(buttons);
     box.appendChild(tabBox);
@@ -17904,6 +17908,9 @@ class Select {
         if (!this.isFocused() && this.j.isEditorMode()) {
             this.focus();
         }
+        if (node && node.nodeName === 'TABLE' && this.j.e) {
+            this.j.e.fire('onInsertingNodeIsTable');
+        }
         const sel = this.sel;
         if (!this.isCollapsed()) {
             this.j.execCommand('Delete');
@@ -17940,6 +17947,9 @@ class Select {
         }
         if (this.j.events) {
             this.j.e.fire('afterInsertNode', node);
+        }
+        if (node && node.nodeName === 'TABLE' && this.j.e) {
+            this.j.e && this.j.e.fire('stopKeepTable');
         }
     }
     insertHTML(html) {
@@ -22499,7 +22509,7 @@ config/* Config.prototype.controls.brush */.D.prototype.controls.brush = {
         if (editor.o.colorPickerDefaultTab !== 'background') {
             tabs = tabs.reverse();
         }
-        return (0,widget/* TabsWidget */.IL)(editor, tabs, currentElement);
+        return (0,widget/* TabsWidget */.IL)(editor, tabs, currentElement, editor.o.showTabsColorPicker);
     },
     exec(jodit, current, { button }) {
         const mode = (0,helpers.dataBind)(button, 'color-mode'), color = (0,helpers.dataBind)(button, 'color');

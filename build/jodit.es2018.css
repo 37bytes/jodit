@@ -3721,6 +3721,9 @@ svg.jodit-icon {
 .jodit-tabs .jodit-tabs__buttons > *:first-child {
   margin-left: 0;
 }
+.jodit-tabs .jodit-tabs__buttons_hide {
+  display: none !important;
+}
 @media (max-width: 480px) {
   .jodit-tabs .jodit-tabs__buttons {
     display: block;

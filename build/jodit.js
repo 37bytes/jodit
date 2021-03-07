@@ -5,7 +5,7 @@
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
-
+	
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -2241,6 +2241,7 @@ var Config = (function () {
                 '#4C1130'
             ]
         };
+        this.showTabsColorPicker = false;
         this.colorPickerDefaultTab = 'background';
         this.imageDefaultWidth = 300;
         this.removeButtons = [];
@@ -5527,7 +5528,7 @@ function applyStyles(html) {
                 }
                 collection = selector_1.$$(rules[idx].selectorText, iframeDoc.body);
                 collection.forEach(function (elm) {
-										elm.style.cssText = normalizeCSS(elm.style.cssText + "; " + rules[idx].style.cssText);
+                    elm.style.cssText = normalizeCSS(elm.style.cssText + "; " + rules[idx].style.cssText);
                 });
             };
             for (var idx = 0; idx < rules.length; idx += 1) {
@@ -15606,11 +15607,9 @@ var Select = (function () {
         if (!this.isFocused() && this.j.isEditorMode()) {
             this.focus();
         }
-				// region изменено из-за проблем с таблицей
-				if (node && node.tagName === "TABLE" && this.j.e) {
-					this.j.e.fire('onInsertingNodeIsTable');
-				}
-				// endregion
+        if (node && node.nodeName === 'TABLE' && this.j.e) {
+            this.j.e.fire('onInsertingNodeIsTable');
+        }
         var sel = this.sel;
         if (!this.isCollapsed()) {
             this.j.execCommand('Delete');
@@ -15648,11 +15647,9 @@ var Select = (function () {
         if (this.j.events) {
             this.j.e.fire('afterInsertNode', node);
         }
-				// region изменено из-за проблем с таблицей
-				if (node && node.tagName === "TABLE" && this.j.e) {
-					this.j.e && this.j.e.fire('stopKeepTable');
-				}
-				// endregion
+        if (node && node.nodeName === 'TABLE' && this.j.e) {
+            this.j.e && this.j.e.fire('stopKeepTable');
+        }
     };
     Select.prototype.insertHTML = function (html) {
         if (html === '') {
@@ -24055,7 +24052,7 @@ config_1.Config.prototype.controls.brush = {
         if (editor.o.colorPickerDefaultTab !== 'background') {
             tabs = tabs.reverse();
         }
-        return widget_1.TabsWidget(editor, tabs, currentElement);
+        return widget_1.TabsWidget(editor, tabs, currentElement, editor.o.showTabsColorPicker);
     },
     exec: function (jodit, current, _a) {
         var button = _a.button;
@@ -24250,8 +24247,12 @@ exports.TabsWidget = void 0;
 __webpack_require__(259);
 var helpers_1 = __webpack_require__(19);
 var ui_1 = __webpack_require__(75);
-var TabsWidget = function (editor, tabs, state) {
+var TabsWidget = function (editor, tabs, state, visibleTabs) {
+    if (visibleTabs === void 0) { visibleTabs = true; }
     var box = editor.c.div('jodit-tabs'), tabBox = editor.c.div('jodit-tabs__wrapper'), buttons = editor.c.div('jodit-tabs__buttons'), nameToTab = {}, buttonList = [];
+    if (!visibleTabs) {
+        buttons.classList.add('jodit-tabs__buttons_hide');
+    }
     var firstTab = '', tabcount = 0;
     box.appendChild(buttons);
     box.appendChild(tabBox);
@@ -33030,7 +33031,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -33043,14 +33044,14 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
@@ -33063,7 +33064,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -33074,7 +33075,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
