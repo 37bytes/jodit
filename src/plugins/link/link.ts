@@ -81,6 +81,8 @@ declare module '../../config' {
 			 */
 			openInNewTabCheckbox: boolean;
 
+			showInNewTabCheckbox: boolean;
+
 			modeClassName: 'input' | 'select';
 			selectMultipleClassName: boolean;
 			selectSizeClassName?: number;
@@ -98,6 +100,7 @@ Config.prototype.link = {
 	processPastedLink: true,
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,
+	showInNewTabCheckbox: true,
 	modeClassName: 'input',
 	selectMultipleClassName: true,
 	selectSizeClassName: 3,
@@ -234,6 +237,7 @@ export class link extends Plugin {
 
 		const i18n = jodit.i18n.bind(jodit),
 			{
+				showInNewTabCheckbox,
 				openInNewTabCheckbox,
 				noFollowCheckbox,
 				formTemplate,
@@ -244,7 +248,7 @@ export class link extends Plugin {
 		const html = formTemplate(jodit),
 			form = isString(html)
 				? (jodit.c.fromHTML(html, {
-						target_checkbox_box: openInNewTabCheckbox,
+						target_checkbox_box: showInNewTabCheckbox,
 						nofollow_checkbox_box: noFollowCheckbox
 				  }) as HTMLFormElement)
 				: html,
@@ -450,12 +454,14 @@ export class link extends Plugin {
 					}
 				}
 
-				if (openInNewTabCheckbox && target_checkbox) {
+				if (showInNewTabCheckbox && openInNewTabCheckbox && target_checkbox) {
 					attr(
 						a,
 						'target',
 						target_checkbox.checked ? '_blank' : null
 					);
+				} else if (openInNewTabCheckbox) {
+					attr(a, 'target', '_blank');
 				}
 
 				if (noFollowCheckbox && nofollow_checkbox) {

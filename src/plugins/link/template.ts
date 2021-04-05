@@ -16,7 +16,7 @@ import { UIButton } from '../../core/ui/button';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
 	const {
-		openInNewTabCheckbox,
+		showInNewTabCheckbox,
 		noFollowCheckbox,
 		modeClassName,
 		selectSizeClassName,
@@ -74,7 +74,7 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 					})()
 			  ])
 			: null,
-		openInNewTabCheckbox
+		showInNewTabCheckbox
 			? new UICheckbox(editor, {
 					name: 'target',
 					ref: 'target_checkbox',
