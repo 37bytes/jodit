@@ -136,7 +136,7 @@ export class limit extends Plugin {
 			(limitWords && words.length > limitWords) ||
 			(Boolean(limitChars) && words.join('').length > limitChars)
 		) {
-			jodit.e.fire('onLimitReplace');
+			jodit.e.fire('onLimitReplace', oldValue);
 			jodit.value = oldValue;
 		}
 	}
