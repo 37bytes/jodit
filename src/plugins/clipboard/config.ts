@@ -46,6 +46,11 @@ declare module '../../config' {
 		defaultActionOnPaste: InsertMode;
 
 		/**
+		 * Флаг для кэширования способа вставки из буфера
+		 */
+		cachedActionOnPaste: boolean;
+
+		/**
 		 * Default insert method from word, if not define, it will use defaultActionOnPaste instead
 		 */
 		defaultActionOnPasteFromWord: InsertMode | null;
@@ -65,6 +70,7 @@ Config.prototype.processPasteFromWord = true;
 
 Config.prototype.nl2brInPlainText = true;
 Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
+Config.prototype.cachedActionOnPaste = false;
 Config.prototype.defaultActionOnPasteFromWord = null;
 
 Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
