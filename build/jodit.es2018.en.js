@@ -20842,7 +20842,7 @@ class limit extends Plugin {
         jodit.e.fire('onLengthChars', words.join('').length);
         if ((limitWords && words.length > limitWords) ||
             (Boolean(limitChars) && words.join('').length > limitChars)) {
-            jodit.e.fire('onLimitReplace');
+            jodit.e.fire('onLimitReplace', oldValue);
             jodit.value = oldValue;
         }
     }
