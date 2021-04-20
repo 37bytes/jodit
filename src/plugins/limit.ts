@@ -78,16 +78,19 @@ export class limit extends Plugin {
 		event: KeyboardEvent | null = null,
 		inputText: string = ''
 	): boolean {
-		if (event && COMMAND_KEYS.includes(event.key)) {
-			return false;
-		}
-
 		const { jodit } = this;
 		const { limitWords, limitChars } = jodit.o;
 		const text =
 			inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
 
 		const words = this.splitWords(text);
+
+		jodit.e.fire('onLengthWords', words.length);
+		jodit.e.fire('onLengthChars', words.join('').length);
+
+		if (event && COMMAND_KEYS.includes(event.key)) {
+			return false;
+		}
 
 		if (limitWords && words.length >= limitWords) {
 			return true;
@@ -103,8 +106,13 @@ export class limit extends Plugin {
 	 */
 	@autobind
 	private checkPreventKeyPressOrPaste(event: KeyboardEvent): void | false {
+		const { jodit } = this;
+
 		if (this.shouldPreventInsertHTML(event)) {
+			jodit.e.fire('onLimit', true);
 			return false;
+		} else {
+			jodit.e.fire('onLimit', false);
 		}
 	}
 
@@ -121,10 +129,14 @@ export class limit extends Plugin {
 		const text = jodit.o.limitHTML ? newValue : stripTags(newValue),
 			words = this.splitWords(text);
 
+		jodit.e.fire('onLengthWords', words.length);
+		jodit.e.fire('onLengthChars', words.join('').length);
+
 		if (
 			(limitWords && words.length > limitWords) ||
 			(Boolean(limitChars) && words.join('').length > limitChars)
 		) {
+			jodit.e.fire('onLimitReplace');
 			jodit.value = oldValue;
 		}
 	}
