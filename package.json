@@ -10,7 +10,7 @@
 		"newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/blob/master/CHANGELOG.MD \" && git tag $npm_package_version && git push --tags origin HEAD:master",
 		"start": "node server.js --port=2000",
 		"clean": "rm -rf build/*",
-		"build": "npm run clean && npm run build-es5 && npm run build-es2018 && npm run build-es2018-en && npm run build-no-uglify-es5 && npm run build-no-uglify-es2018 && npm run build-no-uglify-es2018-en",
+		"build": "npm run build-es5 && npm run build-es2018 && npm run build-es2018-en && npm run build-no-uglify-es5 && npm run build-no-uglify-es2018 && npm run build-no-uglify-es2018-en",
 		"build-es5": "node ./build.js --progress --mode production --es es5 --uglify true",
 		"build-es2018": "node ./build.js --progress --mode production --es es2018 --uglify true",
 		"build-es2018-en": "node ./build.js --progress --mode production --es es2018 --excludeLangs true --uglify true",

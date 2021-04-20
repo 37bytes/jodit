@@ -17570,6 +17570,7 @@ config/* Config.prototype.askBeforePasteFromWord */.D.prototype.askBeforePasteFr
 config/* Config.prototype.processPasteFromWord */.D.prototype.processPasteFromWord = true;
 config/* Config.prototype.nl2brInPlainText */.D.prototype.nl2brInPlainText = true;
 config/* Config.prototype.defaultActionOnPaste */.D.prototype.defaultActionOnPaste = constants.INSERT_AS_HTML;
+config/* Config.prototype.cachedActionOnPaste */.D.prototype.cachedActionOnPaste = false;
 config/* Config.prototype.defaultActionOnPasteFromWord */.D.prototype.defaultActionOnPasteFromWord = null;
 config/* Config.prototype.draggableTags */.D.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 config/* Config.prototype.controls.cut */.D.prototype.controls.cut = {
@@ -17673,7 +17674,11 @@ class paste extends Plugin {
     afterInit(jodit) {
         jodit.e
             .on('paste.paste', this.onPaste)
-            .on('pasteStack.paste', (item) => this.pasteStack.push(item));
+            .on('pasteStack.paste', (item) => {
+            if (jodit.o.cachedActionOnPaste) {
+                this.pasteStack.push(item);
+            }
+        });
         if (jodit.o.nl2brInPlainText) {
             this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
         }
@@ -17736,10 +17741,12 @@ class paste extends Plugin {
     }
     processHTML(e, html) {
         if (this.j.o.askBeforePasteHTML) {
-            const cached = this.pasteStack.find((cachedItem) => cachedItem.html === html);
-            if (cached) {
-                this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
-                return true;
+            if (this.j.o.cachedActionOnPaste) {
+                const cached = this.pasteStack.find((cachedItem) => cachedItem.html === html);
+                if (cached) {
+                    this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
+                    return true;
+                }
             }
             this.askInsertTypeDialog('Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', (insertType) => {
                 this.insertByType(e, html, insertType);
@@ -17773,7 +17780,9 @@ class paste extends Plugin {
         pasteInsertHtml(e, this.j, html);
     }
     insertByType(e, html, action) {
-        this.pasteStack.push({ html, action });
+        if (this.j.o.cachedActionOnPaste) {
+            this.pasteStack.push({ html, action });
+        }
         if ((0,helpers.isString)(html)) {
             this.j.buffer.set(pluginKey, html);
             switch (action) {
@@ -20801,29 +20810,39 @@ class limit extends Plugin {
         }
     }
     shouldPreventInsertHTML(event = null, inputText = '') {
-        if (event && constants.COMMAND_KEYS.includes(event.key)) {
-            return false;
-        }
         const { jodit } = this;
         const { limitWords, limitChars } = jodit.o;
         const text = inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
         const words = this.splitWords(text);
+        jodit.e.fire('onLengthWords', words.length);
+        jodit.e.fire('onLengthChars', words.join('').length);
+        if (event && constants.COMMAND_KEYS.includes(event.key)) {
+            return false;
+        }
         if (limitWords && words.length >= limitWords) {
             return true;
         }
         return Boolean(limitChars) && words.join('').length >= limitChars;
     }
     checkPreventKeyPressOrPaste(event) {
+        const { jodit } = this;
         if (this.shouldPreventInsertHTML(event)) {
+            jodit.e.fire('onLimit', true);
             return false;
+        }
+        else {
+            jodit.e.fire('onLimit', false);
         }
     }
     checkPreventChanging(newValue, oldValue) {
         const { jodit } = this;
         const { limitWords, limitChars } = jodit.o;
         const text = jodit.o.limitHTML ? newValue : (0,helpers.stripTags)(newValue), words = this.splitWords(text);
+        jodit.e.fire('onLengthWords', words.length);
+        jodit.e.fire('onLengthChars', words.join('').length);
         if ((limitWords && words.length > limitWords) ||
             (Boolean(limitChars) && words.join('').length > limitChars)) {
+            jodit.e.fire('onLimitReplace');
             jodit.value = oldValue;
         }
     }

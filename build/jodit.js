@@ -23123,6 +23123,7 @@ config_1.Config.prototype.askBeforePasteFromWord = true;
 config_1.Config.prototype.processPasteFromWord = true;
 config_1.Config.prototype.nl2brInPlainText = true;
 config_1.Config.prototype.defaultActionOnPaste = constants_1.INSERT_AS_HTML;
+config_1.Config.prototype.cachedActionOnPaste = false;
 config_1.Config.prototype.defaultActionOnPasteFromWord = null;
 config_1.Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 config_1.Config.prototype.controls.cut = {
@@ -23413,7 +23414,9 @@ var paste = (function (_super) {
         jodit.e
             .on('paste.paste', this.onPaste)
             .on('pasteStack.paste', function (item) {
-            return _this.pasteStack.push(item);
+            if (jodit.o.cachedActionOnPaste) {
+                _this.pasteStack.push(item);
+            }
         });
         if (jodit.o.nl2brInPlainText) {
             this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
@@ -23480,10 +23483,12 @@ var paste = (function (_super) {
     paste.prototype.processHTML = function (e, html) {
         var _this = this;
         if (this.j.o.askBeforePasteHTML) {
-            var cached = this.pasteStack.find(function (cachedItem) { return cachedItem.html === html; });
-            if (cached) {
-                this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
-                return true;
+            if (this.j.o.cachedActionOnPaste) {
+                var cached = this.pasteStack.find(function (cachedItem) { return cachedItem.html === html; });
+                if (cached) {
+                    this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
+                    return true;
+                }
             }
             this.askInsertTypeDialog('Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', function (insertType) {
                 _this.insertByType(e, html, insertType);
@@ -23517,7 +23522,9 @@ var paste = (function (_super) {
         helpers_1.pasteInsertHtml(e, this.j, html);
     };
     paste.prototype.insertByType = function (e, html, action) {
-        this.pasteStack.push({ html: html, action: action });
+        if (this.j.o.cachedActionOnPaste) {
+            this.pasteStack.push({ html: html, action: action });
+        }
         if (helpers_2.isString(html)) {
             this.j.buffer.set(clipboard_1.pluginKey, html);
             switch (action) {
@@ -27406,29 +27413,39 @@ var limit = (function (_super) {
     limit.prototype.shouldPreventInsertHTML = function (event, inputText) {
         if (event === void 0) { event = null; }
         if (inputText === void 0) { inputText = ''; }
-        if (event && constants_1.COMMAND_KEYS.includes(event.key)) {
-            return false;
-        }
         var jodit = this.jodit;
         var _a = jodit.o, limitWords = _a.limitWords, limitChars = _a.limitChars;
         var text = inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
         var words = this.splitWords(text);
+        jodit.e.fire('onLengthWords', words.length);
+        jodit.e.fire('onLengthChars', words.join('').length);
+        if (event && constants_1.COMMAND_KEYS.includes(event.key)) {
+            return false;
+        }
         if (limitWords && words.length >= limitWords) {
             return true;
         }
         return Boolean(limitChars) && words.join('').length >= limitChars;
     };
     limit.prototype.checkPreventKeyPressOrPaste = function (event) {
+        var jodit = this.jodit;
         if (this.shouldPreventInsertHTML(event)) {
+            jodit.e.fire('onLimit', true);
             return false;
+        }
+        else {
+            jodit.e.fire('onLimit', false);
         }
     };
     limit.prototype.checkPreventChanging = function (newValue, oldValue) {
         var jodit = this.jodit;
         var _a = jodit.o, limitWords = _a.limitWords, limitChars = _a.limitChars;
         var text = jodit.o.limitHTML ? newValue : helpers_1.stripTags(newValue), words = this.splitWords(text);
+        jodit.e.fire('onLengthWords', words.length);
+        jodit.e.fire('onLengthChars', words.join('').length);
         if ((limitWords && words.length > limitWords) ||
             (Boolean(limitChars) && words.join('').length > limitChars)) {
+            jodit.e.fire('onLimitReplace');
             jodit.value = oldValue;
         }
     };
