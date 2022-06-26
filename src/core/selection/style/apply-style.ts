@@ -370,6 +370,7 @@ export class ApplyStyle {
 		const isSuitableInline =
 			!isBlock &&
 			(!attr(elm, 'style') ||
+				// @ts-ignore
 				elm.nodeName.toLowerCase() !== this.style.defaultTag);
 
 		const isSuitableBlock =

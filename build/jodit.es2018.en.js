@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.3
+ * Version: v3.6.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15,7 +15,7 @@
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(self, function() {
+})(self, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ([
 /* 0 */,
@@ -347,50 +347,50 @@ Config.prototype.controls = {};
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ACCURACY": () => (/* binding */ ACCURACY),
+/* harmony export */   "BASE_PATH": () => (/* binding */ BASE_PATH),
+/* harmony export */   "BR": () => (/* binding */ BR),
+/* harmony export */   "COMMAND_KEYS": () => (/* binding */ COMMAND_KEYS),
+/* harmony export */   "EMULATE_DBLCLICK_TIMEOUT": () => (/* binding */ EMULATE_DBLCLICK_TIMEOUT),
+/* harmony export */   "INSEPARABLE_TAGS": () => (/* binding */ INSEPARABLE_TAGS),
+/* harmony export */   "INSERT_AS_HTML": () => (/* binding */ INSERT_AS_HTML),
+/* harmony export */   "INSERT_AS_TEXT": () => (/* binding */ INSERT_AS_TEXT),
+/* harmony export */   "INSERT_CLEAR_HTML": () => (/* binding */ INSERT_CLEAR_HTML),
+/* harmony export */   "INSERT_ONLY_TEXT": () => (/* binding */ INSERT_ONLY_TEXT),
 /* harmony export */   "INVISIBLE_SPACE": () => (/* binding */ INVISIBLE_SPACE),
-/* harmony export */   "NBSP_SPACE": () => (/* binding */ NBSP_SPACE),
 /* harmony export */   "INVISIBLE_SPACE_REG_EXP": () => (/* binding */ INVISIBLE_SPACE_REG_EXP),
 /* harmony export */   "INVISIBLE_SPACE_REG_EXP_END": () => (/* binding */ INVISIBLE_SPACE_REG_EXP_END),
 /* harmony export */   "INVISIBLE_SPACE_REG_EXP_START": () => (/* binding */ INVISIBLE_SPACE_REG_EXP_START),
-/* harmony export */   "SPACE_REG_EXP": () => (/* binding */ SPACE_REG_EXP),
-/* harmony export */   "SPACE_REG_EXP_START": () => (/* binding */ SPACE_REG_EXP_START),
-/* harmony export */   "SPACE_REG_EXP_END": () => (/* binding */ SPACE_REG_EXP_END),
 /* harmony export */   "IS_BLOCK": () => (/* binding */ IS_BLOCK),
-/* harmony export */   "IS_INLINE": () => (/* binding */ IS_INLINE),
-/* harmony export */   "INSEPARABLE_TAGS": () => (/* binding */ INSEPARABLE_TAGS),
-/* harmony export */   "MAY_BE_REMOVED_WITH_KEY": () => (/* binding */ MAY_BE_REMOVED_WITH_KEY),
-/* harmony export */   "KEY_BACKSPACE": () => (/* binding */ KEY_BACKSPACE),
-/* harmony export */   "KEY_TAB": () => (/* binding */ KEY_TAB),
-/* harmony export */   "KEY_ENTER": () => (/* binding */ KEY_ENTER),
-/* harmony export */   "KEY_ESC": () => (/* binding */ KEY_ESC),
-/* harmony export */   "KEY_LEFT": () => (/* binding */ KEY_LEFT),
-/* harmony export */   "KEY_UP": () => (/* binding */ KEY_UP),
-/* harmony export */   "KEY_RIGHT": () => (/* binding */ KEY_RIGHT),
-/* harmony export */   "KEY_DOWN": () => (/* binding */ KEY_DOWN),
-/* harmony export */   "KEY_SPACE": () => (/* binding */ KEY_SPACE),
-/* harmony export */   "KEY_DELETE": () => (/* binding */ KEY_DELETE),
-/* harmony export */   "KEY_F3": () => (/* binding */ KEY_F3),
-/* harmony export */   "NEARBY": () => (/* binding */ NEARBY),
-/* harmony export */   "ACCURACY": () => (/* binding */ ACCURACY),
-/* harmony export */   "COMMAND_KEYS": () => (/* binding */ COMMAND_KEYS),
-/* harmony export */   "BR": () => (/* binding */ BR),
-/* harmony export */   "PARAGRAPH": () => (/* binding */ PARAGRAPH),
-/* harmony export */   "MODE_WYSIWYG": () => (/* binding */ MODE_WYSIWYG),
-/* harmony export */   "MODE_SOURCE": () => (/* binding */ MODE_SOURCE),
-/* harmony export */   "MODE_SPLIT": () => (/* binding */ MODE_SPLIT),
 /* harmony export */   "IS_IE": () => (/* binding */ IS_IE),
-/* harmony export */   "TEXT_PLAIN": () => (/* binding */ TEXT_PLAIN),
-/* harmony export */   "TEXT_HTML": () => (/* binding */ TEXT_HTML),
-/* harmony export */   "MARKER_CLASS": () => (/* binding */ MARKER_CLASS),
-/* harmony export */   "EMULATE_DBLCLICK_TIMEOUT": () => (/* binding */ EMULATE_DBLCLICK_TIMEOUT),
-/* harmony export */   "INSERT_AS_HTML": () => (/* binding */ INSERT_AS_HTML),
-/* harmony export */   "INSERT_CLEAR_HTML": () => (/* binding */ INSERT_CLEAR_HTML),
-/* harmony export */   "INSERT_AS_TEXT": () => (/* binding */ INSERT_AS_TEXT),
-/* harmony export */   "INSERT_ONLY_TEXT": () => (/* binding */ INSERT_ONLY_TEXT),
-/* harmony export */   "SAFE_COUNT_CHANGE_CALL": () => (/* binding */ SAFE_COUNT_CHANGE_CALL),
+/* harmony export */   "IS_INLINE": () => (/* binding */ IS_INLINE),
 /* harmony export */   "IS_MAC": () => (/* binding */ IS_MAC),
 /* harmony export */   "KEY_ALIASES": () => (/* binding */ KEY_ALIASES),
-/* harmony export */   "BASE_PATH": () => (/* binding */ BASE_PATH)
+/* harmony export */   "KEY_BACKSPACE": () => (/* binding */ KEY_BACKSPACE),
+/* harmony export */   "KEY_DELETE": () => (/* binding */ KEY_DELETE),
+/* harmony export */   "KEY_DOWN": () => (/* binding */ KEY_DOWN),
+/* harmony export */   "KEY_ENTER": () => (/* binding */ KEY_ENTER),
+/* harmony export */   "KEY_ESC": () => (/* binding */ KEY_ESC),
+/* harmony export */   "KEY_F3": () => (/* binding */ KEY_F3),
+/* harmony export */   "KEY_LEFT": () => (/* binding */ KEY_LEFT),
+/* harmony export */   "KEY_RIGHT": () => (/* binding */ KEY_RIGHT),
+/* harmony export */   "KEY_SPACE": () => (/* binding */ KEY_SPACE),
+/* harmony export */   "KEY_TAB": () => (/* binding */ KEY_TAB),
+/* harmony export */   "KEY_UP": () => (/* binding */ KEY_UP),
+/* harmony export */   "MARKER_CLASS": () => (/* binding */ MARKER_CLASS),
+/* harmony export */   "MAY_BE_REMOVED_WITH_KEY": () => (/* binding */ MAY_BE_REMOVED_WITH_KEY),
+/* harmony export */   "MODE_SOURCE": () => (/* binding */ MODE_SOURCE),
+/* harmony export */   "MODE_SPLIT": () => (/* binding */ MODE_SPLIT),
+/* harmony export */   "MODE_WYSIWYG": () => (/* binding */ MODE_WYSIWYG),
+/* harmony export */   "NBSP_SPACE": () => (/* binding */ NBSP_SPACE),
+/* harmony export */   "NEARBY": () => (/* binding */ NEARBY),
+/* harmony export */   "PARAGRAPH": () => (/* binding */ PARAGRAPH),
+/* harmony export */   "SAFE_COUNT_CHANGE_CALL": () => (/* binding */ SAFE_COUNT_CHANGE_CALL),
+/* harmony export */   "SPACE_REG_EXP": () => (/* binding */ SPACE_REG_EXP),
+/* harmony export */   "SPACE_REG_EXP_END": () => (/* binding */ SPACE_REG_EXP_END),
+/* harmony export */   "SPACE_REG_EXP_START": () => (/* binding */ SPACE_REG_EXP_START),
+/* harmony export */   "TEXT_HTML": () => (/* binding */ TEXT_HTML),
+/* harmony export */   "TEXT_PLAIN": () => (/* binding */ TEXT_PLAIN)
 /* harmony export */ });
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -972,7 +972,6 @@ class ObserveObject {
             const prefix = this.__prefix.concat(key).filter(a => a.length);
             Object.defineProperty(this, key, {
                 set: (value) => {
-                    var _a;
                     const oldValue = data[key];
                     if (!(0,helpers.isFastEqual)(oldValue, value)) {
                         this.fire([
@@ -991,7 +990,7 @@ class ObserveObject {
                                 rs.push(`change.${sum.join('.')}`);
                                 return rs;
                             }, [])
-                        ], prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf) ? value.valueOf() : value);
+                        ], prefix.join('.'), oldValue, (value === null || value === void 0 ? void 0 : value.valueOf) ? value.valueOf() : value);
                     }
                 },
                 get: () => {
@@ -1044,16 +1043,16 @@ class ObserveObject {
         return new ObserveObject(data, prefix);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__data", void 0);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__prefix", void 0);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__onEvents", void 0);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.nonenumerable
 ], ObserveObject.prototype, "__lockEvent", void 0);
 
@@ -2780,13 +2779,13 @@ class ViewComponent extends Component {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "KQ": () => (/* binding */ lang),
+/* harmony export */   "TB": () => (/* binding */ eventEmitter),
+/* harmony export */   "ZO": () => (/* binding */ getContainer),
 /* harmony export */   "as": () => (/* binding */ instances),
 /* harmony export */   "fe": () => (/* binding */ uniqueUid),
 /* harmony export */   "pw": () => (/* binding */ pluginSystem),
-/* harmony export */   "qz": () => (/* binding */ modules),
-/* harmony export */   "KQ": () => (/* binding */ lang),
-/* harmony export */   "ZO": () => (/* binding */ getContainer),
-/* harmony export */   "TB": () => (/* binding */ eventEmitter)
+/* harmony export */   "qz": () => (/* binding */ modules)
 /* harmony export */ });
 /* unused harmony export extendLang */
 /* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
@@ -2887,13 +2886,12 @@ class PluginSystem {
     }
     init(jodit) {
         const extrasList = jodit.o.extraPlugins.map(s => (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isString)(s) ? { name: s } : s), disableList = (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.splitArray)(jodit.o.disablePlugins).map(s => this.normalizeName(s)), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = (plugin, name) => {
-            var _a;
             if (disableList.includes(name) ||
                 doneList.includes(name) ||
                 promiseList[name]) {
                 return;
             }
-            const requires = (_a = plugin) === null || _a === void 0 ? void 0 : _a.requires;
+            const requires = plugin === null || plugin === void 0 ? void 0 : plugin.requires;
             if (requires &&
                 (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.isArray)(requires) &&
                 this.hasDisabledRequires(disableList, requires)) {
@@ -4455,8 +4453,8 @@ Icon.icons = {};
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "i": () => (/* binding */ css),
-/* harmony export */   "b": () => (/* binding */ clearCenterAlign)
+/* harmony export */   "b": () => (/* binding */ clearCenterAlign),
+/* harmony export */   "i": () => (/* binding */ css)
 /* harmony export */ });
 /* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 /* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
@@ -4947,46 +4945,46 @@ let UIButton = class UIButton extends ui_element/* UIElement */.u {
         this.actionHandlers.forEach(callback => callback.call(this, e));
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.size')
 ], UIButton.prototype, "onChangeSize", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.type')
 ], UIButton.prototype, "onChangeType", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('parentElement')
 ], UIButton.prototype, "updateSize", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.status')
 ], UIButton.prototype, "onChangeStatus", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.text')
 ], UIButton.prototype, "onChangeText", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.text')
 ], UIButton.prototype, "onChangeTextSetMode", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.disabled')
 ], UIButton.prototype, "onChangeDisabled", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.activated')
 ], UIButton.prototype, "onChangeActivated", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.name')
 ], UIButton.prototype, "onChangeName", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.tooltip')
 ], UIButton.prototype, "onChangeTooltip", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.tabIndex')
 ], UIButton.prototype, "onChangeTabIndex", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.icon')
 ], UIButton.prototype, "onChangeIcon", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], UIButton.prototype, "onActionFire", null);
-UIButton = (0,tslib_es6.__decorate)([
+UIButton = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIButton);
 
@@ -5073,7 +5071,7 @@ let UIButtonGroup = class UIButtonGroup extends group/* UIGroup */.q {
         (_b = (_a = this.options).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, result);
     }
 };
-UIButtonGroup = (0,tslib_es6.__decorate)([
+UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIButtonGroup);
 
@@ -5242,10 +5240,10 @@ let UIList = class UIList extends group/* UIGroup */.q {
         return new ui_button/* UIButton */.y3(this.j);
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('mode')
 ], UIList.prototype, "onChangeMode", null);
-UIList = (0,tslib_es6.__decorate)([
+UIList = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIList);
 
@@ -5811,10 +5809,10 @@ let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODUL
         return super.destruct();
     }
 };
-(0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+(0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
     (0,_decorators__WEBPACK_IMPORTED_MODULE_1__.watch)('buttonSize')
 ], UIGroup.prototype, "update", null);
-UIGroup = UIGroup_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+UIGroup = UIGroup_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
     _decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UIGroup);
 
@@ -5825,23 +5823,10 @@ UIGroup = UIGroup_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
+var __webpack_unused_export__;
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
+__webpack_unused_export__ = ({ value: true });
+__webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports.cu = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports.gn = __webpack_unused_export__ = exports.pi = __webpack_unused_export__ = void 0;
 var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -5857,9 +5842,9 @@ function __extends(d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
-exports.__extends = __extends;
+__webpack_unused_export__ = __extends;
 var __assign = function () {
-    exports.__assign = Object.assign || function __assign(t) {
+    exports.pi = Object.assign || function __assign(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s)
@@ -5868,9 +5853,9 @@ var __assign = function () {
         }
         return t;
     };
-    return exports.__assign.apply(this, arguments);
+    return exports.pi.apply(this, arguments);
 };
-exports.__assign = __assign;
+exports.pi = __assign;
 function __rest(s, e) {
     var t = {};
     for (var p in s)
@@ -5883,7 +5868,7 @@ function __rest(s, e) {
         }
     return t;
 }
-exports.__rest = __rest;
+__webpack_unused_export__ = __rest;
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -5894,16 +5879,16 @@ function __decorate(decorators, target, key, desc) {
                 r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
-exports.__decorate = __decorate;
+exports.gn = __decorate;
 function __param(paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); };
 }
-exports.__param = __param;
+__webpack_unused_export__ = __param;
 function __metadata(metadataKey, metadataValue) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
         return Reflect.metadata(metadataKey, metadataValue);
 }
-exports.__metadata = __metadata;
+__webpack_unused_export__ = __metadata;
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -5923,7 +5908,7 @@ function __awaiter(thisArg, _arguments, P, generator) {
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 }
-exports.__awaiter = __awaiter;
+__webpack_unused_export__ = __awaiter;
 function __generator(thisArg, body) {
     var _ = { label: 0, sent: function () { if (t[0] & 1)
             throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
@@ -5993,11 +5978,15 @@ function __generator(thisArg, body) {
         return { value: op[0] ? op[1] : void 0, done: true };
     }
 }
-exports.__generator = __generator;
-exports.__createBinding = Object.create ? (function (o, m, k, k2) {
+__webpack_unused_export__ = __generator;
+exports.cu = Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function () { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
@@ -6006,9 +5995,9 @@ exports.__createBinding = Object.create ? (function (o, m, k, k2) {
 function __exportStar(m, o) {
     for (var p in m)
         if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
-            exports.__createBinding(o, m, p);
+            (0, exports.cu)(o, m, p);
 }
-exports.__exportStar = __exportStar;
+__webpack_unused_export__ = __exportStar;
 function __values(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m)
@@ -6023,7 +6012,7 @@ function __values(o) {
         };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 }
-exports.__values = __values;
+__webpack_unused_export__ = __values;
 function __read(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m)
@@ -6048,13 +6037,13 @@ function __read(o, n) {
     }
     return ar;
 }
-exports.__read = __read;
+__webpack_unused_export__ = __read;
 function __spread() {
     for (var ar = [], i = 0; i < arguments.length; i++)
         ar = ar.concat(__read(arguments[i]));
     return ar;
 }
-exports.__spread = __spread;
+__webpack_unused_export__ = __spread;
 function __spreadArrays() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++)
         s += arguments[i].length;
@@ -6063,17 +6052,23 @@ function __spreadArrays() {
             r[k] = a[j];
     return r;
 }
-exports.__spreadArrays = __spreadArrays;
-function __spreadArray(to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+__webpack_unused_export__ = __spreadArrays;
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2)
+        for (var i = 0, l = from.length, ar; i < l; i++) {
+            if (ar || !(i in from)) {
+                if (!ar)
+                    ar = Array.prototype.slice.call(from, 0, i);
+                ar[i] = from[i];
+            }
+        }
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
-exports.__spreadArray = __spreadArray;
+__webpack_unused_export__ = __spreadArray;
 function __await(v) {
     return this instanceof __await ? (this.v = v, this) : new __await(v);
 }
-exports.__await = __await;
+__webpack_unused_export__ = __await;
 function __asyncGenerator(thisArg, _arguments, generator) {
     if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
@@ -6093,13 +6088,13 @@ function __asyncGenerator(thisArg, _arguments, generator) {
     function settle(f, v) { if (f(v), q.shift(), q.length)
         resume(q[0][0], q[0][1]); }
 }
-exports.__asyncGenerator = __asyncGenerator;
+__webpack_unused_export__ = __asyncGenerator;
 function __asyncDelegator(o) {
     var i, p;
     return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
     function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
 }
-exports.__asyncDelegator = __asyncDelegator;
+__webpack_unused_export__ = __asyncDelegator;
 function __asyncValues(o) {
     if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
@@ -6108,7 +6103,7 @@ function __asyncValues(o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function (v) { resolve({ value: v, done: d }); }, reject); }
 }
-exports.__asyncValues = __asyncValues;
+__webpack_unused_export__ = __asyncValues;
 function __makeTemplateObject(cooked, raw) {
     if (Object.defineProperty) {
         Object.defineProperty(cooked, "raw", { value: raw });
@@ -6118,7 +6113,7 @@ function __makeTemplateObject(cooked, raw) {
     }
     return cooked;
 }
-exports.__makeTemplateObject = __makeTemplateObject;
+__webpack_unused_export__ = __makeTemplateObject;
 ;
 var __setModuleDefault = Object.create ? (function (o, v) {
     Object.defineProperty(o, "default", { enumerable: true, value: v });
@@ -6132,30 +6127,39 @@ function __importStar(mod) {
     if (mod != null)
         for (var k in mod)
             if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-                exports.__createBinding(result, mod, k);
+                (0, exports.cu)(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
-exports.__importStar = __importStar;
+__webpack_unused_export__ = __importStar;
 function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
-exports.__importDefault = __importDefault;
-function __classPrivateFieldGet(receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+__webpack_unused_export__ = __importDefault;
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
-exports.__classPrivateFieldGet = __classPrivateFieldGet;
-function __classPrivateFieldSet(receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+__webpack_unused_export__ = __classPrivateFieldGet;
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m")
+        throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
-exports.__classPrivateFieldSet = __classPrivateFieldSet;
+__webpack_unused_export__ = __classPrivateFieldSet;
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function"))
+        throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+__webpack_unused_export__ = __classPrivateFieldIn;
 
 
 /***/ }),
@@ -6182,7 +6186,7 @@ let UISeparator = class UISeparator extends _element__WEBPACK_IMPORTED_MODULE_0_
         return 'UISeparator';
     }
 };
-UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
     _decorators__WEBPACK_IMPORTED_MODULE_1__.component
 ], UISeparator);
 
@@ -6461,13 +6465,13 @@ class Popup extends ui_element/* UIElement */.u {
         return super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "updatePosition", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "close", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Popup.prototype, "closeOnOutsideClick", null);
 
@@ -6739,13 +6743,13 @@ UIInput.defaultState = {
     required: false,
     validators: []
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.clearButton')
 ], UIInput.prototype, "onChangeClear", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.className')
 ], UIInput.prototype, "onChangeClassName", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)([
         'state.name',
         'state.type',
@@ -6756,13 +6760,13 @@ UIInput.defaultState = {
     ]),
     (0,decorators.debounce)()
 ], UIInput.prototype, "onChangeState", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.value')
 ], UIInput.prototype, "onChangeStateValue", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], UIInput.prototype, "onChangeValue", null);
-UIInput = UIInput_1 = (0,tslib_es6.__decorate)([
+UIInput = UIInput_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIInput);
 
@@ -6786,7 +6790,7 @@ let UITextArea = class UITextArea extends UIInput {
         return super.createContainer(options);
     }
 };
-UITextArea = (0,tslib_es6.__decorate)([
+UITextArea = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UITextArea);
 
@@ -6814,7 +6818,7 @@ let UICheckbox = class UICheckbox extends UIInput {
         super(jodit, { ...options, type: 'checkbox' });
     }
 };
-UICheckbox = (0,tslib_es6.__decorate)([
+UICheckbox = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UICheckbox);
 
@@ -6883,7 +6887,7 @@ UISelect.defaultState = {
     size: 1,
     multiple: false
 };
-UISelect = UISelect_1 = (0,tslib_es6.__decorate)([
+UISelect = UISelect_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UISelect);
 
@@ -6942,7 +6946,7 @@ let UIFileInput = class UIFileInput extends UIInput {
 		/>`);
     }
 };
-UIFileInput = (0,tslib_es6.__decorate)([
+UIFileInput = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIFileInput);
 
@@ -7014,7 +7018,7 @@ let UIForm = class UIForm extends group/* UIGroup */.q {
         return form;
     }
 };
-UIForm = (0,tslib_es6.__decorate)([
+UIForm = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIForm);
 
@@ -7046,7 +7050,7 @@ let UIBlock = class UIBlock extends group/* UIGroup */.q {
         return 'UIBlock';
     }
 };
-UIBlock = (0,tslib_es6.__decorate)([
+UIBlock = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], UIBlock);
 
@@ -8147,8 +8151,9 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -8537,12 +8542,7 @@ class Async {
             rejectCallback = reject;
             return executor(resolve, reject);
         });
-        if (!promise.finally && "es2018" !== 'es2018') {
-            promise.finally = (onfinally) => {
-                promise.then(onfinally).catch(onfinally);
-                return promise;
-            };
-        }
+        if (!promise.finally && "es2018" !== 'es2018') {}
         promise.finally(() => {
             this.promisesRejections.delete(rejectCallback);
         });
@@ -8992,7 +8992,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.6.3";
+        this.version = "3.6.5";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -9143,7 +9143,7 @@ class View extends component/* Component */.wA {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.hook)(component/* STATUSES.beforeDestruct */.n$.beforeDestruct)
 ], View.prototype, "beforeDestruct", null);
 View.defaultOptions = {
@@ -9254,10 +9254,10 @@ let ToolbarCollection = class ToolbarCollection extends ui/* UIList */.bz {
         super.destruct();
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ToolbarCollection.prototype, "immediateUpdate", null);
-ToolbarCollection = (0,tslib_es6.__decorate)([
+ToolbarCollection = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarCollection);
 
@@ -9348,7 +9348,7 @@ let ToolbarEditorCollection = class ToolbarEditorCollection extends ToolbarColle
         return button.target || this.j.s.current() || null;
     }
 };
-ToolbarEditorCollection = (0,tslib_es6.__decorate)([
+ToolbarEditorCollection = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarEditorCollection);
 
@@ -9617,10 +9617,10 @@ let ToolbarButton = class ToolbarButton extends ui_button/* UIButton */.y3 {
         }
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.hasTrigger')
 ], ToolbarButton.prototype, "onChangeHasTrigger", null);
-ToolbarButton = (0,tslib_es6.__decorate)([
+ToolbarButton = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarButton);
 
@@ -9660,7 +9660,7 @@ let ToolbarContent = class ToolbarContent extends ui_button/* UIButton */.y3 {
         return this.j.c.span(this.componentName);
     }
 };
-ToolbarContent = (0,tslib_es6.__decorate)([
+ToolbarContent = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ToolbarContent);
 
@@ -9811,7 +9811,7 @@ class ViewWithToolbar extends View {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ViewWithToolbar.prototype, "beforeToolbarBuild", null);
 
@@ -10217,28 +10217,28 @@ let Dialog = class Dialog extends ViewWithToolbar {
         super.destruct();
     }
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onMouseUp", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onHeaderMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onMouseMove", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onEsc", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "onResizerMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Dialog.prototype, "close", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.hook)('ready')
 ], Dialog.prototype, "buildToolbar", null);
-Dialog = (0,tslib_es6.__decorate)([
+Dialog = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], Dialog);
 
@@ -10422,7 +10422,7 @@ class Plugin extends component/* ViewComponent */.Hr {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Plugin.prototype, "destruct", null);
 
@@ -11221,7 +11221,7 @@ class DataProvider {
         this.ajaxInstances.clear();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DataProvider.prototype, "isSuccess", null);
 
@@ -11969,28 +11969,28 @@ ImageEditor.calcValueByPercent = (value, percent) => {
     }
     return valueNbr || 0;
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "onTitleModeClick", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)()
 ], ImageEditor.prototype, "onChangeSizeInput", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "onResizeHandleMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "onGlobalMouseUp", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)(10)
 ], ImageEditor.prototype, "onGlobalMouseMove", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "hide", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ImageEditor.prototype, "open", null);
-ImageEditor = ImageEditor_1 = (0,tslib_es6.__decorate)([
+ImageEditor = ImageEditor_1 = (0,tslib_es6/* __decorate */.gn)([
     decorators.component
 ], ImageEditor);
 
@@ -12667,10 +12667,10 @@ class FileBrowser extends ViewWithToolbar {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], FileBrowser.prototype, "status", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], FileBrowser.prototype, "open", null);
 
@@ -13016,7 +13016,7 @@ class Observer extends component/* ViewComponent */.Hr {
         super.destruct();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)()
 ], Observer.prototype, "onChange", null);
 
@@ -13311,13 +13311,13 @@ class ApplyStyle {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ApplyStyle.prototype, "applyToElement", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ApplyStyle.prototype, "isSuitableElement", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], ApplyStyle.prototype, "isNormalNode", null);
 
@@ -14092,16 +14092,16 @@ class Select {
         return currentBox.previousElementSibling;
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "focus", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "setCursorAfter", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "setCursorBefore", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Select.prototype, "setCursorIn", null);
 
@@ -14749,7 +14749,7 @@ class Table extends component/* ViewComponent */.Hr {
     }
 }
 Table.selectedByTable = new WeakMap();
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)()
 ], Table.prototype, "recalculateStyles", null);
 const instance = (j) => j.getInstance('Table', j.o);
@@ -16042,13 +16042,13 @@ Jodit.lang = global/* lang */.KQ;
 Jodit.core = {
     Plugin: Plugin
 };
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.cache
 ], Jodit.prototype, "uploader", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.cache
 ], Jodit.prototype, "filebrowser", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], Jodit.prototype, "prepareWYSIWYGEditor", null);
 
@@ -16532,7 +16532,7 @@ function getSiblingBox(node, backspace, root) {
 
 
 
-config/* Config.prototype.delete */.D.prototype.delete = {
+config/* Config.prototype.delete */.D.prototype["delete"] = {
     hotkeys: {
         delete: ['delete', 'cmd+backspace'],
         deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
@@ -17352,10 +17352,10 @@ class cleanHtml extends Plugin {
         this.j.e.off('.cleanHtml');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)(ctx => ctx.jodit.o.cleanHTML.timeout)
 ], cleanHtml.prototype, "onChangeCleanHTML", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], cleanHtml.prototype, "isInlineBlock", null);
 
@@ -17420,7 +17420,7 @@ class WrapTextNodes extends Plugin {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], WrapTextNodes.prototype, "postProcessSetEditorValue", null);
 
@@ -17896,10 +17896,10 @@ class paste extends Plugin {
         jodit.e.off('paste.paste', this.onPaste);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], paste.prototype, "onPaste", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], paste.prototype, "onProcessPasteReplaceNl2Br", null);
 
@@ -18493,16 +18493,16 @@ class DragAndDrop extends Plugin {
             .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDrop.prototype, "onDragStart", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)(ctx => ctx.j.defaultTimeout / 10)
 ], DragAndDrop.prototype, "onDrag", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDrop.prototype, "onDragEnd", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDrop.prototype, "onDrop", null);
 
@@ -18643,16 +18643,16 @@ class DragAndDropElement extends Plugin {
         this.removeDragListeners();
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDropElement.prototype, "onDragStart", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)(ctx => ctx.j.defaultTimeout / 10)
 ], DragAndDropElement.prototype, "onDrag", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDropElement.prototype, "onDragEnd", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], DragAndDropElement.prototype, "onDrop", null);
 
@@ -20180,19 +20180,19 @@ class imageProperties extends Plugin {
         editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.marginIsLocked')
 ], imageProperties.prototype, "onChangeMarginIsLocked", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('state.sizeIsLocked')
 ], imageProperties.prototype, "onChangeSizeIsLocked", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], imageProperties.prototype, "onApply", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], imageProperties.prototype, "openImageEditor", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], imageProperties.prototype, "openImagePopup", null);
 
@@ -20428,9 +20428,9 @@ config/* Config.prototype.toolbarInlineForSelection */.D.prototype.toolbarInline
 config/* Config.prototype.toolbarInlineDisableFor */.D.prototype.toolbarInlineDisableFor = [];
 config/* Config.prototype.toolbarInlineDisabledButtons */.D.prototype.toolbarInlineDisabledButtons = ['source'];
 config/* Config.prototype.popup */.D.prototype.popup = {
-    a: __webpack_require__(44)/* .default */ .Z,
-    img: __webpack_require__(45)/* .default */ .Z,
-    cells: __webpack_require__(46)/* .default */ .Z,
+    a: (__webpack_require__(44)/* ["default"] */ .Z),
+    img: (__webpack_require__(45)/* ["default"] */ .Z),
+    cells: (__webpack_require__(46)/* ["default"] */ .Z),
     jodit: [
         {
             name: 'bin',
@@ -20622,22 +20622,22 @@ class inlinePopup extends Plugin {
             .off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], inlinePopup.prototype, "onClick", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.wait)((ctx) => !ctx.j.isLocked)
 ], inlinePopup.prototype, "showPopup", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], inlinePopup.prototype, "hidePopup", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], inlinePopup.prototype, "onSelectionStart", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], inlinePopup.prototype, "onSelectionEnd", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)(ctx => ctx.defaultTimeout)
 ], inlinePopup.prototype, "onSelectionChange", null);
 
@@ -20856,10 +20856,10 @@ class limit extends Plugin {
         jodit.e.off('.limit');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], limit.prototype, "checkPreventKeyPressOrPaste", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], limit.prototype, "checkPreventChanging", null);
 
@@ -21248,13 +21248,13 @@ class link_link extends Plugin {
             .off('processPaste.link', this.onProcessPasteLink);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], link_link.prototype, "onDblClickOnLink", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], link_link.prototype, "onProcessPasteLink", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], link_link.prototype, "generateForm", null);
 
@@ -21805,7 +21805,7 @@ class placeholder extends Plugin {
         jodit.e.off('.placeholder').off(window, 'load', this.toggle);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)(ctx => ctx.defaultTimeout / 10, true)
 ], placeholder.prototype, "toggle", null);
 
@@ -22200,7 +22200,7 @@ class resizer extends Plugin {
         jodit.e.off(this.j.ow, '.resizer').off('.resizer');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizer.prototype, "hide", null);
 
@@ -22669,7 +22669,7 @@ class search extends Plugin {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], search.prototype, "calcSticky", null);
 
@@ -22756,7 +22756,7 @@ let resizeHandler = class resizeHandler extends Plugin {
     }
 };
 resizeHandler.requires = ['size'];
-resizeHandler = (0,tslib_es6.__decorate)([
+resizeHandler = (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeHandler);
 
@@ -22880,7 +22880,7 @@ let size = class size extends Plugin {
             .off('.size');
     }
 };
-size = (0,tslib_es6.__decorate)([
+size = (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], size);
 
@@ -23735,7 +23735,7 @@ class sticky extends Plugin {
             .off('.sticky');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     (0,decorators.throttle)()
 ], sticky.prototype, "onScroll", null);
 
@@ -24496,16 +24496,16 @@ class resizeCells extends Plugin {
         }
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "onHandleMouseDown", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "onMouseMove", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "onMouseUp", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], resizeCells.prototype, "observe", null);
 
@@ -24729,19 +24729,19 @@ class selectCells extends Plugin {
         jodit.e.off('.select-cells');
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "observe", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onRemoveSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onStopSelection", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onExecCommand", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], selectCells.prototype, "onAfterCommand", null);
 
@@ -24955,10 +24955,10 @@ class tooltip extends Plugin {
         dom/* Dom.safeRemove */.i.safeRemove(this.container);
     }
 }
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], tooltip.prototype, "delayOpen", null);
-(0,tslib_es6.__decorate)([
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], tooltip.prototype, "close", null);
 

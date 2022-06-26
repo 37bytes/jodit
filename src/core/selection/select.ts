@@ -89,6 +89,7 @@ export class Select {
 	 */
 	get sel(): WindowSelection {
 		if (this.j.o.shadowRoot) {
+			// @ts-ignore
 			return this.j.o.shadowRoot.getSelection();
 		}
 
@@ -172,7 +173,9 @@ export class Select {
 			const rng = this.createRange();
 
 			(() => {
+				// @ts-ignore
 				if (this.doc.caretPositionFromPoint) {
+					// @ts-ignore
 					const caret = this.doc.caretPositionFromPoint(x, y);
 
 					if (caret) {
@@ -183,6 +186,7 @@ export class Select {
 
 				if (this.doc.caretRangeFromPoint) {
 					const caret = this.doc.caretRangeFromPoint(x, y);
+					// @ts-ignore
 					rng.setStart(caret.startContainer, caret.startOffset);
 				}
 			})();

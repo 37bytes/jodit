@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.3
+ * Version: v3.6.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15,7 +15,7 @@
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(self, function() {
+})(self, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ([
 /* 0 */,
@@ -250,7 +250,7 @@ if ("document" in window.self) {
 
 "use strict";
 
-module.exports = __webpack_require__(5).polyfill();
+module.exports = (__webpack_require__(5).polyfill)();
 
 
 /***/ }),
@@ -863,7 +863,7 @@ var Jodit = (function (_super) {
         _this.__callChangeCount = 0;
         _this.elementToPlace = new Map();
         try {
-            helpers_1.resolveElement(element, _this.o.shadowRoot || _this.od);
+            (0, helpers_1.resolveElement)(element, _this.o.shadowRoot || _this.od);
         }
         catch (e) {
             _this.destruct();
@@ -871,7 +871,7 @@ var Jodit = (function (_super) {
         }
         _this.setStatus(modules_1.STATUSES.beforeInit);
         _this.id =
-            helpers_1.attr(helpers_1.resolveElement(element, _this.o.shadowRoot || _this.od), 'id') ||
+            (0, helpers_1.attr)((0, helpers_1.resolveElement)(element, _this.o.shadowRoot || _this.od), 'id') ||
                 new Date().getTime().toString();
         global_1.instances[_this.id] = _this;
         _this.storage = storage_1.Storage.makeStorage(true, _this.id);
@@ -884,10 +884,10 @@ var Jodit = (function (_super) {
         _this.e.on('prepareWYSIWYGEditor', _this.prepareWYSIWYGEditor);
         _this.selection = new modules_1.Select(_this);
         var beforeInitHookResult = _this.beforeInitHook();
-        helpers_1.callPromise(beforeInitHookResult, function () {
+        (0, helpers_1.callPromise)(beforeInitHookResult, function () {
             _this.e.fire('beforeInit', _this);
             var initPluginsResult = global_1.pluginSystem.init(_this);
-            helpers_1.callPromise(initPluginsResult, function () {
+            (0, helpers_1.callPromise)(initPluginsResult, function () {
                 _this.e.fire('afterPluginSystemInit', _this);
                 _this.e.on('changePlace', function () {
                     _this.setReadOnly(_this.o.readonly);
@@ -904,7 +904,7 @@ var Jodit = (function (_super) {
                     _this.setStatus(modules_1.STATUSES.ready);
                     _this.e.fire('afterConstructor', _this);
                 };
-                helpers_1.callPromise(addPlaceResult, init);
+                (0, helpers_1.callPromise)(addPlaceResult, init);
             });
         });
         return _this;
@@ -944,7 +944,7 @@ var Jodit = (function (_super) {
         configurable: true
     });
     Jodit.atom = function (object) {
-        return helpers_1.markAsAtomic(object);
+        return (0, helpers_1.markAsAtomic)(object);
     };
     Jodit.make = function (element, options) {
         return new Jodit(element, options);
@@ -1079,7 +1079,7 @@ var Jodit = (function (_super) {
     Object.defineProperty(Jodit.prototype, "filebrowser", {
         get: function () {
             var jodit = this;
-            var options = helpers_1.ConfigProto({
+            var options = (0, helpers_1.ConfigProto)({
                 defaultTimeout: jodit.defaultTimeout,
                 uploader: jodit.o.uploader,
                 language: jodit.o.language,
@@ -1096,7 +1096,7 @@ var Jodit = (function (_super) {
                                 jodit.s.insertImage(url, null, jodit.o.imageDefaultWidth);
                             }
                             else {
-                                jodit.s.insertNode(jodit.createInside.fromHTML("<a href='" + url + "' title='" + url + "'>" + url + "</a>"));
+                                jodit.s.insertNode(jodit.createInside.fromHTML("<a href='".concat(url, "' title='").concat(url, "'>").concat(url, "</a>")));
                             }
                         });
                     }
@@ -1119,7 +1119,7 @@ var Jodit = (function (_super) {
     });
     Jodit.prototype.getNativeEditorValue = function () {
         var value = this.e.fire('beforeGetNativeEditorValue');
-        if (helpers_1.isString(value)) {
+        if ((0, helpers_1.isString)(value)) {
             return value;
         }
         if (this.editor) {
@@ -1158,7 +1158,7 @@ var Jodit = (function (_super) {
         if (newValue === false) {
             return;
         }
-        if (helpers_1.isString(newValue)) {
+        if ((0, helpers_1.isString)(newValue)) {
             value = newValue;
         }
         if (!this.editor) {
@@ -1167,8 +1167,8 @@ var Jodit = (function (_super) {
             }
             return;
         }
-        if (!helpers_1.isString(value) && !helpers_1.isVoid(value)) {
-            throw helpers_1.error('value must be string');
+        if (!(0, helpers_1.isString)(value) && !(0, helpers_1.isVoid)(value)) {
+            throw (0, helpers_1.error)('value must be string');
         }
         if (value !== undefined && this.getNativeEditorValue() !== value) {
             this.setNativeEditorValue(value);
@@ -1195,8 +1195,8 @@ var Jodit = (function (_super) {
             : this.element.innerHTML;
     };
     Jodit.prototype.setElementValue = function (value) {
-        if (!helpers_1.isString(value) && value !== undefined) {
-            throw helpers_1.error('value must be string');
+        if (!(0, helpers_1.isString)(value) && value !== undefined) {
+            throw (0, helpers_1.error)('value must be string');
         }
         if (value !== undefined) {
             if (this.element !== this.container) {
@@ -1221,7 +1221,7 @@ var Jodit = (function (_super) {
             this.commands[commandName] = [];
         }
         this.commands[commandName].push(command);
-        if (!helpers_1.isFunction(command)) {
+        if (!(0, helpers_1.isFunction)(command)) {
             var hotkeys = this.o.commandToHotkeys[commandName] ||
                 this.o.commandToHotkeys[commandNameOriginal] ||
                 command.hotkeys;
@@ -1234,7 +1234,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.registerHotkeyToCommand = function (hotkeys, commandName, shouldStop) {
         var _this = this;
         if (shouldStop === void 0) { shouldStop = true; }
-        var shortcuts = helpers_1.asArray(hotkeys)
+        var shortcuts = (0, helpers_1.asArray)(hotkeys)
             .map(helpers_1.normalizeKeyAliases)
             .map(function (hotkey) { return hotkey + '.hotkey'; })
             .join(' ');
@@ -1284,7 +1284,7 @@ var Jodit = (function (_super) {
             var result_1;
             var exec = function (command) {
                 var callback;
-                if (helpers_1.isFunction(command)) {
+                if ((0, helpers_1.isFunction)(command)) {
                     callback = command;
                 }
                 else {
@@ -1423,7 +1423,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.afterInitHook = function () {
     };
     Jodit.prototype.initOptions = function (options) {
-        this.options = (helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions));
+        this.options = ((0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions));
     };
     Jodit.prototype.initOwners = function () {
         this.editorWindow = this.o.ownerWindow;
@@ -1431,10 +1431,10 @@ var Jodit = (function (_super) {
     };
     Jodit.prototype.addPlace = function (source, options) {
         var _this = this;
-        var element = helpers_1.resolveElement(source, this.o.shadowRoot || this.od);
+        var element = (0, helpers_1.resolveElement)(source, this.o.shadowRoot || this.od);
         this.attachEvents(options);
         if (element.attributes) {
-            helpers_1.toArray(element.attributes).forEach(function (attr) {
+            (0, helpers_1.toArray)(element.attributes).forEach(function (attr) {
                 var name = attr.name;
                 var value = attr.value;
                 if (config_1.Config.defaultOptions[name] !== undefined &&
@@ -1452,7 +1452,7 @@ var Jodit = (function (_super) {
         var container = this.c.div('jodit-container');
         container.classList.add('jodit');
         container.classList.add('jodit-container');
-        container.classList.add("jodit_theme_" + (this.o.theme || 'default'));
+        container.classList.add("jodit_theme_".concat(this.o.theme || 'default'));
         container.setAttribute('contenteditable', 'false');
         var buffer = null;
         if (this.o.inline) {
@@ -1492,7 +1492,7 @@ var Jodit = (function (_super) {
             workplace: workplace,
             statusbar: statusbar,
             options: this.isReady
-                ? helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions)
+                ? (0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions)
                 : this.options,
             observer: new modules_1.Observer(this),
             editorWindow: this.ow
@@ -1514,7 +1514,7 @@ var Jodit = (function (_super) {
             }
             _this.e.fire('afterAddPlace', currentPlace);
         };
-        return helpers_1.callPromise(initResult, init);
+        return (0, helpers_1.callPromise)(initResult, init);
     };
     Jodit.prototype.addDisclaimer = function (elm) {
         this.workplace.appendChild(elm);
@@ -1535,7 +1535,7 @@ var Jodit = (function (_super) {
     Jodit.prototype.initEditor = function (buffer) {
         var _this = this;
         var result = this.createEditor();
-        return helpers_1.callPromise(result, function () {
+        return (0, helpers_1.callPromise)(result, function () {
             if (_this.isInDestruct) {
                 return;
             }
@@ -1578,18 +1578,18 @@ var Jodit = (function (_super) {
         var _this = this;
         var defaultEditorArea = this.editor;
         var stayDefault = this.e.fire('createEditor', this);
-        return helpers_1.callPromise(stayDefault, function () {
+        return (0, helpers_1.callPromise)(stayDefault, function () {
             if (_this.isInDestruct) {
                 return;
             }
-            if (stayDefault === false || helpers_1.isPromise(stayDefault)) {
+            if (stayDefault === false || (0, helpers_1.isPromise)(stayDefault)) {
                 modules_1.Dom.safeRemove(defaultEditorArea);
             }
             if (_this.o.editorCssClass) {
                 _this.editor.classList.add(_this.o.editorCssClass);
             }
             if (_this.o.style) {
-                helpers_1.css(_this.editor, _this.o.style);
+                (0, helpers_1.css)(_this.editor, _this.o.style);
             }
             _this.e
                 .on('synchro', function () {
@@ -1680,7 +1680,7 @@ var Jodit = (function (_super) {
             var container = _a.container, workplace = _a.workplace, statusbar = _a.statusbar, element = _a.element, iframe = _a.iframe, editor = _a.editor, observer = _a.observer;
             if (element !== container) {
                 if (element.hasAttribute(_this.__defaultStyleDisplayKey)) {
-                    var display = helpers_1.attr(element, _this.__defaultStyleDisplayKey);
+                    var display = (0, helpers_1.attr)(element, _this.__defaultStyleDisplayKey);
                     if (display) {
                         element.style.display = display;
                         element.removeAttribute(_this.__defaultStyleDisplayKey);
@@ -1693,11 +1693,11 @@ var Jodit = (function (_super) {
             else {
                 if (element.hasAttribute(_this.__defaultClassesKey)) {
                     element.className =
-                        helpers_1.attr(element, _this.__defaultClassesKey) || '';
+                        (0, helpers_1.attr)(element, _this.__defaultClassesKey) || '';
                     element.removeAttribute(_this.__defaultClassesKey);
                 }
             }
-            if (element.hasAttribute('style') && !helpers_1.attr(element, 'style')) {
+            if (element.hasAttribute('style') && !(0, helpers_1.attr)(element, 'style')) {
                 element.removeAttribute('style');
             }
             !statusbar.isInDestruct && statusbar.destruct();
@@ -1749,22 +1749,8 @@ exports.Jodit = Jodit;
 
 "use strict";
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
+exports.__classPrivateFieldIn = exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
 var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1920,7 +1906,11 @@ exports.__generator = __generator;
 exports.__createBinding = Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function () { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
@@ -1929,7 +1919,7 @@ exports.__createBinding = Object.create ? (function (o, m, k, k2) {
 function __exportStar(m, o) {
     for (var p in m)
         if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
-            exports.__createBinding(o, m, p);
+            (0, exports.__createBinding)(o, m, p);
 }
 exports.__exportStar = __exportStar;
 function __values(o) {
@@ -1987,10 +1977,16 @@ function __spreadArrays() {
     return r;
 }
 exports.__spreadArrays = __spreadArrays;
-function __spreadArray(to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2)
+        for (var i = 0, l = from.length, ar; i < l; i++) {
+            if (ar || !(i in from)) {
+                if (!ar)
+                    ar = Array.prototype.slice.call(from, 0, i);
+                ar[i] = from[i];
+            }
+        }
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
 exports.__spreadArray = __spreadArray;
 function __await(v) {
@@ -2055,7 +2051,7 @@ function __importStar(mod) {
     if (mod != null)
         for (var k in mod)
             if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-                exports.__createBinding(result, mod, k);
+                (0, exports.__createBinding)(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 }
@@ -2064,21 +2060,30 @@ function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
 }
 exports.__importDefault = __importDefault;
-function __classPrivateFieldGet(receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
 exports.__classPrivateFieldGet = __classPrivateFieldGet;
-function __classPrivateFieldSet(receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m")
+        throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f)
+        throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+        throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 exports.__classPrivateFieldSet = __classPrivateFieldSet;
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function"))
+        throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+exports.__classPrivateFieldIn = __classPrivateFieldIn;
 
 
 /***/ }),
@@ -2450,7 +2455,7 @@ exports.INSEPARABLE_TAGS = [
     'jodit',
     'jodit-media'
 ];
-exports.MAY_BE_REMOVED_WITH_KEY = RegExp("^" + exports.INSEPARABLE_TAGS.join('|') + "$", 'i');
+exports.MAY_BE_REMOVED_WITH_KEY = RegExp("^".concat(exports.INSEPARABLE_TAGS.join('|'), "$"), 'i');
 exports.KEY_BACKSPACE = 'Backspace';
 exports.KEY_TAB = 'Tab';
 exports.KEY_ENTER = 'Enter';
@@ -2707,7 +2712,7 @@ var EventsNative = (function () {
     };
     EventsNative.prototype.getStore = function (subject) {
         if (!subject) {
-            throw type_1.error('Need subject');
+            throw (0, type_1.error)('Need subject');
         }
         if (subject[this.__key] === undefined) {
             var store = new store_1.EventHandlersStore();
@@ -2765,34 +2770,34 @@ var EventsNative = (function () {
     EventsNative.prototype.on = function (subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop) {
         var _this = this;
         if (onTop === void 0) { onTop = false; }
-        var subject = is_string_1.isString(subjectOrEvents) ? this : subjectOrEvents;
-        var events = is_string_1.isString(eventsOrCallback)
+        var subject = (0, is_string_1.isString)(subjectOrEvents) ? this : subjectOrEvents;
+        var events = (0, is_string_1.isString)(eventsOrCallback)
             ? eventsOrCallback
             : subjectOrEvents;
         var callback = handlerOrSelector;
-        if (callback === undefined && is_function_1.isFunction(eventsOrCallback)) {
+        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
             callback = eventsOrCallback;
         }
         var store = this.getStore(subject);
-        if (!is_string_1.isString(events) || events === '') {
-            throw type_1.error('Need events names');
+        if (!(0, is_string_1.isString)(events) || events === '') {
+            throw (0, type_1.error)('Need events names');
         }
-        if (!is_function_1.isFunction(callback)) {
-            throw type_1.error('Need event handler');
+        if (!(0, is_function_1.isFunction)(callback)) {
+            throw (0, type_1.error)('Need event handler');
         }
-        if (is_array_1.isArray(subject)) {
+        if ((0, is_array_1.isArray)(subject)) {
             subject.forEach(function (subj) {
                 _this.on(subj, events, callback, onTop);
             });
             return this;
         }
-        var isDOMElement = is_function_1.isFunction(subject.addEventListener), self = this;
+        var isDOMElement = (0, is_function_1.isFunction)(subject.addEventListener), self = this;
         var syntheticCallback = function (event) {
             var args = [];
             for (var _i = 1; _i < arguments.length; _i++) {
                 args[_i - 1] = arguments[_i];
             }
-            return callback && callback.call.apply(callback, tslib_1.__spreadArray([this, event], args));
+            return callback && callback.call.apply(callback, tslib_1.__spreadArray([this, event], args, false));
         };
         if (isDOMElement) {
             syntheticCallback = function (event) {
@@ -2807,7 +2812,7 @@ var EventsNative = (function () {
         }
         this.eachEvent(events, function (event, namespace) {
             if (event === '') {
-                throw type_1.error('Need event name');
+                throw (0, type_1.error)('Need event name');
             }
             if (store.indexOf(event, namespace, callback) === false) {
                 var block = {
@@ -2838,12 +2843,12 @@ var EventsNative = (function () {
     EventsNative.prototype.one = function (subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop) {
         var _this = this;
         if (onTop === void 0) { onTop = false; }
-        var subject = is_string_1.isString(subjectOrEvents) ? this : subjectOrEvents;
-        var events = is_string_1.isString(eventsOrCallback)
+        var subject = (0, is_string_1.isString)(subjectOrEvents) ? this : subjectOrEvents;
+        var events = (0, is_string_1.isString)(eventsOrCallback)
             ? eventsOrCallback
             : subjectOrEvents;
         var callback = handlerOrSelector;
-        if (callback === undefined && is_function_1.isFunction(eventsOrCallback)) {
+        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
             callback = eventsOrCallback;
         }
         var newCallback = function () {
@@ -2859,25 +2864,25 @@ var EventsNative = (function () {
     };
     EventsNative.prototype.off = function (subjectOrEvents, eventsOrCallback, handler) {
         var _this = this;
-        var subject = is_string_1.isString(subjectOrEvents)
+        var subject = (0, is_string_1.isString)(subjectOrEvents)
             ? this
             : subjectOrEvents;
-        var events = is_string_1.isString(eventsOrCallback)
+        var events = (0, is_string_1.isString)(eventsOrCallback)
             ? eventsOrCallback
             : subjectOrEvents;
         var store = this.getStore(subject);
         var callback = handler;
-        if (!is_string_1.isString(events) || !events) {
+        if (!(0, is_string_1.isString)(events) || !events) {
             store.namespaces().forEach(function (namespace) {
                 _this.off(subject, '.' + namespace);
             });
             this.clearStore(subject);
             return this;
         }
-        if (callback === undefined && is_function_1.isFunction(eventsOrCallback)) {
+        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
             callback = eventsOrCallback;
         }
-        var isDOMElement = is_function_1.isFunction(subject.removeEventListener), removeEventListener = function (block) {
+        var isDOMElement = (0, is_function_1.isFunction)(subject.removeEventListener), removeEventListener = function (block) {
             if (isDOMElement) {
                 subject.removeEventListener(block.event, block.syntheticCallback, false);
             }
@@ -2885,7 +2890,7 @@ var EventsNative = (function () {
             if (event !== '') {
                 var blocks = store.get(event, namespace);
                 if (blocks && blocks.length) {
-                    if (!is_function_1.isFunction(callback)) {
+                    if (!(0, is_function_1.isFunction)(callback)) {
                         blocks.forEach(removeEventListener);
                         blocks.length = 0;
                     }
@@ -2920,14 +2925,14 @@ var EventsNative = (function () {
     };
     EventsNative.prototype.stopPropagation = function (subjectOrEvents, eventsList) {
         var _this = this;
-        var subject = is_string_1.isString(subjectOrEvents)
+        var subject = (0, is_string_1.isString)(subjectOrEvents)
             ? this
             : subjectOrEvents;
-        var events = is_string_1.isString(subjectOrEvents)
+        var events = (0, is_string_1.isString)(subjectOrEvents)
             ? subjectOrEvents
             : eventsList;
         if (typeof events !== 'string') {
-            throw type_1.error('Need event names');
+            throw (0, type_1.error)('Need event names');
         }
         var store = this.getStore(subject);
         this.eachEvent(events, function (event, namespace) {
@@ -2961,20 +2966,20 @@ var EventsNative = (function () {
             args[_i - 2] = arguments[_i];
         }
         var result, result_value;
-        var subject = is_string_1.isString(subjectOrEvents)
+        var subject = (0, is_string_1.isString)(subjectOrEvents)
             ? this
             : subjectOrEvents;
-        var events = is_string_1.isString(subjectOrEvents)
+        var events = (0, is_string_1.isString)(subjectOrEvents)
             ? subjectOrEvents
             : eventsList;
-        var argumentsList = is_string_1.isString(subjectOrEvents)
-            ? tslib_1.__spreadArray([eventsList], args) : args;
-        var isDOMElement = is_function_1.isFunction(subject.dispatchEvent);
-        if (!isDOMElement && !is_string_1.isString(events)) {
-            throw type_1.error('Need events names');
+        var argumentsList = (0, is_string_1.isString)(subjectOrEvents)
+            ? tslib_1.__spreadArray([eventsList], args, true) : args;
+        var isDOMElement = (0, is_function_1.isFunction)(subject.dispatchEvent);
+        if (!isDOMElement && !(0, is_string_1.isString)(events)) {
+            throw (0, type_1.error)('Need events names');
         }
         var store = this.getStore(subject);
-        if (!is_string_1.isString(events) && isDOMElement) {
+        if (!(0, is_string_1.isString)(events) && isDOMElement) {
             this.triggerNativeEvent(subject, eventsList);
         }
         else {
@@ -2986,7 +2991,7 @@ var EventsNative = (function () {
                     var blocks_1 = store.get(event, namespace);
                     if (blocks_1) {
                         try {
-                            tslib_1.__spreadArray([], blocks_1).every(function (block) {
+                            tslib_1.__spreadArray([], blocks_1, true).every(function (block) {
                                 if (_this.isStopped(blocks_1)) {
                                     return false;
                                 }
@@ -3011,7 +3016,7 @@ var EventsNative = (function () {
                             var result_second = _this.fire.apply(_this, tslib_1.__spreadArray([
                                 subject,
                                 event + '.' + ns
-                            ], argumentsList));
+                            ], argumentsList, true));
                             if (result_second !== undefined) {
                                 result = result_second;
                             }
@@ -3231,9 +3236,9 @@ var helpers_1 = __webpack_require__(19);
 var decorators_1 = __webpack_require__(99);
 var ObserveObject = (function () {
     function ObserveObject(data, prefix, onEvents) {
-        var _this = this;
         if (prefix === void 0) { prefix = []; }
         if (onEvents === void 0) { onEvents = {}; }
+        var _this = this;
         this.__lockEvent = {};
         this.__data = data;
         this.__prefix = prefix;
@@ -3242,14 +3247,13 @@ var ObserveObject = (function () {
             var prefix = _this.__prefix.concat(key).filter(function (a) { return a.length; });
             Object.defineProperty(_this, key, {
                 set: function (value) {
-                    var _a;
                     var oldValue = data[key];
-                    if (!helpers_1.isFastEqual(oldValue, value)) {
+                    if (!(0, helpers_1.isFastEqual)(oldValue, value)) {
                         _this.fire([
                             'beforeChange',
-                            "beforeChange." + prefix.join('.')
+                            "beforeChange.".concat(prefix.join('.'))
                         ], key, value);
-                        if (helpers_1.isPlainObject(value)) {
+                        if ((0, helpers_1.isPlainObject)(value)) {
                             value = new ObserveObject(value, prefix, _this.__onEvents);
                         }
                         data[key] = value;
@@ -3258,9 +3262,9 @@ var ObserveObject = (function () {
                             'change'
                         ], prefix.reduce(function (rs, p) {
                             sum_1.push(p);
-                            rs.push("change." + sum_1.join('.'));
+                            rs.push("change.".concat(sum_1.join('.')));
                             return rs;
-                        }, [])), prefix.join('.'), oldValue, ((_a = value) === null || _a === void 0 ? void 0 : _a.valueOf) ? value.valueOf() : value);
+                        }, []), true), prefix.join('.'), oldValue, (value === null || value === void 0 ? void 0 : value.valueOf) ? value.valueOf() : value);
                     }
                 },
                 get: function () {
@@ -3269,7 +3273,7 @@ var ObserveObject = (function () {
                 enumerable: true,
                 configurable: true
             });
-            if (helpers_1.isPlainObject(data[key])) {
+            if ((0, helpers_1.isPlainObject)(data[key])) {
                 data[key] = new ObserveObject(data[key], prefix, _this.__onEvents);
             }
         });
@@ -3282,7 +3286,7 @@ var ObserveObject = (function () {
     };
     ObserveObject.prototype.on = function (event, callback) {
         var _this = this;
-        if (helpers_1.isArray(event)) {
+        if ((0, helpers_1.isArray)(event)) {
             event.map(function (e) { return _this.on(e, callback); });
             return this;
         }
@@ -3298,14 +3302,14 @@ var ObserveObject = (function () {
         for (var _i = 1; _i < arguments.length; _i++) {
             attr[_i - 1] = arguments[_i];
         }
-        if (helpers_1.isArray(event)) {
-            event.map(function (e) { return _this.fire.apply(_this, tslib_1.__spreadArray([e], attr)); });
+        if ((0, helpers_1.isArray)(event)) {
+            event.map(function (e) { return _this.fire.apply(_this, tslib_1.__spreadArray([e], attr, false)); });
             return;
         }
         try {
             if (!this.__lockEvent[event] && this.__onEvents[event]) {
                 this.__lockEvent[event] = true;
-                this.__onEvents[event].forEach(function (clb) { return clb.call.apply(clb, tslib_1.__spreadArray([_this], attr)); });
+                this.__onEvents[event].forEach(function (clb) { return clb.call.apply(clb, tslib_1.__spreadArray([_this], attr, false)); });
             }
         }
         finally {
@@ -3422,9 +3426,9 @@ function markDeprecated(method, names, ctx) {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        exports.cns.warn("Method \"" + names[0] + "\" deprecated." +
-            (names[1] ? " Use \"" + names[1] + "\" instead" : ''));
-        return method.call.apply(method, tslib_1.__spreadArray([ctx], args));
+        exports.cns.warn("Method \"".concat(names[0], "\" deprecated.") +
+            (names[1] ? " Use \"".concat(names[1], "\" instead") : ''));
+        return method.call.apply(method, tslib_1.__spreadArray([ctx], args, false));
     };
 }
 exports.markDeprecated = markDeprecated;
@@ -3452,11 +3456,11 @@ function call(func) {
 }
 exports.call = call;
 function attr(elm, key, value) {
-    if (!elm || !is_function_1.isFunction(elm.getAttribute)) {
+    if (!elm || !(0, is_function_1.isFunction)(elm.getAttribute)) {
         return null;
     }
     if (/^-/.test(key)) {
-        var res = attr(elm, "data" + key);
+        var res = attr(elm, "data".concat(key));
         if (res) {
             return res;
         }
@@ -3483,7 +3487,7 @@ function markOwner(jodit, elm) {
 }
 exports.markOwner = markOwner;
 function callPromise(condition, callback) {
-    if (is_promise_1.isPromise(condition)) {
+    if ((0, is_promise_1.isPromise)(condition)) {
         return condition.finally(callback);
     }
     else {
@@ -3502,8 +3506,8 @@ var reset = function (key) {
             if (!iframe.contentWindow) {
                 return null;
             }
-            var func = get_1.get(key, iframe.contentWindow), bind = get_1.get(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
-            if (is_function_1.isFunction(func)) {
+            var func = (0, get_1.get)(key, iframe.contentWindow), bind = (0, get_1.get)(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
+            if ((0, is_function_1.isFunction)(func)) {
                 map[key] = func.bind(bind);
             }
         }
@@ -3551,12 +3555,12 @@ var keys = function (obj, own) {
 exports.keys = keys;
 var memorizeExec = function (editor, _, _a, preProcessValue) {
     var control = _a.control;
-    var key = "button" + control.command;
-    var value = (control.args && control.args[0]) || data_bind_1.dataBind(editor, key);
-    if (checker_1.isVoid(value)) {
+    var key = "button".concat(control.command);
+    var value = (control.args && control.args[0]) || (0, data_bind_1.dataBind)(editor, key);
+    if ((0, checker_1.isVoid)(value)) {
         return false;
     }
-    data_bind_1.dataBind(editor, key, value);
+    (0, data_bind_1.dataBind)(editor, key, value);
     if (preProcessValue) {
         value = preProcessValue(value);
     }
@@ -3600,19 +3604,19 @@ exports.get = void 0;
 var is_string_1 = __webpack_require__(14);
 var is_void_1 = __webpack_require__(25);
 function get(chain, obj) {
-    if (!is_string_1.isString(chain) || !chain.length) {
+    if (!(0, is_string_1.isString)(chain) || !chain.length) {
         return null;
     }
     var parts = chain.split('.');
     var result = obj;
     for (var _i = 0, parts_1 = parts; _i < parts_1.length; _i++) {
         var part = parts_1[_i];
-        if (is_void_1.isVoid(result[part])) {
+        if ((0, is_void_1.isVoid)(result[part])) {
             return null;
         }
         result = result[part];
     }
-    if (is_void_1.isVoid(result)) {
+    if ((0, is_void_1.isVoid)(result)) {
         return null;
     }
     return result;
@@ -3664,7 +3668,7 @@ var dataBind = function (elm, key, value) {
         if (elm instanceof component_1.ViewComponent) {
             e = elm.j.e;
         }
-        if (checker_1.isViewObject(elm)) {
+        if ((0, checker_1.isViewObject)(elm)) {
             e = elm.e;
         }
         e &&
@@ -3743,18 +3747,18 @@ var Component = (function () {
         this.ownerWindow = window;
         this.__componentStatus = statuses_1.STATUSES.beforeInit;
         this.componentName =
-            'jodit-' + helpers_1.kebabCase(this.className() || helpers_1.getClassName(this));
-        this.uid = 'jodit-uid-' + global_1.uniqueUid();
+            'jodit-' + (0, helpers_1.kebabCase)(this.className() || (0, helpers_1.getClassName)(this));
+        this.uid = 'jodit-uid-' + (0, global_1.uniqueUid)();
     }
     Component.prototype.getFullElName = function (elementName, mod, modValue) {
         var result = [this.componentName];
         if (elementName) {
             elementName = elementName.replace(/[^a-z0-9-]/gi, '-');
-            result.push("__" + elementName);
+            result.push("__".concat(elementName));
         }
         if (mod) {
             result.push('_', mod);
-            result.push('_', helpers_1.isVoid(modValue) ? 'true' : modValue.toString());
+            result.push('_', (0, helpers_1.isVoid)(modValue) ? 'true' : modValue.toString());
         }
         return result.join('');
     };
@@ -3780,7 +3784,7 @@ var Component = (function () {
         configurable: true
     });
     Component.prototype.get = function (chain, obj) {
-        return helpers_1.get(chain, obj || this);
+        return (0, helpers_1.get)(chain, obj || this);
     };
     Object.defineProperty(Component.prototype, "isReady", {
         get: function () {
@@ -3839,7 +3843,7 @@ var Component = (function () {
             return;
         }
         var proto = Object.getPrototypeOf(this);
-        if (proto && helpers_1.isFunction(proto.setStatusComponent)) {
+        if (proto && (0, helpers_1.isFunction)(proto.setStatusComponent)) {
             proto.setStatusComponent(componentStatus, component);
         }
         var statuses = StatusListHandlers.get(this), list = statuses === null || statuses === void 0 ? void 0 : statuses[componentStatus];
@@ -3909,19 +3913,19 @@ var boxes = new WeakMap();
 function getContainer(jodit, classFunc, tag, inside) {
     if (tag === void 0) { tag = 'div'; }
     if (inside === void 0) { inside = false; }
-    var name = helpers_1.getClassName(classFunc.prototype);
+    var name = (0, helpers_1.getClassName)(classFunc.prototype);
     var data = boxes.get(jodit) || {}, key = name + tag;
-    var view = helpers_1.isViewObject(jodit) ? jodit : jodit.j;
+    var view = (0, helpers_1.isViewObject)(jodit) ? jodit : jodit.j;
     if (!data[key]) {
         var c = view.c, body = jodit.od.body;
-        if (inside && helpers_1.isJoditObject(jodit) && jodit.od !== jodit.ed) {
+        if (inside && (0, helpers_1.isJoditObject)(jodit) && jodit.od !== jodit.ed) {
             c = jodit.createInside;
             body = tag === 'style' ? jodit.ed.head : jodit.ed.body;
         }
         var box_1 = c.element(tag, {
-            className: "jodit jodit-" + helpers_1.kebabCase(name) + "-container jodit-box"
+            className: "jodit jodit-".concat((0, helpers_1.kebabCase)(name), "-container jodit-box")
         });
-        box_1.classList.add("jodit_theme_" + (view.o.theme || 'default'));
+        box_1.classList.add("jodit_theme_".concat(view.o.theme || 'default'));
         body.appendChild(box_1);
         data[key] = box_1;
         jodit.hookStatus('beforeDestruct', function () {
@@ -3934,7 +3938,7 @@ function getContainer(jodit, classFunc, tag, inside) {
         boxes.set(jodit, data);
     }
     data[key].classList.remove('jodit_theme_default', 'jodit_theme_dark');
-    data[key].classList.add("jodit_theme_" + (view.o.theme || 'default'));
+    data[key].classList.add("jodit_theme_".concat(view.o.theme || 'default'));
     return data[key];
 }
 exports.getContainer = getContainer;
@@ -3961,7 +3965,7 @@ var PluginSystem = (function () {
         this.items = new Map();
     }
     PluginSystem.prototype.normalizeName = function (name) {
-        return helpers_1.kebabCase(name).toLowerCase();
+        return (0, helpers_1.kebabCase)(name).toLowerCase();
     };
     PluginSystem.prototype.add = function (name, plugin) {
         this.items.set(this.normalizeName(name), plugin);
@@ -3975,19 +3979,18 @@ var PluginSystem = (function () {
     PluginSystem.prototype.init = function (jodit) {
         var _this = this;
         var extrasList = jodit.o.extraPlugins.map(function (s) {
-            return helpers_1.isString(s) ? { name: s } : s;
-        }), disableList = helpers_1.splitArray(jodit.o.disablePlugins).map(function (s) {
+            return (0, helpers_1.isString)(s) ? { name: s } : s;
+        }), disableList = (0, helpers_1.splitArray)(jodit.o.disablePlugins).map(function (s) {
             return _this.normalizeName(s);
         }), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = function (plugin, name) {
-            var _a;
             if (disableList.includes(name) ||
                 doneList.includes(name) ||
                 promiseList[name]) {
                 return;
             }
-            var requires = (_a = plugin) === null || _a === void 0 ? void 0 : _a.requires;
+            var requires = plugin === null || plugin === void 0 ? void 0 : plugin.requires;
             if (requires &&
-                helpers_1.isArray(requires) &&
+                (0, helpers_1.isArray)(requires) &&
                 _this.hasDisabledRequires(disableList, requires)) {
                 return;
             }
@@ -3997,7 +4000,7 @@ var PluginSystem = (function () {
             pluginsMap[name] = instance;
         };
         var resultLoadExtras = this.loadExtras(jodit, extrasList);
-        return helpers_1.callPromise(resultLoadExtras, function () {
+        return (0, helpers_1.callPromise)(resultLoadExtras, function () {
             if (jodit.isInDestruct) {
                 return;
             }
@@ -4011,11 +4014,11 @@ var PluginSystem = (function () {
             disableList.some(function (disabled) { return requires.includes(disabled); }));
     };
     PluginSystem.makePluginInstance = function (jodit, plugin) {
-        return helpers_1.isFunction(plugin) ? new plugin(jodit) : plugin;
+        return (0, helpers_1.isFunction)(plugin) ? new plugin(jodit) : plugin;
     };
     PluginSystem.prototype.initOrWait = function (jodit, pluginName, instance, doneList, promiseList) {
         var initPlugin = function (name, plugin) {
-            if (helpers_1.isInitable(plugin)) {
+            if ((0, helpers_1.isInitable)(plugin)) {
                 var req = plugin.requires;
                 if (!(req === null || req === void 0 ? void 0 : req.length) ||
                     req.every(function (name) { return doneList.includes(name); })) {
@@ -4050,7 +4053,7 @@ var PluginSystem = (function () {
     PluginSystem.prototype.addListenerOnBeforeDestruct = function (jodit, plugins) {
         jodit.e.on('beforeDestruct', function () {
             plugins.forEach(function (instance) {
-                if (helpers_1.isDestructable(instance)) {
+                if ((0, helpers_1.isDestructable)(instance)) {
                     instance.destruct(jodit);
                 }
             });
@@ -4065,7 +4068,7 @@ var PluginSystem = (function () {
         return Promise.all(pluginList.map(function (extra) {
             var url = extra.url ||
                 PluginSystem.getFullUrl(jodit, extra.name, true);
-            return reflect(helpers_1.appendScriptAsync(jodit, url));
+            return reflect((0, helpers_1.appendScriptAsync)(jodit, url));
         }));
     };
     PluginSystem.loadStyle = function (jodit, pluginName) {
@@ -4077,12 +4080,12 @@ var PluginSystem = (function () {
                     return [2];
                 }
                 this.styles.add(url);
-                return [2, helpers_1.appendStyleAsync(jodit, url)];
+                return [2, (0, helpers_1.appendStyleAsync)(jodit, url)];
             });
         });
     };
     PluginSystem.getFullUrl = function (jodit, name, js) {
-        name = helpers_1.kebabCase(name);
+        name = (0, helpers_1.kebabCase)(name);
         return (jodit.basePath +
             'plugins/' +
             name +
@@ -4154,7 +4157,7 @@ var Dom = (function () {
                 last = tmp;
             }
         } while (needFindNext);
-        var wrapper = helpers_1.isString(tag) ? editor.createInside.element(tag) : tag;
+        var wrapper = (0, helpers_1.isString)(tag) ? editor.createInside.element(tag) : tag;
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
         }
@@ -4172,7 +4175,7 @@ var Dom = (function () {
     };
     Dom.wrap = function (current, tag, editor) {
         var selInfo = editor.s.save();
-        var wrapper = helpers_1.isString(tag) ? editor.createInside.element(tag) : tag;
+        var wrapper = (0, helpers_1.isString)(tag) ? editor.createInside.element(tag) : tag;
         if (!current.parentNode) {
             return null;
         }
@@ -4226,7 +4229,7 @@ var Dom = (function () {
     Dom.replace = function (elm, newTagName, create, withAttributes, notMoveContent) {
         if (withAttributes === void 0) { withAttributes = false; }
         if (notMoveContent === void 0) { notMoveContent = false; }
-        var tag = helpers_1.isString(newTagName)
+        var tag = (0, helpers_1.isString)(newTagName)
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -4235,7 +4238,7 @@ var Dom = (function () {
             }
         }
         if (withAttributes) {
-            helpers_1.toArray(elm.attributes).forEach(function (attr) {
+            (0, helpers_1.toArray)(elm.attributes).forEach(function (attr) {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -4256,13 +4259,13 @@ var Dom = (function () {
             return true;
         }
         if (Dom.isText(node)) {
-            return node.nodeValue == null || helpers_1.trim(node.nodeValue).length === 0;
+            return node.nodeValue == null || (0, helpers_1.trim)(node.nodeValue).length === 0;
         }
         return (!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
             Dom.each(node, function (elm) {
                 if ((Dom.isText(elm) &&
                     elm.nodeValue != null &&
-                    helpers_1.trim(elm.nodeValue).length !== 0) ||
+                    (0, helpers_1.trim)(elm.nodeValue).length !== 0) ||
                     (Dom.isElement(elm) &&
                         condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
                     return false;
@@ -4289,7 +4292,7 @@ var Dom = (function () {
             /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
     };
     Dom.isBlock = function (node, win) {
-        return (!helpers_1.isVoid(node) &&
+        return (!(0, helpers_1.isVoid)(node) &&
             typeof node === 'object' &&
             Dom.isNode(node, win) &&
             consts.IS_BLOCK.test(node.nodeName));
@@ -4306,10 +4309,10 @@ var Dom = (function () {
     Dom.isInlineBlock = function (node) {
         return (Dom.isElement(node) &&
             !/^(BR|HR)$/i.test(node.tagName) &&
-            ['inline', 'inline-block'].indexOf(helpers_1.css(node, 'display').toString()) !== -1);
+            ['inline', 'inline-block'].indexOf((0, helpers_1.css)(node, 'display').toString()) !== -1);
     };
     Dom.canSplitBlock = function (node, win) {
-        return (!helpers_1.isVoid(node) &&
+        return (!(0, helpers_1.isVoid)(node) &&
             node instanceof win.HTMLElement &&
             Dom.isBlock(node, win) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
@@ -4415,10 +4418,10 @@ var Dom = (function () {
     };
     Dom.closest = function (node, tagsOrCondition, root) {
         var condition;
-        if (helpers_1.isFunction(tagsOrCondition)) {
+        if ((0, helpers_1.isFunction)(tagsOrCondition)) {
             condition = tagsOrCondition;
         }
-        else if (helpers_1.isArray(tagsOrCondition)) {
+        else if ((0, helpers_1.isArray)(tagsOrCondition)) {
             condition = function (tag) {
                 return tag &&
                     tagsOrCondition.includes(tag.nodeName.toLowerCase());
@@ -4474,7 +4477,7 @@ var Dom = (function () {
     };
     Dom.append = function (root, newElement) {
         var _this = this;
-        if (helpers_1.isArray(newElement)) {
+        if ((0, helpers_1.isArray)(newElement)) {
             newElement.forEach(function (node) {
                 _this.append(root, node);
             });
@@ -4486,7 +4489,7 @@ var Dom = (function () {
     Dom.moveContent = function (from, to, inStart) {
         if (inStart === void 0) { inStart = false; }
         var fragment = (from.ownerDocument || document).createDocumentFragment();
-        helpers_1.toArray(from.childNodes).forEach(function (node) {
+        (0, helpers_1.toArray)(from.childNodes).forEach(function (node) {
             fragment.appendChild(node);
         });
         if (!inStart || !to.firstChild) {
@@ -4498,7 +4501,7 @@ var Dom = (function () {
     };
     Dom.all = function (node, condition, prev) {
         if (prev === void 0) { prev = false; }
-        var nodes = node.childNodes ? helpers_1.toArray(node.childNodes) : [];
+        var nodes = node.childNodes ? (0, helpers_1.toArray)(node.childNodes) : [];
         if (condition(node)) {
             return node;
         }
@@ -4524,20 +4527,20 @@ var Dom = (function () {
         if (!node) {
             return;
         }
-        helpers_1.dataBind(node, '__old_display', node.style.display);
+        (0, helpers_1.dataBind)(node, '__old_display', node.style.display);
         node.style.display = 'none';
     };
     Dom.show = function (node) {
         if (!node) {
             return;
         }
-        var display = helpers_1.dataBind(node, '__old_display');
+        var display = (0, helpers_1.dataBind)(node, '__old_display');
         if (node.style.display === 'none') {
             node.style.display = display || '';
         }
     };
     Dom.isTag = function (node, tagNames) {
-        var tags = helpers_1.asArray(tagNames).map(String);
+        var tags = (0, helpers_1.asArray)(tagNames).map(String);
         for (var i = 0; i < tags.length; i += 1) {
             if (this.isElement(node) &&
                 node.tagName.toLowerCase() === tags[i].toLowerCase()) {
@@ -4593,7 +4596,7 @@ var ViewComponent = (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        return (_a = this.j).i18n.apply(_a, tslib_1.__spreadArray([text], params));
+        return (_a = this.j).i18n.apply(_a, tslib_1.__spreadArray([text], params, false));
     };
     ViewComponent.prototype.setParentView = function (jodit) {
         this.jodit = jodit;
@@ -4708,7 +4711,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isFastEqual = exports.isEqual = void 0;
 var stringify_1 = __webpack_require__(38);
 function isEqual(a, b) {
-    return a === b || stringify_1.stringify(a) === stringify_1.stringify(b);
+    return a === b || (0, stringify_1.stringify)(a) === (0, stringify_1.stringify)(b);
 }
 exports.isEqual = isEqual;
 function isFastEqual(a, b) {
@@ -4769,7 +4772,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isHTML = void 0;
 var is_string_1 = __webpack_require__(14);
 var isHTML = function (str) {
-    return is_string_1.isString(str) && /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str);
+    return (0, is_string_1.isString)(str) && /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str);
 };
 exports.isHTML = isHTML;
 
@@ -4812,15 +4815,15 @@ var is_function_1 = __webpack_require__(15);
 var dom_1 = __webpack_require__(32);
 var is_void_1 = __webpack_require__(25);
 function isInitable(value) {
-    return !is_void_1.isVoid(value) && is_function_1.isFunction(value.init);
+    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.init);
 }
 exports.isInitable = isInitable;
 function isDestructable(value) {
-    return !is_void_1.isVoid(value) && is_function_1.isFunction(value.destruct);
+    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.destruct);
 }
 exports.isDestructable = isDestructable;
 function hasContainer(value) {
-    return !is_void_1.isVoid(value) && dom_1.Dom.isElement(value.container);
+    return !(0, is_void_1.isVoid)(value) && dom_1.Dom.isElement(value.container);
 }
 exports.hasContainer = hasContainer;
 
@@ -4841,7 +4844,7 @@ exports.isInt = void 0;
 var is_numeric_1 = __webpack_require__(43);
 var is_string_1 = __webpack_require__(14);
 function isInt(value) {
-    if (is_string_1.isString(value) && is_numeric_1.isNumeric(value)) {
+    if ((0, is_string_1.isString)(value) && (0, is_numeric_1.isNumeric)(value)) {
         value = parseFloat(value);
     }
     return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
@@ -4864,7 +4867,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isNumeric = void 0;
 var is_string_1 = __webpack_require__(14);
 function isNumeric(value) {
-    if (is_string_1.isString(value)) {
+    if ((0, is_string_1.isString)(value)) {
         if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
             return false;
         }
@@ -4893,7 +4896,7 @@ var global_1 = __webpack_require__(30);
 function isJoditObject(jodit) {
     return Boolean(jodit &&
         jodit instanceof Object &&
-        is_function_1.isFunction(jodit.constructor) &&
+        (0, is_function_1.isFunction)(jodit.constructor) &&
         ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
             jodit.isJodit));
 }
@@ -4901,7 +4904,7 @@ exports.isJoditObject = isJoditObject;
 function isViewObject(jodit) {
     return Boolean(jodit &&
         jodit instanceof Object &&
-        is_function_1.isFunction(jodit.constructor) &&
+        (0, is_function_1.isFunction)(jodit.constructor) &&
         (jodit instanceof global_1.modules.View || jodit.isView));
 }
 exports.isViewObject = isViewObject;
@@ -4922,7 +4925,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isLicense = void 0;
 var is_string_1 = __webpack_require__(14);
 var isLicense = function (license) {
-    return (is_string_1.isString(license) &&
+    return ((0, is_string_1.isString)(license) &&
         license.length === 23 &&
         /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license));
 };
@@ -4986,7 +4989,7 @@ exports.isPlainObject = void 0;
 var is_window_1 = __webpack_require__(49);
 var type_1 = __webpack_require__(17);
 function isPlainObject(obj) {
-    if (!obj || typeof obj !== 'object' || obj.nodeType || is_window_1.isWindow(obj)) {
+    if (!obj || typeof obj !== 'object' || obj.nodeType || (0, is_window_1.isWindow)(obj)) {
         return false;
     }
     return !(obj.constructor &&
@@ -5082,15 +5085,15 @@ var is_numeric_1 = __webpack_require__(43);
 var is_array_1 = __webpack_require__(16);
 var checker_1 = __webpack_require__(34);
 function set(chain, value, obj) {
-    if (!is_string_1.isString(chain) || !chain.length) {
+    if (!(0, is_string_1.isString)(chain) || !chain.length) {
         return;
     }
     var parts = chain.split('.');
     var result = obj, key = parts[0];
     for (var i = 0; i < parts.length - 1; i += 1) {
         key = parts[i];
-        if (!is_array_1.isArray(result[key]) && !checker_1.isPlainObject(result[key])) {
-            result[key] = is_numeric_1.isNumeric(parts[i + 1]) ? [] : {};
+        if (!(0, is_array_1.isArray)(result[key]) && !(0, checker_1.isPlainObject)(result[key])) {
+            result[key] = (0, is_numeric_1.isNumeric)(parts[i + 1]) ? [] : {};
         }
         result = result[key];
     }
@@ -5118,7 +5121,7 @@ var is_function_1 = __webpack_require__(15);
 exports.keepNames = new Map();
 var getClassName = function (obj) {
     var _a;
-    if (is_function_1.isFunction(obj.className)) {
+    if ((0, is_function_1.isFunction)(obj.className)) {
         return obj.className();
     }
     var constructor = ((_a = obj.constructor) === null || _a === void 0 ? void 0 : _a.originalConstructor) || obj.constructor;
@@ -5201,7 +5204,7 @@ Object.defineProperty(exports, "toArray", ({ enumerable: true, get: function () 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.asArray = void 0;
 var is_array_1 = __webpack_require__(16);
-var asArray = function (a) { return (is_array_1.isArray(a) ? a : [a]); };
+var asArray = function (a) { return ((0, is_array_1.isArray)(a) ? a : [a]); };
 exports.asArray = asArray;
 
 
@@ -5220,7 +5223,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.splitArray = void 0;
 var is_string_1 = __webpack_require__(14);
 function splitArray(a) {
-    return is_string_1.isString(a) ? a.split(/[,\s]+/) : a;
+    return (0, is_string_1.isString)(a) ? a.split(/[,\s]+/) : a;
 }
 exports.splitArray = splitArray;
 
@@ -5246,9 +5249,9 @@ exports.toArray = function toArray() {
     for (var _i = 0; _i < arguments.length; _i++) {
         args[_i] = arguments[_i];
     }
-    var func = is_native_function_1.isNativeFunction(Array.from)
+    var func = (0, is_native_function_1.isNativeFunction)(Array.from)
         ? Array.from
-        : (_a = utils_1.reset('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+        : (_a = (0, utils_1.reset)('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
     return func.apply(Array, args);
 };
 
@@ -5289,10 +5292,10 @@ function setTimeout(callback, timeout) {
         args[_i - 2] = arguments[_i];
     }
     if (!timeout) {
-        callback.call.apply(callback, tslib_1.__spreadArray([null], args));
+        callback.call.apply(callback, tslib_1.__spreadArray([null], args, false));
     }
     else {
-        return window.setTimeout.apply(window, tslib_1.__spreadArray([callback, timeout], args));
+        return window.setTimeout.apply(window, tslib_1.__spreadArray([callback, timeout], args, false));
     }
     return 0;
 }
@@ -5331,7 +5334,7 @@ function markAsAtomic(obj) {
 }
 exports.markAsAtomic = markAsAtomic;
 function fastClone(object) {
-    return JSON.parse(stringify_1.stringify(object));
+    return JSON.parse((0, stringify_1.stringify)(object));
 }
 exports.fastClone = fastClone;
 
@@ -5414,11 +5417,11 @@ function ConfigProto(options, proto, deep) {
         return options;
     }
     var def = config_1.Config.defaultOptions;
-    if (checker_1.isString(options.preset)) {
+    if ((0, checker_1.isString)(options.preset)) {
         if (def.presets[options.preset] !== undefined) {
             var preset_1 = def.presets[options.preset];
             Object.keys(preset_1).forEach(function (subKey) {
-                if (checker_1.isVoid(options[subKey])) {
+                if ((0, checker_1.isVoid)(options[subKey])) {
                     options[subKey] = preset_1[subKey];
                 }
             });
@@ -5428,12 +5431,12 @@ function ConfigProto(options, proto, deep) {
     var newOpt = {};
     Object.keys(options).forEach(function (key) {
         var opt = options[key], protoKey = proto ? proto[key] : null;
-        if (checker_1.isPlainObject(opt) && checker_1.isPlainObject(protoKey) && !extend_1.isAtom(opt)) {
+        if ((0, checker_1.isPlainObject)(opt) && (0, checker_1.isPlainObject)(protoKey) && !(0, extend_1.isAtom)(opt)) {
             newOpt[key] = ConfigProto(opt, protoKey, deep + 1);
             return;
         }
-        if (deep !== 0 && checker_1.isArray(opt) && !extend_1.isAtom(opt) && checker_1.isArray(protoKey)) {
-            newOpt[key] = tslib_1.__spreadArray(tslib_1.__spreadArray([], opt), protoKey.slice(opt.length));
+        if (deep !== 0 && (0, checker_1.isArray)(opt) && !(0, extend_1.isAtom)(opt) && (0, checker_1.isArray)(protoKey)) {
+            newOpt[key] = tslib_1.__spreadArray(tslib_1.__spreadArray([], opt, true), protoKey.slice(opt.length), true);
             return;
         }
         newOpt[key] = opt;
@@ -5443,7 +5446,7 @@ function ConfigProto(options, proto, deep) {
 }
 exports.ConfigProto = ConfigProto;
 function ConfigFlatten(obj) {
-    return utils_1.keys(obj, false).reduce(function (app, key) {
+    return (0, utils_1.keys)(obj, false).reduce(function (app, key) {
         app[key] = obj[key];
         return app;
     }, {});
@@ -5526,9 +5529,9 @@ function applyStyles(html) {
                 if (rules[idx].selectorText === '') {
                     return "continue";
                 }
-                collection = selector_1.$$(rules[idx].selectorText, iframeDoc.body);
+                collection = (0, selector_1.$$)(rules[idx].selectorText, iframeDoc.body);
                 collection.forEach(function (elm) {
-                    elm.style.cssText = normalizeCSS(elm.style.cssText + "; " + rules[idx].style.cssText);
+                    elm.style.cssText = normalizeCSS("".concat(elm.style.cssText, "; ").concat(rules[idx].style.cssText));
                 });
             };
             for (var idx = 0; idx < rules.length; idx += 1) {
@@ -5547,7 +5550,7 @@ function applyStyles(html) {
                 }
             });
             convertedString = iframeDoc.firstChild
-                ? string_1.trim(iframeDoc.body.innerHTML)
+                ? (0, string_1.trim)(iframeDoc.body.innerHTML)
                 : '';
         }
     }
@@ -5559,7 +5562,7 @@ function applyStyles(html) {
     if (convertedString) {
         html = convertedString;
     }
-    return string_1.trim(html
+    return (0, string_1.trim)(html
         .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
         .replace(/<!--[^>]*>/g, ''));
 }
@@ -5623,11 +5626,11 @@ var getXPathByElement = function (element, root) {
         return "//*[@id='" + element.id + "']";
     }
     var sames = [].filter.call(element.parentNode.childNodes, function (x) { return x.nodeName === element.nodeName; });
-    return (exports.getXPathByElement(element.parentNode, root) +
+    return ((0, exports.getXPathByElement)(element.parentNode, root) +
         '/' +
         element.nodeName.toLowerCase() +
         (sames.length > 1
-            ? '[' + (array_1.toArray(sames).indexOf(element) + 1) + ']'
+            ? '[' + ((0, array_1.toArray)(sames).indexOf(element) + 1) + ']'
             : ''));
 };
 exports.getXPathByElement = getXPathByElement;
@@ -5636,9 +5639,9 @@ var refs = function (root) {
         root = root.container;
     }
     return $$('[ref],[data-ref]', root).reduce(function (def, child) {
-        var key = utils_1.attr(child, '-ref');
-        if (key && checker_1.isString(key)) {
-            def[string_1.camelCase(key)] = child;
+        var key = (0, utils_1.attr)(child, '-ref');
+        if (key && (0, checker_1.isString)(key)) {
+            def[(0, string_1.camelCase)(key)] = child;
             def[key] = child;
         }
         return def;
@@ -5676,19 +5679,19 @@ var cssPath = function (el) {
 exports.cssPath = cssPath;
 function resolveElement(element, od) {
     var resolved = element;
-    if (checker_1.isString(element)) {
+    if ((0, checker_1.isString)(element)) {
         try {
             resolved = od.querySelector(element);
         }
         catch (_a) {
-            throw type_1.error('String "' + element + '" should be valid HTML selector');
+            throw (0, type_1.error)('String "' + element + '" should be valid HTML selector');
         }
     }
     if (!resolved ||
         typeof resolved !== 'object' ||
         !dom_1.Dom.isElement(resolved) ||
         !resolved.cloneNode) {
-        throw type_1.error('Element "' + element + '" should be string or HTMLElement instance');
+        throw (0, type_1.error)('Element "' + element + '" should be string or HTMLElement instance');
     }
     return resolved;
 }
@@ -5776,14 +5779,14 @@ exports.trimInv = exports.trim = void 0;
 var constants_1 = __webpack_require__(9);
 function trim(value) {
     return value
-        .replace(constants_1.SPACE_REG_EXP_END(), '')
-        .replace(constants_1.SPACE_REG_EXP_START(), '');
+        .replace((0, constants_1.SPACE_REG_EXP_END)(), '')
+        .replace((0, constants_1.SPACE_REG_EXP_START)(), '');
 }
 exports.trim = trim;
 function trimInv(value) {
     return value
-        .replace(constants_1.INVISIBLE_SPACE_REG_EXP_END(), '')
-        .replace(constants_1.INVISIBLE_SPACE_REG_EXP_START(), '');
+        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_END)(), '')
+        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_START)(), '');
 }
 exports.trimInv = trimInv;
 
@@ -5843,8 +5846,8 @@ var sprintf = function (str, args) {
 };
 exports.sprintf = sprintf;
 var i18n = function (key, params, options) {
-    if (!__1.isString(key)) {
-        throw __1.error('i18n: Need string in first argument');
+    if (!(0, __1.isString)(key)) {
+        throw (0, __1.error)('i18n: Need string in first argument');
     }
     if (!key.length) {
         return key;
@@ -5852,20 +5855,20 @@ var i18n = function (key, params, options) {
     var debug = Boolean(options !== undefined && options.debugLanguage);
     var store;
     var parse = function (value) {
-        return params && params.length ? exports.sprintf(value, params) : value;
-    }, defaultLanguage = default_language_1.defaultLanguage(config_1.Config.defaultOptions.language, config_1.Config.defaultOptions.language), language = default_language_1.defaultLanguage(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = function (store) {
+        return params && params.length ? (0, exports.sprintf)(value, params) : value;
+    }, defaultLanguage = (0, default_language_1.defaultLanguage)(config_1.Config.defaultOptions.language, config_1.Config.defaultOptions.language), language = (0, default_language_1.defaultLanguage)(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = function (store) {
         if (!store) {
             return;
         }
-        if (__1.isString(store[key])) {
+        if ((0, __1.isString)(store[key])) {
             return parse(store[key]);
         }
         var lcKey = key.toLowerCase();
-        if (__1.isString(store[lcKey])) {
+        if ((0, __1.isString)(store[lcKey])) {
             return parse(store[lcKey]);
         }
-        var ucfKey = __1.ucfirst(key);
-        if (__1.isString(store[ucfKey])) {
+        var ucfKey = (0, __1.ucfirst)(key);
+        if ((0, __1.isString)(store[ucfKey])) {
             return parse(store[ucfKey]);
         }
         return;
@@ -5892,7 +5895,7 @@ var i18n = function (key, params, options) {
     if (result) {
         return result;
     }
-    if (global_1.lang.en && __1.isString(global_1.lang.en[key]) && global_1.lang.en[key]) {
+    if (global_1.lang.en && (0, __1.isString)(global_1.lang.en[key]) && global_1.lang.en[key]) {
         return parse(global_1.lang.en[key]);
     }
     if (debug) {
@@ -5920,7 +5923,7 @@ exports.defaultLanguage = void 0;
 var checker_1 = __webpack_require__(34);
 var defaultLanguage = function (language, defaultLanguage) {
     if (defaultLanguage === void 0) { defaultLanguage = 'en'; }
-    if (language !== 'auto' && checker_1.isString(language)) {
+    if (language !== 'auto' && (0, checker_1.isString)(language)) {
         return language;
     }
     if (document.documentElement && document.documentElement.lang) {
@@ -6079,7 +6082,7 @@ var UIElement = (function (_super) {
     UIElement.prototype.createContainer = function (options) {
         var _this = this;
         var result = this.render(options);
-        if (helpers_1.isString(result)) {
+        if ((0, helpers_1.isString)(result)) {
             var elm = this.j.c.fromHTML(result
                 .replace(/\*([^*]+?)\*/g, function (_, name) { return icon_1.Icon.get(name) || ''; })
                 .replace(/&__/g, this.componentName + '__')
@@ -6134,10 +6137,10 @@ var Elms = (function () {
     function Elms() {
     }
     Elms.getElm = function (elementName) {
-        return this.container.querySelector("." + this.getFullElName(elementName));
+        return this.container.querySelector(".".concat(this.getFullElName(elementName)));
     };
     Elms.getElms = function (elementName) {
-        return helpers_1.toArray(this.container.querySelectorAll("." + this.getFullElName(elementName)));
+        return (0, helpers_1.toArray)(this.container.querySelectorAll(".".concat(this.getFullElName(elementName))));
     };
     return Elms;
 }());
@@ -6166,15 +6169,15 @@ var Mods = (function () {
         if (this.mods[name] === value) {
             return;
         }
-        var mod = this.componentName + "_" + name, cl = (container || this.container).classList;
-        helpers_1.toArray(cl).forEach(function (className) {
+        var mod = "".concat(this.componentName, "_").concat(name), cl = (container || this.container).classList;
+        (0, helpers_1.toArray)(cl).forEach(function (className) {
             if (className.indexOf(mod) === 0) {
                 cl.remove(className);
             }
         });
         value != null &&
             value !== '' &&
-            cl.add(mod + "_" + value.toString().toLowerCase());
+            cl.add("".concat(mod, "_").concat(value.toString().toLowerCase()));
         this.mods[name] = value;
     };
     Mods.getMod = function (name) {
@@ -6229,7 +6232,7 @@ var Icon = (function () {
             var clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
             if (icon.iconURL) {
                 iconElement = jodit.c.span();
-                css_1.css(iconElement, 'backgroundImage', 'url(' +
+                (0, css_1.css)(iconElement, 'backgroundImage', 'url(' +
                     icon.iconURL.replace('{basePath}', (jodit === null || jodit === void 0 ? void 0 : jodit.basePath) || '') +
                     ')');
             }
@@ -6276,32 +6279,32 @@ var string_1 = __webpack_require__(68);
 var css = function (element, key, value, onlyStyleMode) {
     if (onlyStyleMode === void 0) { onlyStyleMode = false; }
     var numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size/i;
-    if (checker_1.isPlainObject(key) || value !== undefined) {
+    if ((0, checker_1.isPlainObject)(key) || value !== undefined) {
         var setValue = function (elm, _key, _value) {
-            if (!checker_1.isVoid(_value) &&
+            if (!(0, checker_1.isVoid)(_value) &&
                 numberFieldsReg.test(_key) &&
-                checker_1.isNumeric(_value.toString())) {
+                (0, checker_1.isNumeric)(_value.toString())) {
                 _value = parseInt(_value.toString(), 10) + 'px';
             }
             if (_value !== undefined &&
                 (_value == null ||
-                    exports.css(elm, _key, undefined, true) !==
-                        normalize_1.normalizeCssValue(_key, _value))) {
+                    (0, exports.css)(elm, _key, undefined, true) !==
+                        (0, normalize_1.normalizeCssValue)(_key, _value))) {
                 elm.style[_key] = _value;
             }
         };
-        if (checker_1.isPlainObject(key)) {
+        if ((0, checker_1.isPlainObject)(key)) {
             var keys = Object.keys(key);
             for (var j = 0; j < keys.length; j += 1) {
-                setValue(element, string_1.camelCase(keys[j]), key[keys[j]]);
+                setValue(element, (0, string_1.camelCase)(keys[j]), key[keys[j]]);
             }
         }
         else {
-            setValue(element, string_1.camelCase(key), value);
+            setValue(element, (0, string_1.camelCase)(key), value);
         }
         return '';
     }
-    var key2 = string_1.kebabCase(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
+    var key2 = (0, string_1.kebabCase)(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
     var currentValue = element.style[key];
     var result = '';
     if (currentValue !== undefined && currentValue !== '') {
@@ -6314,12 +6317,12 @@ var css = function (element, key, value, onlyStyleMode) {
         /^[-+]?[0-9.]+px$/.test(result.toString())) {
         result = parseInt(result.toString(), 10);
     }
-    return normalize_1.normalizeCssValue(key, result);
+    return (0, normalize_1.normalizeCssValue)(key, result);
 };
 exports.css = css;
 var clearCenterAlign = function (image) {
-    if (exports.css(image, 'display') === 'block') {
-        exports.css(image, 'display', '');
+    if ((0, exports.css)(image, 'display') === 'block') {
+        (0, exports.css)(image, 'display', '');
     }
     if (image.style.marginLeft === 'auto' &&
         image.style.marginRight === 'auto') {
@@ -6374,7 +6377,7 @@ function normalizeKeyAliases(keys) {
     return keys
         .replace(/\+\+/g, '+add')
         .split(/[\s]*\+[\s]*/)
-        .map(function (key) { return string_1.trim(key.toLowerCase()); })
+        .map(function (key) { return (0, string_1.trim)(key.toLowerCase()); })
         .map(function (key) { return constants_1.KEY_ALIASES[key] || key; })
         .sort()
         .filter(function (key) { return !memory[key] && key !== '' && (memory[key] = true); })
@@ -6434,14 +6437,14 @@ var normalizeNode = function (node) {
             if (node.nextSibling.nodeValue != null) {
                 node.nodeValue += node.nextSibling.nodeValue;
             }
-            node.nodeValue = node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '');
+            node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
             dom_1.Dom.safeRemove(node.nextSibling);
         }
     }
     else {
-        exports.normalizeNode(node.firstChild);
+        (0, exports.normalizeNode)(node.firstChild);
     }
-    exports.normalizeNode(node.nextSibling);
+    (0, exports.normalizeNode)(node.nextSibling);
 };
 exports.normalizeNode = normalizeNode;
 
@@ -6466,7 +6469,7 @@ var normalizePath = function () {
         path[_i] = arguments[_i];
     }
     return path
-        .filter(function (part) { return string_1.trim(part).length; })
+        .filter(function (part) { return (0, string_1.trim)(part).length; })
         .map(function (part, index) {
         part = part.replace(/([^:])[\\/]+/g, '$1/');
         if (index) {
@@ -6586,7 +6589,7 @@ var checker_1 = __webpack_require__(34);
 var string_1 = __webpack_require__(68);
 var color_1 = __webpack_require__(62);
 function normalizeCssValue(key, value) {
-    switch (string_1.kebabCase(key)) {
+    switch ((0, string_1.kebabCase)(key)) {
         case 'font-weight':
             switch (value.toString().toLowerCase()) {
                 case '700':
@@ -6599,10 +6602,10 @@ function normalizeCssValue(key, value) {
                 case 'heavy':
                     return 900;
             }
-            return checker_1.isNumeric(value) ? Number(value) : value;
+            return (0, checker_1.isNumeric)(value) ? Number(value) : value;
     }
     if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
-        return color_1.colorToHex(value.toString()) || value;
+        return (0, color_1.colorToHex)(value.toString()) || value;
     }
     return value;
 }
@@ -6626,11 +6629,11 @@ var color_1 = __webpack_require__(62);
 var string_1 = __webpack_require__(68);
 var normalizeColor = function (colorInput) {
     var newcolor = ['#'];
-    var color = color_1.colorToHex(colorInput);
+    var color = (0, color_1.colorToHex)(colorInput);
     if (!color) {
         return false;
     }
-    color = string_1.trim(color.toUpperCase());
+    color = (0, string_1.trim)(color.toUpperCase());
     color = color.substr(1);
     if (color.length === 3) {
         for (var i = 0; i < 3; i += 1) {
@@ -6709,7 +6712,7 @@ var UIButton = (function (_super) {
     function UIButton(jodit, state) {
         var _this = _super.call(this, jodit) || this;
         _this.isButton = true;
-        _this.state = exports.UIButtonState();
+        _this.state = (0, exports.UIButtonState)();
         _this.actionHandlers = [];
         _this.updateSize();
         _this.onChangeSize();
@@ -6732,7 +6735,7 @@ var UIButton = (function (_super) {
         this.setMod('size', this.state.size);
     };
     UIButton.prototype.onChangeType = function () {
-        helpers_1.attr(this.container, 'type', this.state.type);
+        (0, helpers_1.attr)(this.container, 'type', this.state.type);
     };
     UIButton.prototype.updateSize = function () {
         var pe = this.closest(list_1.UIList);
@@ -6751,30 +6754,30 @@ var UIButton = (function (_super) {
         this.setMod('text-icons', Boolean(this.state.text.trim().length));
     };
     UIButton.prototype.onChangeDisabled = function () {
-        helpers_1.attr(this.container, 'disabled', this.state.disabled || null);
+        (0, helpers_1.attr)(this.container, 'disabled', this.state.disabled || null);
     };
     UIButton.prototype.onChangeActivated = function () {
-        helpers_1.attr(this.container, 'aria-pressed', this.state.activated);
+        (0, helpers_1.attr)(this.container, 'aria-pressed', this.state.activated);
     };
     UIButton.prototype.onChangeName = function () {
-        this.container.classList.add(this.componentName + "_" + this.clearName(this.state.name));
+        this.container.classList.add("".concat(this.componentName, "_").concat(this.clearName(this.state.name)));
         this.name = this.state.name;
-        helpers_1.attr(this.container, 'data-ref', this.state.name);
-        helpers_1.attr(this.container, 'ref', this.state.name);
+        (0, helpers_1.attr)(this.container, 'data-ref', this.state.name);
+        (0, helpers_1.attr)(this.container, 'ref', this.state.name);
     };
     UIButton.prototype.onChangeTooltip = function () {
         if (this.get('j.o.useNativeTooltip')) {
-            helpers_1.attr(this.container, 'title', this.state.tooltip);
+            (0, helpers_1.attr)(this.container, 'title', this.state.tooltip);
         }
-        helpers_1.attr(this.container, 'aria-label', this.state.tooltip);
+        (0, helpers_1.attr)(this.container, 'aria-label', this.state.tooltip);
     };
     UIButton.prototype.onChangeTabIndex = function () {
-        helpers_1.attr(this.container, 'tabIndex', this.state.tabIndex);
+        (0, helpers_1.attr)(this.container, 'tabIndex', this.state.tabIndex);
     };
     UIButton.prototype.onChangeIcon = function () {
         var textIcons = this.get('j.o.textIcons');
         if (textIcons === true ||
-            (helpers_1.isFunction(textIcons) && textIcons(this.state.name))) {
+            ((0, helpers_1.isFunction)(textIcons) && textIcons(this.state.name))) {
             return;
         }
         dom_1.Dom.detach(this.icon);
@@ -6819,40 +6822,40 @@ var UIButton = (function (_super) {
         this.actionHandlers.forEach(function (callback) { return callback.call(_this, e); });
     };
     tslib_1.__decorate([
-        decorators_1.watch('state.size')
+        (0, decorators_1.watch)('state.size')
     ], UIButton.prototype, "onChangeSize", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.type')
+        (0, decorators_1.watch)('state.type')
     ], UIButton.prototype, "onChangeType", null);
     tslib_1.__decorate([
-        decorators_1.watch('parentElement')
+        (0, decorators_1.watch)('parentElement')
     ], UIButton.prototype, "updateSize", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.status')
+        (0, decorators_1.watch)('state.status')
     ], UIButton.prototype, "onChangeStatus", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.text')
+        (0, decorators_1.watch)('state.text')
     ], UIButton.prototype, "onChangeText", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.text')
+        (0, decorators_1.watch)('state.text')
     ], UIButton.prototype, "onChangeTextSetMode", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.disabled')
+        (0, decorators_1.watch)('state.disabled')
     ], UIButton.prototype, "onChangeDisabled", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.activated')
+        (0, decorators_1.watch)('state.activated')
     ], UIButton.prototype, "onChangeActivated", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.name')
+        (0, decorators_1.watch)('state.name')
     ], UIButton.prototype, "onChangeName", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.tooltip')
+        (0, decorators_1.watch)('state.tooltip')
     ], UIButton.prototype, "onChangeTooltip", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.tabIndex')
+        (0, decorators_1.watch)('state.tabIndex')
     ], UIButton.prototype, "onChangeTabIndex", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.icon')
+        (0, decorators_1.watch)('state.icon')
     ], UIButton.prototype, "onChangeIcon", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -6866,7 +6869,7 @@ exports.UIButton = UIButton;
 function Button(jodit, stateOrText, text, status) {
     var button = new UIButton(jodit);
     button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
-    if (helpers_1.isString(stateOrText)) {
+    if ((0, helpers_1.isString)(stateOrText)) {
         button.state.icon.name = stateOrText;
         button.state.name = stateOrText;
         if (status) {
@@ -6953,7 +6956,7 @@ var UIList = (function (_super) {
     UIList.prototype.build = function (items, target) {
         var _this = this;
         if (target === void 0) { target = null; }
-        items = helpers_1.splitArray(items);
+        items = (0, helpers_1.splitArray)(items);
         this.clear();
         var lastBtnSeparator = false;
         var line = this.makeGroup();
@@ -6990,19 +6993,19 @@ var UIList = (function (_super) {
             return !_this.removeButtons.includes(b.name);
         };
         items.forEach(function (item) {
-            if (buttons_1.isButtonGroup(item)) {
+            if ((0, buttons_1.isButtonGroup)(item)) {
                 var buttons = item.buttons.filter(function (b) { return b; });
                 if (buttons.length) {
                     group = _this.makeGroup();
                     line.append(group);
                     group.setMod('separated', true).setMod('group', item.group);
-                    get_strong_control_types_1.getStrongControlTypes(buttons, _this.j.o.controls)
+                    (0, get_strong_control_types_1.getStrongControlTypes)(buttons, _this.j.o.controls)
                         .filter(isNotRemoved)
                         .forEach(addButton);
                 }
             }
             else {
-                var control = get_control_type_1.getControlType(item, _this.j.o.controls);
+                var control = (0, get_control_type_1.getControlType)(item, _this.j.o.controls);
                 isNotRemoved(control) && addButton(control);
             }
         });
@@ -7013,7 +7016,7 @@ var UIList = (function (_super) {
         return new button_1.UIButton(this.j);
     };
     tslib_1.__decorate([
-        decorators_1.watch('mode')
+        (0, decorators_1.watch)('mode')
     ], UIList.prototype, "onChangeMode", null);
     UIList = tslib_1.__decorate([
         decorators_1.component
@@ -7050,14 +7053,14 @@ var config_1 = __webpack_require__(8);
 var checker_1 = __webpack_require__(34);
 var helpers_1 = __webpack_require__(19);
 function getStrongControlTypes(items, controls) {
-    var elements = checker_1.isArray(items)
+    var elements = (0, checker_1.isArray)(items)
         ? items
-        : helpers_1.keys(items, false).map(function (key) {
+        : (0, helpers_1.keys)(items, false).map(function (key) {
             var value = items[key] || {};
-            return helpers_1.ConfigProto({ name: key }, value);
+            return (0, helpers_1.ConfigProto)({ name: key }, value);
         });
     return elements.map(function (item) {
-        return get_control_type_1.getControlType(item, controls || config_1.Config.defaultOptions.controls);
+        return (0, get_control_type_1.getControlType)(item, controls || config_1.Config.defaultOptions.controls);
     });
 }
 exports.getStrongControlTypes = getStrongControlTypes;
@@ -7082,10 +7085,10 @@ var config_1 = __webpack_require__(8);
 function getControlType(button, controls) {
     var buttonControl;
     controls || (controls = config_1.Config.defaultOptions.controls);
-    if (!helpers_1.isString(button)) {
-        buttonControl = tslib_1.__assign({ name: 'empty' }, helpers_1.ConfigFlatten(button));
+    if (!(0, helpers_1.isString)(button)) {
+        buttonControl = tslib_1.__assign({ name: 'empty' }, (0, helpers_1.ConfigFlatten)(button));
         if (controls[buttonControl.name] !== undefined) {
-            buttonControl = tslib_1.__assign(tslib_1.__assign({}, helpers_1.ConfigFlatten(controls[buttonControl.name])), helpers_1.ConfigFlatten(buttonControl));
+            buttonControl = tslib_1.__assign(tslib_1.__assign({}, (0, helpers_1.ConfigFlatten)(controls[buttonControl.name])), (0, helpers_1.ConfigFlatten)(buttonControl));
         }
     }
     else {
@@ -7110,7 +7113,7 @@ function findControlType(path, controls) {
         key = namespaceOrKey;
     }
     return store[key]
-        ? tslib_1.__assign({ name: key }, helpers_1.ConfigFlatten(store[key])) : undefined;
+        ? tslib_1.__assign({ name: key }, (0, helpers_1.ConfigFlatten)(store[key])) : undefined;
 }
 exports.findControlType = findControlType;
 
@@ -7158,7 +7161,7 @@ var helpers_1 = __webpack_require__(19);
 function cache(target, name, descriptor) {
     var getter = descriptor.get;
     if (!getter) {
-        throw helpers_1.error('Getter property descriptor expected');
+        throw (0, helpers_1.error)('Getter property descriptor expected');
     }
     descriptor.get = function () {
         var value = getter.call(this);
@@ -7229,17 +7232,17 @@ function debounce(timeout, firstCallImmediately, method) {
     if (firstCallImmediately === void 0) { firstCallImmediately = false; }
     if (method === void 0) { method = 'debounce'; }
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var view = helpers_1.isViewObject(component)
+            var view = (0, helpers_1.isViewObject)(component)
                 ? component
                 : component.jodit;
-            var realTimeout = helpers_1.isFunction(timeout)
+            var realTimeout = (0, helpers_1.isFunction)(timeout)
                 ? timeout(component)
                 : timeout;
-            component[propertyKey] = view.async[method](component[propertyKey].bind(component), helpers_1.isNumber(realTimeout) || helpers_1.isPlainObject(realTimeout)
+            component[propertyKey] = view.async[method](component[propertyKey].bind(component), (0, helpers_1.isNumber)(realTimeout) || (0, helpers_1.isPlainObject)(realTimeout)
                 ? realTimeout
                 : view.defaultTimeout, firstCallImmediately);
         });
@@ -7269,8 +7272,8 @@ exports.hook = void 0;
 var helpers_1 = __webpack_require__(19);
 function hook(status) {
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(status, function (component) {
             target[propertyKey].call(component);
@@ -7328,9 +7331,9 @@ var component_1 = __webpack_require__(27);
 var helpers_1 = __webpack_require__(19);
 function persistent(target, propertyKey) {
     target.hookStatus(component_1.STATUSES.ready, function (component) {
-        var jodit = helpers_1.isViewObject(component)
+        var jodit = (0, helpers_1.isViewObject)(component)
             ? component
-            : component.jodit, storageKey = component.componentName + "_prop_" + propertyKey, initialValue = component[propertyKey];
+            : component.jodit, storageKey = "".concat(component.componentName, "_prop_").concat(propertyKey), initialValue = component[propertyKey];
         Object.defineProperty(component, propertyKey, {
             get: function () {
                 var _a;
@@ -7362,11 +7365,11 @@ var helpers_1 = __webpack_require__(19);
 var component_1 = __webpack_require__(27);
 function wait(condition) {
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var async = helpers_1.isViewObject(component)
+            var async = (0, helpers_1.isViewObject)(component)
                 ? component.async
                 : component.j.async;
             var realMethod = component[propertyKey];
@@ -7418,8 +7421,8 @@ function getPropertyDescriptor(obj, prop) {
 exports.getPropertyDescriptor = getPropertyDescriptor;
 function watch(observeFields, context) {
     return function (target, propertyKey) {
-        if (!helpers_1.isFunction(target[propertyKey])) {
-            throw helpers_1.error('Handler must be a Function');
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
         }
         var process = function (component) {
             var callback = function (key) {
@@ -7429,19 +7432,19 @@ function watch(observeFields, context) {
                     args[_i - 1] = arguments[_i];
                 }
                 if (!component.isInDestruct) {
-                    return (_a = component)[propertyKey].apply(_a, tslib_1.__spreadArray([key], args));
+                    return (_a = component)[propertyKey].apply(_a, tslib_1.__spreadArray([key], args, false));
                 }
             };
-            helpers_1.splitArray(observeFields).forEach(function (field) {
+            (0, helpers_1.splitArray)(observeFields).forEach(function (field) {
                 if (/:/.test(field)) {
                     var _a = field.split(':'), objectPath = _a[0], eventName = _a[1];
-                    var view = helpers_1.isViewObject(component)
+                    var view = (0, helpers_1.isViewObject)(component)
                         ? component
                         : component.jodit;
                     if (objectPath.length) {
                         context = component.get(objectPath);
                     }
-                    if (helpers_1.isFunction(context)) {
+                    if ((0, helpers_1.isFunction)(context)) {
                         context = context(component);
                     }
                     view.events
@@ -7452,11 +7455,11 @@ function watch(observeFields, context) {
                 var parts = field.split('.'), key = parts[0];
                 var value = component[key];
                 if (value instanceof events_1.ObserveObject) {
-                    value.on("change." + field, callback);
+                    value.on("change.".concat(field), callback);
                 }
-                else if (helpers_1.isPlainObject(value) && parts.length > 1) {
+                else if ((0, helpers_1.isPlainObject)(value) && parts.length > 1) {
                     var observe = events_1.ObserveObject.create(value, [key]);
-                    observe.on("change." + field, callback);
+                    observe.on("change.".concat(field), callback);
                     component[key] = observe;
                 }
                 else {
@@ -7472,7 +7475,7 @@ function watch(observeFields, context) {
                             if (descriptor_1 && descriptor_1.set) {
                                 descriptor_1.set.call(component, v);
                             }
-                            if (helpers_1.isPlainObject(value)) {
+                            if ((0, helpers_1.isPlainObject)(value)) {
                                 value = events_1.ObserveObject.create(value, [key]);
                                 value.on('change.' + field, callback);
                             }
@@ -7488,7 +7491,7 @@ function watch(observeFields, context) {
                 }
             });
         };
-        if (helpers_1.isFunction(target.hookStatus)) {
+        if ((0, helpers_1.isFunction)(target.hookStatus)) {
             target.hookStatus(component_1.STATUSES.ready, process);
         }
         else {
@@ -7497,7 +7500,7 @@ function watch(observeFields, context) {
     };
 }
 exports.watch = watch;
-exports.default = watch;
+exports["default"] = watch;
 
 
 /***/ }),
@@ -7576,7 +7579,7 @@ function autobind() {
     }
     return boundMethod.apply(void 0, arguments);
 }
-exports.default = autobind;
+exports["default"] = autobind;
 
 
 /***/ }),
@@ -7618,10 +7621,10 @@ var UIGroup = (function (_super) {
     Object.defineProperty(UIGroup.prototype, "allChildren", {
         get: function () {
             var result = [];
-            var stack = tslib_1.__spreadArray([], this.elements);
+            var stack = tslib_1.__spreadArray([], this.elements, true);
             while (stack.length) {
                 var elm = stack.pop();
-                if (helpers_1.isArray(elm)) {
+                if ((0, helpers_1.isArray)(elm)) {
                     stack.push.apply(stack, elm);
                 }
                 else if (elm instanceof UIGroup_1) {
@@ -7642,7 +7645,7 @@ var UIGroup = (function (_super) {
     };
     UIGroup.prototype.append = function (elm, distElement) {
         var _this = this;
-        if (helpers_1.isArray(elm)) {
+        if ((0, helpers_1.isArray)(elm)) {
             elm.forEach(function (item) { return _this.append(item); });
             return this;
         }
@@ -7689,7 +7692,7 @@ var UIGroup = (function (_super) {
     };
     var UIGroup_1;
     tslib_1.__decorate([
-        decorators_1.watch('buttonSize')
+        (0, decorators_1.watch)('buttonSize')
     ], UIGroup.prototype, "update", null);
     UIGroup = UIGroup_1 = tslib_1.__decorate([
         decorators_1.component
@@ -7755,12 +7758,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.flatButtonsSet = exports.isButtonGroup = void 0;
 var checker_1 = __webpack_require__(34);
 var isButtonGroup = function (item) {
-    return checker_1.isArray(item.buttons);
+    return (0, checker_1.isArray)(item.buttons);
 };
 exports.isButtonGroup = isButtonGroup;
 var flatButtonsSet = function (buttons) {
     return new Set(buttons.reduce(function (acc, item) {
-        if (exports.isButtonGroup(item)) {
+        if ((0, exports.isButtonGroup)(item)) {
             acc.push.apply(acc, item.buttons);
         }
         else {
@@ -7796,8 +7799,9 @@ var UIButtonGroup = (function (_super) {
         if (options === void 0) { options = {
             radio: true
         }; }
+        var _this = this;
         var _a, _b;
-        var _this = _super.call(this, jodit, (_a = options.options) === null || _a === void 0 ? void 0 : _a.map(function (opt) {
+        _this = _super.call(this, jodit, (_a = options.options) === null || _a === void 0 ? void 0 : _a.map(function (opt) {
             var btn = new button_1.UIButton(jodit, {
                 text: opt.text,
                 value: opt.value,
@@ -7816,7 +7820,7 @@ var UIButtonGroup = (function (_super) {
         return 'UIButtonGroup';
     };
     UIButtonGroup.prototype.render = function (options) {
-        return "<div>\n\t\t\t<div class=\"&__label\">~" + options.label + "~</div>\n\t\t\t<div class=\"&__options\"></div>\n\t\t</div>";
+        return "<div>\n\t\t\t<div class=\"&__label\">~".concat(options.label, "~</div>\n\t\t\t<div class=\"&__options\"></div>\n\t\t</div>");
     };
     UIButtonGroup.prototype.appendChildToContainer = function (childContainer) {
         this.getElm('options').appendChild(childContainer);
@@ -7907,7 +7911,7 @@ var Popup = (function (_super) {
             height: _this.ow.innerHeight
         }); };
         _this.childrenPopups = new Set();
-        helpers_1.attr(_this.container, 'role', 'popup');
+        (0, helpers_1.attr)(_this.container, 'role', 'popup');
         return _this;
     }
     Popup.prototype.className = function () {
@@ -7932,13 +7936,13 @@ var Popup = (function (_super) {
     };
     Popup.prototype.setContent = function (content) {
         dom_1.Dom.detach(this.container);
-        var box = this.j.c.div(this.componentName + "__content");
+        var box = this.j.c.div("".concat(this.componentName, "__content"));
         var elm;
         if (content instanceof element_1.UIElement) {
             elm = content.container;
             content.parentElement = this;
         }
-        else if (helpers_1.isString(content)) {
+        else if ((0, helpers_1.isString)(content)) {
             elm = this.j.c.fromHTML(content);
         }
         else {
@@ -7951,13 +7955,13 @@ var Popup = (function (_super) {
     };
     Popup.prototype.open = function (getBound, keepPosition) {
         if (keepPosition === void 0) { keepPosition = false; }
-        helpers_1.markOwner(this.jodit, this.container);
+        (0, helpers_1.markOwner)(this.jodit, this.container);
         this.isOpened = true;
         this.addGlobalListeners();
         this.targetBound = !keepPosition
             ? getBound
             : this.getKeepBound(getBound);
-        var parentContainer = global_1.getContainer(this.jodit, Popup);
+        var parentContainer = (0, global_1.getContainer)(this.jodit, Popup);
         if (parentContainer !== this.container.parentElement) {
             parentContainer.appendChild(this.container);
         }
@@ -7975,10 +7979,10 @@ var Popup = (function (_super) {
         var element = dom_1.Dom.isHTMLElement(elmUnderCursor, this.ow)
             ? elmUnderCursor
             : elmUnderCursor.parentElement;
-        var oldPos = helpers_1.position(element, this.j);
+        var oldPos = (0, helpers_1.position)(element, this.j);
         return function () {
             var bound = getBound();
-            var newPos = helpers_1.position(element, _this.j);
+            var newPos = (0, helpers_1.position)(element, _this.j);
             return tslib_1.__assign(tslib_1.__assign({}, bound), { top: bound.top + (newPos.top - oldPos.top), left: bound.left + (newPos.left - oldPos.left) });
         };
     };
@@ -7986,9 +7990,9 @@ var Popup = (function (_super) {
         if (!this.isOpened) {
             return this;
         }
-        var _a = this.calculatePosition(this.targetBound(), this.viewBound(), helpers_1.position(this.container, this.j)), pos = _a[0], strategy = _a[1];
+        var _a = this.calculatePosition(this.targetBound(), this.viewBound(), (0, helpers_1.position)(this.container, this.j)), pos = _a[0], strategy = _a[1];
         this.setMod('strategy', strategy);
-        helpers_1.css(this.container, {
+        (0, helpers_1.css)(this.container, {
             left: pos.left,
             top: pos.top
         });
@@ -8005,10 +8009,10 @@ var Popup = (function (_super) {
             top: target.top - container.height
         };
         var list = Object.keys(x).reduce(function (keys, xKey) {
-            return keys.concat(Object.keys(y).map(function (yKey) { return "" + xKey + helpers_1.ucfirst(yKey); }));
+            return keys.concat(Object.keys(y).map(function (yKey) { return "".concat(xKey).concat((0, helpers_1.ucfirst)(yKey)); }));
         }, []);
         var getPointByStrategy = function (strategy) {
-            var _a = helpers_1.kebabCase(strategy).split('-'), xKey = _a[0], yKey = _a[1];
+            var _a = (0, helpers_1.kebabCase)(strategy).split('-'), xKey = _a[0], yKey = _a[1];
             return {
                 left: x[xKey],
                 top: y[yKey],
@@ -8032,7 +8036,7 @@ var Popup = (function (_super) {
             }
             return strategy;
         };
-        var strategy = getMatchStrategy(helpers_1.position(this.j.container, this.j));
+        var strategy = getMatchStrategy((0, helpers_1.position)(this.j.container, this.j));
         if (!strategy || !Popup.boxInView(getPointByStrategy(strategy), view)) {
             strategy = getMatchStrategy(view) || strategy || defaultStrategy;
         }
@@ -8208,7 +8212,7 @@ var UIForm = (function (_super) {
     UIForm.prototype.createContainer = function () {
         var form = this.j.c.element('form');
         form.classList.add(this.componentName);
-        utils_1.attr(form, 'dir', this.j.o.direction || 'auto');
+        (0, utils_1.attr)(form, 'dir', this.j.o.direction || 'auto');
         return form;
     };
     UIForm = tslib_1.__decorate([
@@ -8314,13 +8318,13 @@ var UIInput = (function (_super) {
     UIInput.prototype.onChangeState = function () {
         this.name = this.state.name;
         var input = this.nativeInput, _a = this.state, name = _a.name, icon = _a.icon, type = _a.type, ref = _a.ref, required = _a.required, placeholder = _a.placeholder, autocomplete = _a.autocomplete, label = _a.label;
-        helpers_1.attr(input, 'name', name);
-        helpers_1.attr(input, 'type', type);
-        helpers_1.attr(input, 'data-ref', ref || name);
-        helpers_1.attr(input, 'ref', ref || name);
-        helpers_1.attr(input, 'required', required || null);
-        helpers_1.attr(input, 'autocomplete', !autocomplete ? 'off' : null);
-        helpers_1.attr(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
+        (0, helpers_1.attr)(input, 'name', name);
+        (0, helpers_1.attr)(input, 'type', type);
+        (0, helpers_1.attr)(input, 'data-ref', ref || name);
+        (0, helpers_1.attr)(input, 'ref', ref || name);
+        (0, helpers_1.attr)(input, 'required', required || null);
+        (0, helpers_1.attr)(input, 'autocomplete', !autocomplete ? 'off' : null);
+        (0, helpers_1.attr)(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
         if (icon && icon_1.Icon.exists(icon)) {
             dom_1.Dom.before(input, this.icon);
             this.icon.innerHTML = icon_1.Icon.get(icon);
@@ -8389,7 +8393,7 @@ var UIInput = (function (_super) {
     UIInput.prototype.validate = function () {
         var _this = this;
         this.error = '';
-        return helpers_1.toArray(this.validators).every(function (validator) { return validator(_this); });
+        return (0, helpers_1.toArray)(this.validators).every(function (validator) { return validator(_this); });
     };
     UIInput.prototype.createContainer = function (options) {
         var container = _super.prototype.createContainer.call(this);
@@ -8401,7 +8405,7 @@ var UIInput = (function (_super) {
         nativeInput.classList.add(this.getFullElName('input'));
         this.wrapper.appendChild(nativeInput);
         container.appendChild(this.wrapper);
-        helpers_1.attr(nativeInput, 'dir', this.j.o.direction || 'auto');
+        (0, helpers_1.attr)(nativeInput, 'dir', this.j.o.direction || 'auto');
         return container;
     };
     UIInput.prototype.createNativeInput = function (options) {
@@ -8435,13 +8439,13 @@ var UIInput = (function (_super) {
         validators: []
     };
     tslib_1.__decorate([
-        decorators_1.watch('state.clearButton')
+        (0, decorators_1.watch)('state.clearButton')
     ], UIInput.prototype, "onChangeClear", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.className')
+        (0, decorators_1.watch)('state.className')
     ], UIInput.prototype, "onChangeClassName", null);
     tslib_1.__decorate([
-        decorators_1.watch([
+        (0, decorators_1.watch)([
             'state.name',
             'state.type',
             'state.label',
@@ -8449,10 +8453,10 @@ var UIInput = (function (_super) {
             'state.autocomplete',
             'state.icon'
         ]),
-        decorators_1.debounce()
+        (0, decorators_1.debounce)()
     ], UIInput.prototype, "onChangeState", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.value')
+        (0, decorators_1.watch)('state.value')
     ], UIInput.prototype, "onChangeStateValue", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -8506,14 +8510,14 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.url = exports.required = void 0;
 var helpers_1 = __webpack_require__(19);
 exports.required = function (input) {
-    if (!helpers_1.trim(input.value).length) {
+    if (!(0, helpers_1.trim)(input.value).length) {
         input.error = 'Please fill out this field';
         return false;
     }
     return true;
 };
 exports.url = function (input) {
-    if (!helpers_1.isURL(helpers_1.trim(input.value))) {
+    if (!(0, helpers_1.isURL)((0, helpers_1.trim)(input.value))) {
         input.error = 'Please enter a web address';
         return false;
     }
@@ -8536,7 +8540,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.required = void 0;
 var helpers_1 = __webpack_require__(19);
 exports.required = function (select) {
-    if (!helpers_1.trim(select.value).length) {
+    if (!(0, helpers_1.trim)(select.value).length) {
         select.error = 'Please fill out this field';
         return false;
     }
@@ -8686,10 +8690,10 @@ var UISelect = (function (_super) {
             nativeInput.add(option);
         });
         if (state.size && state.size > 0) {
-            helpers_1.attr(nativeInput, 'size', state.size);
+            (0, helpers_1.attr)(nativeInput, 'size', state.size);
         }
         if (state.multiple) {
-            helpers_1.attr(nativeInput, 'multiple', '');
+            (0, helpers_1.attr)(nativeInput, 'multiple', '');
         }
         return container;
     };
@@ -8767,7 +8771,7 @@ var UIFileInput = (function (_super) {
         return container;
     };
     UIFileInput.prototype.createNativeInput = function (options) {
-        return this.j.create.fromHTML("<input\n\t\t\ttype=\"file\"\n\t\t\taccept=\"" + (options.onlyImages ? 'image/*' : '*') + "\"\n\t\t\ttabindex=\"-1\"\n\t\t\tdir=\"auto\"\n\t\t\tmultiple=\"\"\n\t\t/>");
+        return this.j.create.fromHTML("<input\n\t\t\ttype=\"file\"\n\t\t\taccept=\"".concat(options.onlyImages ? 'image/*' : '*', "\"\n\t\t\ttabindex=\"-1\"\n\t\t\tdir=\"auto\"\n\t\t\tmultiple=\"\"\n\t\t/>"));
     };
     UIFileInput = tslib_1.__decorate([
         decorators_1.component
@@ -8815,8 +8819,8 @@ var UIBlock = (function (_super) {
         _this.setMod('align', _this.options.align || 'left');
         _this.setMod('width', _this.options.width || '');
         _this.options.mod && _this.setMod(_this.options.mod, true);
-        utils_1.attr(_this.container, 'data-ref', options.ref);
-        utils_1.attr(_this.container, 'ref', options.ref);
+        (0, utils_1.attr)(_this.container, 'data-ref', options.ref);
+        (0, utils_1.attr)(_this.container, 'ref', options.ref);
         return _this;
     }
     UIBlock.prototype.className = function () {
@@ -8943,7 +8947,7 @@ function cleanFromWord(html) {
                                 dom_1.Dom.unwrap(node);
                                 break;
                             default:
-                                array_1.toArray(node.attributes).forEach(function (attr) {
+                                (0, array_1.toArray)(node.attributes).forEach(function (attr) {
                                     if ([
                                         'src',
                                         'href',
@@ -9018,13 +9022,13 @@ var dom_1 = __webpack_require__(32);
 function stripTags(html, doc) {
     if (doc === void 0) { doc = document; }
     var tmp = doc.createElement('div');
-    if (checker_1.isString(html)) {
+    if ((0, checker_1.isString)(html)) {
         tmp.innerHTML = html;
     }
     else {
         tmp.appendChild(html);
     }
-    selector_1.$$('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(function (p) {
+    (0, selector_1.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(function (p) {
         var pr = p.parentNode;
         if (!pr) {
             return;
@@ -9037,7 +9041,7 @@ function stripTags(html, doc) {
             pr.insertBefore(doc.createTextNode(' '), nx);
         }
     });
-    return string_1.trim(tmp.innerText) || '';
+    return (0, string_1.trim)(tmp.innerText) || '';
 }
 exports.stripTags = stripTags;
 
@@ -9162,7 +9166,7 @@ var offset = function (elm, jodit, doc, recurse) {
     var topValue, leftValue;
     var iframe = jodit.iframe;
     if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
-        var _a = exports.offset(iframe, jodit, jodit.od, true), top_1 = _a.top, left = _a.left;
+        var _a = (0, exports.offset)(iframe, jodit, jodit.od, true), top_1 = _a.top, left = _a.left;
         topValue = rect.top + top_1;
         leftValue = rect.left + left;
     }
@@ -9198,7 +9202,7 @@ function position(elm, jodit, recurse) {
     if (recurse === void 0) { recurse = false; }
     var rect = elm.getBoundingClientRect();
     var xPos = rect.left, yPos = rect.top;
-    if (checker_1.isJoditObject(jodit) && jodit.iframe && !recurse) {
+    if ((0, checker_1.isJoditObject)(jodit) && jodit.iframe && !recurse) {
         var _a = position(jodit.iframe, jodit, true), left = _a.left, top_1 = _a.top;
         xPos += left;
         yPos += top_1;
@@ -9247,11 +9251,11 @@ var appendScript = function (jodit, url, callback) {
     var script = jodit.c.element('script');
     script.type = 'text/javascript';
     script.async = true;
-    if (checker_1.isFunction(callback) && !jodit.isInDestruct) {
+    if ((0, checker_1.isFunction)(callback) && !jodit.isInDestruct) {
         jodit.e.on(script, 'load', callback);
     }
     if (!script.src) {
-        script.src = complete_url_1.completeUrl(url);
+        script.src = (0, complete_url_1.completeUrl)(url);
     }
     jodit.od.body.appendChild(script);
     return {
@@ -9262,7 +9266,7 @@ var appendScript = function (jodit, url, callback) {
 exports.appendScript = appendScript;
 exports.appendScriptAsync = cacheLoaders(function (jodit, url) {
     return new Promise(function (resolve, reject) {
-        var element = exports.appendScript(jodit, url, resolve).element;
+        var element = (0, exports.appendScript)(jodit, url, resolve).element;
         !jodit.isInDestruct && jodit.e.on(element, 'error', reject);
     });
 });
@@ -9275,7 +9279,7 @@ exports.appendStyleAsync = cacheLoaders(function (jodit, url) {
         var callback = function () { return resolve(link); };
         !jodit.isInDestruct &&
             jodit.e.on(link, 'load', callback).on(link, 'error', reject);
-        link.href = complete_url_1.completeUrl(url);
+        link.href = (0, complete_url_1.completeUrl)(url);
         if (jodit.o.shadowRoot) {
             jodit.o.shadowRoot.appendChild(link);
         }
@@ -9286,11 +9290,11 @@ exports.appendStyleAsync = cacheLoaders(function (jodit, url) {
 });
 var loadNext = function (jodit, urls, i) {
     if (i === void 0) { i = 0; }
-    if (!checker_1.isString(urls[i])) {
+    if (!(0, checker_1.isString)(urls[i])) {
         return Promise.resolve();
     }
-    return exports.appendScriptAsync(jodit, urls[i]).then(function () {
-        return exports.loadNext(jodit, urls, i + 1);
+    return (0, exports.appendScriptAsync)(jodit, urls[i]).then(function () {
+        return (0, exports.loadNext)(jodit, urls, i + 1);
     });
 };
 exports.loadNext = loadNext;
@@ -9375,7 +9379,7 @@ var parse_query_1 = __webpack_require__(151);
 var convertMediaUrlToVideoEmbed = function (url, width, height) {
     if (width === void 0) { width = 400; }
     if (height === void 0) { height = 345; }
-    if (!checker_1.isURL(url)) {
+    if (!(0, checker_1.isURL)(url)) {
         return url;
     }
     var parser = document.createElement('a'), pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
@@ -9404,7 +9408,7 @@ var convertMediaUrlToVideoEmbed = function (url, width, height) {
         case 'youtu.be':
         case 'www.youtu.be': {
             var query = parser.search
-                ? parse_query_1.parseQuery(parser.search)
+                ? (0, parse_query_1.parseQuery)(parser.search)
                 : { v: parser.pathname.substr(1) };
             return query.v
                 ? '<iframe width="' +
@@ -9492,7 +9496,7 @@ exports.each = void 0;
 var checker_1 = __webpack_require__(34);
 function each(obj, callback) {
     var length, keys, i;
-    if (checker_1.isArray(obj)) {
+    if ((0, checker_1.isArray)(obj)) {
         length = obj.length;
         for (i = 0; i < length; i += 1) {
             if (callback.call(obj[i], i, obj[i]) === false) {
@@ -9559,7 +9563,7 @@ var buildQuery = function (data, prefix) {
         if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
             var k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
             var v = data[dataKey];
-            str.push(checker_1.isPlainObject(v) ? exports.buildQuery(v, k) : enc(k) + '=' + enc(v));
+            str.push((0, checker_1.isPlainObject)(v) ? (0, exports.buildQuery)(v, k) : enc(k) + '=' + enc(v));
         }
     }
     return str.join('&');
@@ -9599,11 +9603,11 @@ var inView = function (elm, root, doc) {
 };
 exports.inView = inView;
 var scrollIntoViewIfNeeded = function (elm, root, doc) {
-    if (!exports.inView(elm, root, doc)) {
+    if (!(0, exports.inView)(elm, root, doc)) {
         if (root.clientHeight !== root.scrollHeight) {
             root.scrollTop = elm.offsetTop;
         }
-        if (!exports.inView(elm, root, doc)) {
+        if (!(0, exports.inView)(elm, root, doc)) {
             elm.scrollIntoView();
         }
     }
@@ -9687,15 +9691,15 @@ var Async = (function () {
             timeout = options.timeout || 0;
         }
         if (options.label && this.timers.has(options.label)) {
-            helpers_1.clearTimeout(this.timers.get(options.label));
+            (0, helpers_1.clearTimeout)(this.timers.get(options.label));
             this.timers.delete(options.label);
         }
-        var timer = helpers_1.setTimeout.apply(void 0, tslib_1.__spreadArray([callback, timeout], args)), key = options.label || timer;
+        var timer = helpers_1.setTimeout.apply(void 0, tslib_1.__spreadArray([callback, timeout], args, false)), key = options.label || timer;
         this.timers.set(key, timer);
         return timer;
     };
     Async.prototype.clearTimeout = function (timer) {
-        helpers_1.clearTimeout(timer);
+        (0, helpers_1.clearTimeout)(timer);
         this.timers.delete(timer);
     };
     Async.prototype.debounce = function (fn, timeout, firstCallImmediately) {
@@ -9717,7 +9721,7 @@ var Async = (function () {
                         promises.forEach(function (res) { return res(); });
                         promises.length = 0;
                     };
-                    helpers_1.isPromise(res) ? res.finally(runPromises) : runPromises();
+                    (0, helpers_1.isPromise)(res) ? res.finally(runPromises) : runPromises();
                 }
             }
         };
@@ -9734,12 +9738,12 @@ var Async = (function () {
                 if (!timer && firstCallImmediately) {
                     callFn.apply(void 0, args);
                 }
-                helpers_1.clearTimeout(timer);
-                timer = _this.setTimeout(function () { return callFn.apply(void 0, args); }, helpers_1.isFunction(timeout) ? timeout() : timeout);
+                (0, helpers_1.clearTimeout)(timer);
+                timer = _this.setTimeout(function () { return callFn.apply(void 0, args); }, (0, helpers_1.isFunction)(timeout) ? timeout() : timeout);
                 _this.timers.set(fn, timer);
             }
         };
-        return helpers_1.isPlainObject(timeout) && timeout.promisify
+        return (0, helpers_1.isPlainObject)(timeout) && timeout.promisify
             ? function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -9773,7 +9777,7 @@ var Async = (function () {
                     if (needInvoke) {
                         fn.apply(void 0, lastArgs);
                         needInvoke = false;
-                        timer = _this.setTimeout(callee, helpers_1.isFunction(timeout) ? timeout() : timeout);
+                        timer = _this.setTimeout(callee, (0, helpers_1.isFunction)(timeout) ? timeout() : timeout);
                         _this.timers.set(callee, timer);
                     }
                     else {
@@ -9847,7 +9851,7 @@ var Async = (function () {
             _this.cancelIdleCallback(key);
         });
         this.timers.forEach(function (key) {
-            helpers_1.clearTimeout(_this.timers.get(key));
+            (0, helpers_1.clearTimeout)(_this.timers.get(key));
         });
         this.timers.clear();
         this.promisesRejections.forEach(function (reject) {
@@ -9901,7 +9905,7 @@ var Ajax = (function () {
         this.success_response_codes = [200, 201, 202];
         this.resolved = false;
         this.activated = false;
-        this.options = helpers_1.ConfigProto(options || {}, config_1.Config.prototype.defaultAjaxOptions);
+        this.options = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.prototype.defaultAjaxOptions);
         this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
         jodit &&
             jodit.events &&
@@ -9910,15 +9914,15 @@ var Ajax = (function () {
             });
     }
     Ajax.prototype.__buildParams = function (obj, prefix) {
-        if (helpers_1.isFunction(this.o.queryBuild)) {
+        if ((0, helpers_1.isFunction)(this.o.queryBuild)) {
             return this.o.queryBuild.call(this, obj, prefix);
         }
-        if (helpers_1.isString(obj) ||
+        if ((0, helpers_1.isString)(obj) ||
             (this.j.ow.FormData &&
                 obj instanceof this.j.ow.FormData)) {
             return obj;
         }
-        return helpers_1.buildQuery(obj);
+        return (0, helpers_1.buildQuery)(obj);
     };
     Object.defineProperty(Ajax.prototype, "o", {
         get: function () {
@@ -9951,18 +9955,18 @@ var Ajax = (function () {
                     result = JSON.parse(resp);
                 }
                 if (!result) {
-                    throw helpers_1.error('No JSON format');
+                    throw (0, helpers_1.error)('No JSON format');
                 }
                 return result;
             };
             _this.xhr.onabort = function () {
-                reject(helpers_1.error(_this.xhr.statusText));
+                reject((0, helpers_1.error)(_this.xhr.statusText));
             };
             _this.xhr.onerror = function () {
-                reject(helpers_1.error(_this.xhr.statusText));
+                reject((0, helpers_1.error)(_this.xhr.statusText));
             };
             _this.xhr.ontimeout = function () {
-                reject(helpers_1.error(_this.xhr.statusText));
+                reject((0, helpers_1.error)(_this.xhr.statusText));
             };
             _this.xhr.onload = function () {
                 _this.response = _this.xhr.responseText;
@@ -9990,7 +9994,7 @@ var Ajax = (function () {
                         resolve.call(_this.xhr, __parse(resp));
                     }
                     else {
-                        reject.call(_this.xhr, helpers_1.error(_this.xhr.statusText ||
+                        reject.call(_this.xhr, (0, helpers_1.error)(_this.xhr.statusText ||
                             _this.j.i18n('Connection error!')));
                     }
                 }
@@ -10002,7 +10006,7 @@ var Ajax = (function () {
                 _this.xhr.setRequestHeader('Content-type', _this.o.contentType);
             }
             if (_this.o.headers && _this.xhr.setRequestHeader) {
-                helpers_1.each(_this.o.headers, function (key, value) {
+                (0, helpers_1.each)(_this.o.headers, function (key, value) {
                     _this.xhr.setRequestHeader(key, value);
                 });
             }
@@ -10013,22 +10017,22 @@ var Ajax = (function () {
     };
     Ajax.prototype.prepareRequest = function () {
         if (!this.o.url) {
-            throw helpers_1.error('Need URL for AJAX request');
+            throw (0, helpers_1.error)('Need URL for AJAX request');
         }
         var url = this.o.url;
         var data = this.o.data;
         var method = (this.o.method || 'get').toLowerCase();
-        if (method === 'get' && data && helpers_1.isPlainObject(data)) {
+        if (method === 'get' && data && (0, helpers_1.isPlainObject)(data)) {
             var qIndex = url.indexOf('?');
             if (qIndex !== -1) {
-                var urlData = helpers_1.parseQuery(url);
+                var urlData = (0, helpers_1.parseQuery)(url);
                 url =
                     url.substr(0, qIndex) +
                         '?' +
-                        helpers_1.buildQuery(tslib_1.__assign(tslib_1.__assign({}, urlData), data));
+                        (0, helpers_1.buildQuery)(tslib_1.__assign(tslib_1.__assign({}, urlData), data));
             }
             else {
-                url += '?' + helpers_1.buildQuery(this.o.data);
+                url += '?' + (0, helpers_1.buildQuery)(this.o.data);
             }
         }
         var request = {
@@ -10081,14 +10085,14 @@ var ContextMenu = (function (_super) {
     ContextMenu.prototype.show = function (x, y, actions) {
         var _this = this;
         var self = this, content = this.j.c.div('jodit-context-menu__actions');
-        if (!checker_1.isArray(actions)) {
+        if (!(0, checker_1.isArray)(actions)) {
             return;
         }
         actions.forEach(function (item) {
             if (!item) {
                 return;
             }
-            var action = button_1.Button(_this.jodit, item.icon || 'empty', item.title);
+            var action = (0, button_1.Button)(_this.jodit, item.icon || 'empty', item.title);
             _this.jodit && action.setParentView(_this.jodit);
             action.setMod('context', 'menu');
             action.onAction(function (e) {
@@ -10211,19 +10215,19 @@ var Dialog = (function (_super) {
         _this.isModal = false;
         _this.isOpened = false;
         var self = _this;
-        self.options = helpers_1.ConfigProto(options !== null && options !== void 0 ? options : {}, helpers_1.ConfigProto({
+        self.options = (0, helpers_1.ConfigProto)(options !== null && options !== void 0 ? options : {}, (0, helpers_1.ConfigProto)({
             toolbarButtonSize: 'middle'
-        }, helpers_1.ConfigProto(config_1.Config.prototype.dialog, view_1.View.defaultOptions)));
+        }, (0, helpers_1.ConfigProto)(config_1.Config.prototype.dialog, view_1.View.defaultOptions)));
         dom_1.Dom.safeRemove(self.container);
         var n = _this.getFullElName.bind(_this);
-        self.container = _this.c.fromHTML("<div style=\"z-index:" + self.o.zIndex + "\" class=\"jodit jodit-dialog " + _this.componentName + "\">\n\t\t\t\t<div class=\"" + n('overlay') + "\"></div>\n\t\t\t\t<div class=\"" + _this.getFullElName('panel') + "\">\n\t\t\t\t\t<div class=\"" + n('header') + "\">\n\t\t\t\t\t\t<div class=\"" + n('header-title') + "\"></div>\n\t\t\t\t\t\t<div class=\"" + n('header-toolbar') + "\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"" + n('content') + "\"></div>\n\t\t\t\t\t<div class=\"" + n('footer') + "\"></div>\n\t\t\t\t\t" + (self.o.resizable ? "<div class=\"" + n('resizer') + "\"></div>" : '') + "\n\t\t\t\t</div>\n\t\t\t</div>");
-        helpers_1.attr(self.container, 'role', 'dialog');
+        self.container = _this.c.fromHTML("<div style=\"z-index:".concat(self.o.zIndex, "\" class=\"jodit jodit-dialog ").concat(_this.componentName, "\">\n\t\t\t\t<div class=\"").concat(n('overlay'), "\"></div>\n\t\t\t\t<div class=\"").concat(_this.getFullElName('panel'), "\">\n\t\t\t\t\t<div class=\"").concat(n('header'), "\">\n\t\t\t\t\t\t<div class=\"").concat(n('header-title'), "\"></div>\n\t\t\t\t\t\t<div class=\"").concat(n('header-toolbar'), "\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"").concat(n('content'), "\"></div>\n\t\t\t\t\t<div class=\"").concat(n('footer'), "\"></div>\n\t\t\t\t\t").concat(self.o.resizable ? "<div class=\"".concat(n('resizer'), "\"></div>") : '', "\n\t\t\t\t</div>\n\t\t\t</div>"));
+        (0, helpers_1.attr)(self.container, 'role', 'dialog');
         Object.defineProperty(self.container, 'component', {
             value: _this
         });
         self.setMod('theme', self.o.theme || 'default');
         self.dialog = self.getElm('panel');
-        helpers_1.css(self.dialog, {
+        (0, helpers_1.css)(self.dialog, {
             maxWidth: self.options.maxWidth,
             minHeight: self.options.minHeight,
             minWidth: self.options.minWidth
@@ -10239,7 +10243,7 @@ var Dialog = (function (_super) {
             self.e.on(self.resizer, 'mousedown', self.onResizerMouseDown);
         }
         var fullSize = global_1.pluginSystem.get('fullsize');
-        helpers_1.isFunction(fullSize) && fullSize(self);
+        (0, helpers_1.isFunction)(fullSize) && fullSize(self);
         _this.e
             .on(self.container, 'close_dialog', self.close)
             .on(_this.ow, 'keydown', _this.onEsc)
@@ -10252,26 +10256,26 @@ var Dialog = (function (_super) {
     Dialog.prototype.setElements = function (root, elements) {
         var _this = this;
         var elements_list = [];
-        helpers_1.asArray(elements).forEach(function (elm) {
-            if (helpers_1.isArray(elm)) {
+        (0, helpers_1.asArray)(elements).forEach(function (elm) {
+            if ((0, helpers_1.isArray)(elm)) {
                 var div = _this.c.div(_this.getFullElName('column'));
                 elements_list.push(div);
                 root.appendChild(div);
                 return _this.setElements(div, elm);
             }
             var element;
-            if (helpers_1.isString(elm)) {
+            if ((0, helpers_1.isString)(elm)) {
                 element = _this.c.fromHTML(elm);
             }
             else {
-                element = helpers_1.hasContainer(elm) ? elm.container : elm;
+                element = (0, helpers_1.hasContainer)(elm) ? elm.container : elm;
             }
             elements_list.push(element);
             if (element.parentNode !== root) {
                 root.appendChild(element);
             }
         });
-        helpers_1.toArray(root.childNodes).forEach(function (elm) {
+        (0, helpers_1.toArray)(root.childNodes).forEach(function (elm) {
             if (elements_list.indexOf(elm) === -1) {
                 root.removeChild(elm);
             }
@@ -10298,8 +10302,8 @@ var Dialog = (function (_super) {
         this.draggable = true;
         this.startX = e.clientX;
         this.startY = e.clientY;
-        this.startPoint.x = helpers_1.css(this.dialog, 'left');
-        this.startPoint.y = helpers_1.css(this.dialog, 'top');
+        this.startPoint.x = (0, helpers_1.css)(this.dialog, 'left');
+        this.startPoint.y = (0, helpers_1.css)(this.dialog, 'top');
         this.setMaxZIndex();
         e.preventDefault();
         this.lockSelect();
@@ -10368,7 +10372,7 @@ var Dialog = (function (_super) {
         if (h == null) {
             h = this.dialog.offsetHeight;
         }
-        helpers_1.css(this.dialog, {
+        (0, helpers_1.css)(this.dialog, {
             width: w,
             height: h
         });
@@ -10411,13 +10415,13 @@ var Dialog = (function (_super) {
         return this;
     };
     Dialog.prototype.getZIndex = function () {
-        return parseInt(helpers_1.css(this.container, 'zIndex'), 10) || 0;
+        return parseInt((0, helpers_1.css)(this.container, 'zIndex'), 10) || 0;
     };
     Dialog.prototype.getMaxZIndexDialog = function () {
         var maxZi = 0, dlg, zIndex, res = this;
-        helpers_1.$$('.jodit-dialog', this.destination).forEach(function (dialog) {
+        (0, helpers_1.$$)('.jodit-dialog', this.destination).forEach(function (dialog) {
             dlg = dialog.component;
-            zIndex = parseInt(helpers_1.css(dialog, 'zIndex'), 10);
+            zIndex = parseInt((0, helpers_1.css)(dialog, 'zIndex'), 10);
             if (dlg.isOpened && !isNaN(zIndex) && zIndex > maxZi) {
                 res = dlg;
                 maxZi = zIndex;
@@ -10427,14 +10431,14 @@ var Dialog = (function (_super) {
     };
     Dialog.prototype.setMaxZIndex = function () {
         var maxZIndex = 20000004, zIndex = 0;
-        helpers_1.$$('.jodit-dialog', this.destination).forEach(function (dialog) {
-            zIndex = parseInt(helpers_1.css(dialog, 'zIndex'), 10);
+        (0, helpers_1.$$)('.jodit-dialog', this.destination).forEach(function (dialog) {
+            zIndex = parseInt((0, helpers_1.css)(dialog, 'zIndex'), 10);
             maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
         });
         this.container.style.zIndex = (maxZIndex + 1).toString();
     };
     Dialog.prototype.maximization = function (condition) {
-        if (helpers_1.isVoid(condition)) {
+        if ((0, helpers_1.isVoid)(condition)) {
             condition = !this.getMod('fullsize');
         }
         this.setMod('fullsize', condition);
@@ -10454,15 +10458,15 @@ var Dialog = (function (_super) {
         if (this.e.fire(this, 'beforeOpen') === false) {
             return this;
         }
-        if (helpers_1.isBoolean(contentOrClose)) {
+        if ((0, helpers_1.isBoolean)(contentOrClose)) {
             destroyAfterClose = contentOrClose;
         }
-        if (helpers_1.isBoolean(titleOrModal)) {
+        if ((0, helpers_1.isBoolean)(titleOrModal)) {
             modal = titleOrModal;
         }
         this.destroyAfterClose = destroyAfterClose === true;
-        var content = helpers_1.isBoolean(contentOrClose) ? undefined : contentOrClose;
-        var title = helpers_1.isBoolean(titleOrModal) ? undefined : titleOrModal;
+        var content = (0, helpers_1.isBoolean)(contentOrClose) ? undefined : contentOrClose;
+        var title = (0, helpers_1.isBoolean)(titleOrModal) ? undefined : titleOrModal;
         if (title !== undefined) {
             this.setHeader(title);
         }
@@ -10518,7 +10522,7 @@ var Dialog = (function (_super) {
     Dialog.prototype.buildToolbar = function () {
         this.o.buttons &&
             this.toolbar
-                .build(helpers_1.splitArray(this.o.buttons))
+                .build((0, helpers_1.splitArray)(this.o.buttons))
                 .setMod('mode', 'header')
                 .appendTo(this.dialogbox_toolbar);
     };
@@ -10558,7 +10562,7 @@ var Dialog = (function (_super) {
         decorators_1.autobind
     ], Dialog.prototype, "close", null);
     tslib_1.__decorate([
-        decorators_1.hook('ready')
+        (0, decorators_1.hook)('ready')
     ], Dialog.prototype, "buildToolbar", null);
     Dialog = tslib_1.__decorate([
         decorators_1.component
@@ -10605,7 +10609,7 @@ var ViewWithToolbar = (function (_super) {
         if (isJodit === void 0) { isJodit = false; }
         var _this = _super.call(this, options, isJodit) || this;
         _this.isJodit = isJodit;
-        _this.toolbar = factory_1.makeCollection(_this);
+        _this.toolbar = (0, factory_1.makeCollection)(_this);
         _this.defaultToolbarContainer = _this.c.div('jodit-toolbar__box');
         _this.registeredButtons = new Set();
         _this.groupToButtons = {};
@@ -10615,9 +10619,9 @@ var ViewWithToolbar = (function (_super) {
     Object.defineProperty(ViewWithToolbar.prototype, "toolbarContainer", {
         get: function () {
             if (!this.o.fullsize &&
-                (helpers_1.isString(this.o.toolbar) ||
+                ((0, helpers_1.isString)(this.o.toolbar) ||
                     dom_1.Dom.isHTMLElement(this.o.toolbar, this.ow))) {
-                return helpers_1.resolveElement(this.o.toolbar, this.o.shadowRoot || this.od);
+                return (0, helpers_1.resolveElement)(this.o.toolbar, this.o.shadowRoot || this.od);
             }
             this.o.toolbar &&
                 dom_1.Dom.appendChildFirst(this.container, this.defaultToolbarContainer);
@@ -10635,7 +10639,7 @@ var ViewWithToolbar = (function (_super) {
             return;
         }
         var buttons = this.o.buttons
-            ? helpers_1.splitArray(this.o.buttons)
+            ? (0, helpers_1.splitArray)(this.o.buttons)
             : [];
         this.toolbar
             .setRemoveButtons(this.o.removeButtons)
@@ -10676,12 +10680,12 @@ var ViewWithToolbar = (function (_super) {
         var _this = this;
         if (Object.keys(this.groupToButtons).length) {
             return items.map(function (item) {
-                if (buttons_1.isButtonGroup(item) &&
+                if ((0, buttons_1.isButtonGroup)(item) &&
                     item.group &&
                     _this.groupToButtons[item.group]) {
                     return {
                         group: item.group,
-                        buttons: tslib_1.__spreadArray(tslib_1.__spreadArray([], item.buttons), _this.groupToButtons[item.group])
+                        buttons: tslib_1.__spreadArray(tslib_1.__spreadArray([], item.buttons, true), _this.groupToButtons[item.group], true)
                     };
                 }
                 return item;
@@ -10745,7 +10749,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.6.3";
+        _this.version = "3.6.5";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -10792,7 +10796,7 @@ var View = (function (_super) {
     });
     Object.defineProperty(View.prototype, "defaultTimeout", {
         get: function () {
-            return helpers_1.isVoid(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
+            return (0, helpers_1.isVoid)(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
         },
         enumerable: false,
         configurable: true
@@ -10843,7 +10847,7 @@ var View = (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             params[_i - 1] = arguments[_i];
         }
-        return helpers_1.i18n(text, params, this.options);
+        return (0, helpers_1.i18n)(text, params, this.options);
     };
     View.prototype.toggleFullSize = function (isFullSize) {
         if (isFullSize === undefined) {
@@ -10890,17 +10894,17 @@ var View = (function (_super) {
         return this.version;
     };
     View.prototype.initOptions = function (options) {
-        this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(this.options || {}, View.defaultOptions));
+        this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
     };
     View.prototype.initOwners = function () { };
     View.prototype.getInstance = function (moduleName, options) {
-        var instance = this.e.fire(helpers_1.camelCase('getInstance_' + moduleName), options);
+        var instance = this.e.fire((0, helpers_1.camelCase)('getInstance_' + moduleName), options);
         if (instance) {
             return instance;
         }
         var module = global_1.modules[moduleName], mi = this.__modulesInstances;
-        if (!helpers_1.isFunction(module)) {
-            throw helpers_1.error('Need real module name');
+        if (!(0, helpers_1.isFunction)(module)) {
+            throw (0, helpers_1.error)('Need real module name');
         }
         if (!mi.has(moduleName)) {
             var instance_1 = module.prototype instanceof modules_1.ViewComponent
@@ -10917,7 +10921,7 @@ var View = (function (_super) {
     View.prototype.beforeDestruct = function () {
         this.e.fire(modules_1.STATUSES.beforeDestruct, this);
         this.components.forEach(function (component) {
-            if (helpers_1.isDestructable(component) && !component.isInDestruct) {
+            if ((0, helpers_1.isDestructable)(component) && !component.isInDestruct) {
                 component.destruct();
             }
         });
@@ -10940,7 +10944,7 @@ var View = (function (_super) {
         _super.prototype.destruct.call(this);
     };
     tslib_1.__decorate([
-        decorators_1.hook(modules_1.STATUSES.beforeDestruct)
+        (0, decorators_1.hook)(modules_1.STATUSES.beforeDestruct)
     ], View.prototype, "beforeDestruct", null);
     return View;
 }(modules_1.Component));
@@ -11114,16 +11118,16 @@ var Storage = (function () {
         }
     }
     Storage.prototype.set = function (key, value) {
-        this.provider.set(helpers_1.camelCase(this.prefix + key), value);
+        this.provider.set((0, helpers_1.camelCase)(this.prefix + key), value);
     };
     Storage.prototype.delete = function (key) {
-        this.provider.delete(helpers_1.camelCase(this.prefix + key));
+        this.provider.delete((0, helpers_1.camelCase)(this.prefix + key));
     };
     Storage.prototype.get = function (key) {
-        return this.provider.get(helpers_1.camelCase(this.prefix + key));
+        return this.provider.get((0, helpers_1.camelCase)(this.prefix + key));
     };
     Storage.prototype.exists = function (key) {
-        return this.provider.exists(helpers_1.camelCase(this.prefix + key));
+        return this.provider.exists((0, helpers_1.camelCase)(this.prefix + key));
     };
     Storage.prototype.clear = function () {
         return this.provider.clear();
@@ -11131,7 +11135,7 @@ var Storage = (function () {
     Storage.makeStorage = function (persistent, suffix) {
         if (persistent === void 0) { persistent = false; }
         var provider;
-        if (persistent && local_storage_provider_1.canUsePersistentStorage()) {
+        if (persistent && (0, local_storage_provider_1.canUsePersistentStorage)()) {
             provider = new local_storage_provider_1.LocalStorageProvider(exports.StorageKey + suffix);
         }
         if (!provider) {
@@ -11163,7 +11167,7 @@ var editor_collection_1 = __webpack_require__(175);
 var button_1 = __webpack_require__(176);
 var content_1 = __webpack_require__(178);
 function makeCollection(jodit, parentElement) {
-    var collection = helpers_1.isJoditObject(jodit)
+    var collection = (0, helpers_1.isJoditObject)(jodit)
         ? new editor_collection_1.ToolbarEditorCollection(jodit)
         : new collection_1.ToolbarCollection(jodit);
     if (jodit.o.textIcons) {
@@ -11180,7 +11184,7 @@ function makeCollection(jodit, parentElement) {
 exports.makeCollection = makeCollection;
 function makeButton(jodit, control, target) {
     if (target === void 0) { target = null; }
-    if (helpers_1.isFunction(control.getContent)) {
+    if ((0, helpers_1.isFunction)(control.getContent)) {
         return new content_1.ToolbarContent(jodit, control, target);
     }
     var button = new button_1.ToolbarButton(jodit, control, target);
@@ -11232,13 +11236,13 @@ var ToolbarCollection = (function (_super) {
     });
     ToolbarCollection.prototype.makeButton = function (control, target) {
         if (target === void 0) { target = null; }
-        return factory_1.makeButton(this.j, control, target);
+        return (0, factory_1.makeButton)(this.j, control, target);
     };
     ToolbarCollection.prototype.shouldBeActive = function (button) {
-        if (helpers_1.isJoditObject(this.j) && !this.j.editorIsActive) {
+        if ((0, helpers_1.isJoditObject)(this.j) && !this.j.editorIsActive) {
             return false;
         }
-        if (helpers_1.isFunction(button.control.isActive)) {
+        if ((0, helpers_1.isFunction)(button.control.isActive)) {
             return button.control.isActive(this.j, button.control, button);
         }
         return undefined;
@@ -11253,7 +11257,7 @@ var ToolbarCollection = (function (_super) {
             return true;
         }
         var isDisabled;
-        if (helpers_1.isFunction(button.control.isDisabled)) {
+        if ((0, helpers_1.isFunction)(button.control.isDisabled)) {
             isDisabled = button.control.isDisabled(this.j, button.control, button);
         }
         return isDisabled;
@@ -11342,13 +11346,13 @@ var ToolbarEditorCollection = (function (_super) {
             var matches = 0, total = 0;
             Object.keys(cssObject).forEach(function (cssProperty) {
                 var cssValue = cssObject[cssProperty];
-                if (helpers_1.isFunction(cssValue)) {
-                    if (cssValue(_this.j, helpers_1.css(node, cssProperty).toString())) {
+                if ((0, helpers_1.isFunction)(cssValue)) {
+                    if (cssValue(_this.j, (0, helpers_1.css)(node, cssProperty).toString())) {
                         matches += 1;
                     }
                 }
                 else {
-                    if (cssValue.indexOf(helpers_1.css(node, cssProperty).toString()) !== -1) {
+                    if (cssValue.indexOf((0, helpers_1.css)(node, cssProperty).toString()) !== -1) {
                         matches += 1;
                     }
                 }
@@ -11450,7 +11454,7 @@ var ToolbarButton = (function (_super) {
         var _this = _super.call(this, jodit) || this;
         _this.control = control;
         _this.target = target;
-        _this.state = tslib_1.__assign(tslib_1.__assign({}, button_1.UIButtonState()), { theme: 'toolbar', currentValue: '', hasTrigger: false });
+        _this.state = tslib_1.__assign(tslib_1.__assign({}, (0, button_1.UIButtonState)()), { theme: 'toolbar', currentValue: '', hasTrigger: false });
         jodit.e.on([_this.button, _this.trigger], 'mousedown', function (e) {
             return e.preventDefault();
         });
@@ -11474,7 +11478,7 @@ var ToolbarButton = (function (_super) {
     });
     Object.defineProperty(ToolbarButton.prototype, "button", {
         get: function () {
-            return this.container.querySelector("button." + this.componentName + "__button");
+            return this.container.querySelector("button.".concat(this.componentName, "__button"));
         },
         enumerable: false,
         configurable: true
@@ -11485,17 +11489,17 @@ var ToolbarButton = (function (_super) {
             state.disabled = Boolean(tc.shouldBeDisabled(this));
             state.activated = Boolean(tc.shouldBeActive(this));
         }
-        if (helpers_1.isFunction(control.update)) {
+        if ((0, helpers_1.isFunction)(control.update)) {
             control.update(this);
         }
         _super.prototype.update.call(this);
     };
     ToolbarButton.prototype.onChangeActivated = function () {
-        helpers_1.attr(this.button, 'aria-pressed', this.state.activated);
+        (0, helpers_1.attr)(this.button, 'aria-pressed', this.state.activated);
         _super.prototype.onChangeActivated.call(this);
     };
     ToolbarButton.prototype.onChangeText = function () {
-        if (helpers_1.isFunction(this.control.template)) {
+        if ((0, helpers_1.isFunction)(this.control.template)) {
             this.text.innerHTML = this.control.template(this.j, this.control.name, this.j.i18n(this.state.text));
         }
         else {
@@ -11504,19 +11508,19 @@ var ToolbarButton = (function (_super) {
         this.setMod('text-icons', Boolean(this.text.innerText.trim().length));
     };
     ToolbarButton.prototype.onChangeTabIndex = function () {
-        helpers_1.attr(this.button, 'tabIndex', this.state.tabIndex);
+        (0, helpers_1.attr)(this.button, 'tabIndex', this.state.tabIndex);
     };
     ToolbarButton.prototype.createContainer = function () {
         var cn = this.componentName;
         var container = this.j.c.span(cn), button = _super.prototype.createContainer.call(this);
-        helpers_1.attr(container, 'role', 'listitem');
+        (0, helpers_1.attr)(container, 'role', 'listitem');
         button.classList.remove(cn);
         button.classList.add(cn + '__button');
         Object.defineProperty(button, 'component', {
             value: this
         });
         container.appendChild(button);
-        this.trigger = this.j.c.fromHTML("<span role=\"trigger\" class=\"" + cn + "__trigger\">" + ui_1.Icon.get('chevron') + "</span>");
+        this.trigger = this.j.c.fromHTML("<span role=\"trigger\" class=\"".concat(cn, "__trigger\">").concat(ui_1.Icon.get('chevron'), "</span>"));
         this.j.e.on(this.trigger, 'click', this.onTriggerClick.bind(this));
         return container;
     };
@@ -11535,9 +11539,9 @@ var ToolbarButton = (function (_super) {
     };
     ToolbarButton.prototype.onChangeDisabled = function () {
         var dsb = this.state.disabled ? 'disabled' : null;
-        helpers_1.attr(this.trigger, 'disabled', dsb);
-        helpers_1.attr(this.button, 'disabled', dsb);
-        helpers_1.attr(this.container, 'disabled', dsb);
+        (0, helpers_1.attr)(this.trigger, 'disabled', dsb);
+        (0, helpers_1.attr)(this.button, 'disabled', dsb);
+        (0, helpers_1.attr)(this.container, 'disabled', dsb);
     };
     ToolbarButton.prototype.initTooltip = function () {
         var _this = this;
@@ -11568,9 +11572,9 @@ var ToolbarButton = (function (_super) {
         state.name = ctr.name;
         var textIcons = this.j.o.textIcons;
         if (textIcons === true ||
-            (helpers_1.isFunction(textIcons) && textIcons(ctr.name)) ||
+            ((0, helpers_1.isFunction)(textIcons) && textIcons(ctr.name)) ||
             ctr.template) {
-            state.icon = button_1.UIButtonState().icon;
+            state.icon = (0, button_1.UIButtonState)().icon;
             state.text = ctr.text || ctr.name;
         }
         else {
@@ -11603,36 +11607,36 @@ var ToolbarButton = (function (_super) {
         if (ctr.list) {
             return this.openControlList(ctr);
         }
-        if (helpers_1.isFunction(ctr.popup)) {
+        if ((0, helpers_1.isFunction)(ctr.popup)) {
             var popup = new popup_1.Popup(this.j);
             popup.parentElement = this;
-            if (this.j.e.fire(helpers_1.camelCase("before-" + ctr.name + "-open-popup"), this.target, ctr, popup) !== false) {
+            if (this.j.e.fire((0, helpers_1.camelCase)("before-".concat(ctr.name, "-open-popup")), this.target, ctr, popup) !== false) {
                 var target = (_c = (_b = (_a = this.toolbar) === null || _a === void 0 ? void 0 : _a.getTarget(this)) !== null && _b !== void 0 ? _b : this.target) !== null && _c !== void 0 ? _c : null;
                 var elm = ctr.popup(this.j, target, ctr, popup.close, this);
                 if (elm) {
                     popup
-                        .setContent(helpers_1.isString(elm) ? this.j.c.fromHTML(elm) : elm)
-                        .open(function () { return helpers_1.position(_this.container); });
+                        .setContent((0, helpers_1.isString)(elm) ? this.j.c.fromHTML(elm) : elm)
+                        .open(function () { return (0, helpers_1.position)(_this.container); });
                 }
             }
-            this.j.e.fire(helpers_1.camelCase("after-" + ctr.name + "-open-popup"), popup.container);
+            this.j.e.fire((0, helpers_1.camelCase)("after-".concat(ctr.name, "-open-popup")), popup.container);
         }
     };
     ToolbarButton.prototype.openControlList = function (control) {
         var _this = this;
         var _a;
         var controls = (_a = this.jodit.options.controls) !== null && _a !== void 0 ? _a : {}, getControl = function (key) {
-            return get_control_type_1.findControlType(key, controls);
+            return (0, get_control_type_1.findControlType)(key, controls);
         };
-        var list = control.list, menu = new popup_1.Popup(this.j), toolbar = factory_1.makeCollection(this.j);
+        var list = control.list, menu = new popup_1.Popup(this.j), toolbar = (0, factory_1.makeCollection)(this.j);
         menu.parentElement = this;
         toolbar.parentElement = menu;
         toolbar.mode = 'vertical';
         var getButton = function (key, value) {
-            if (helpers_1.isString(value) && getControl(value)) {
+            if ((0, helpers_1.isString)(value) && getControl(value)) {
                 return tslib_1.__assign({ name: value.toString() }, getControl(value));
             }
-            if (helpers_1.isString(key) && getControl(key)) {
+            if ((0, helpers_1.isString)(key) && getControl(key)) {
                 return tslib_1.__assign(tslib_1.__assign({ name: key.toString() }, getControl(key)), (typeof value === 'object' ? value : {}));
             }
             var childControl = {
@@ -11644,17 +11648,17 @@ var ToolbarButton = (function (_super) {
                 isActive: control.isChildActive,
                 isDisabled: control.isChildDisabled,
                 mode: control.mode,
-                args: tslib_1.__spreadArray(tslib_1.__spreadArray([], (control.args ? control.args : [])), [key, value])
+                args: tslib_1.__spreadArray(tslib_1.__spreadArray([], (control.args ? control.args : []), true), [key, value], false)
             };
-            if (helpers_1.isString(value)) {
+            if ((0, helpers_1.isString)(value)) {
                 childControl.text = value;
             }
             return childControl;
         };
-        toolbar.build(helpers_1.isArray(list)
+        toolbar.build((0, helpers_1.isArray)(list)
             ? list.map(getButton)
-            : helpers_1.keys(list, false).map(function (key) { return getButton(key, list[key]); }), this.target);
-        menu.setContent(toolbar.container).open(function () { return helpers_1.position(_this.container); });
+            : (0, helpers_1.keys)(list, false).map(function (key) { return getButton(key, list[key]); }), this.target);
+        menu.setContent(toolbar.container).open(function () { return (0, helpers_1.position)(_this.container); });
         this.state.activated = true;
         this.j.e.on(menu, 'afterClose', function () {
             _this.state.activated = false;
@@ -11663,7 +11667,7 @@ var ToolbarButton = (function (_super) {
     ToolbarButton.prototype.onClick = function (originalEvent) {
         var _a, _b, _c, _d, _e, _f, _g;
         var ctr = this.control;
-        if (helpers_1.isFunction(ctr.exec)) {
+        if ((0, helpers_1.isFunction)(ctr.exec)) {
             var target = (_c = (_b = (_a = this.toolbar) === null || _a === void 0 ? void 0 : _a.getTarget(this)) !== null && _b !== void 0 ? _b : this.target) !== null && _c !== void 0 ? _c : null;
             var result = ctr.exec(this.j, target, {
                 control: ctr,
@@ -11682,18 +11686,18 @@ var ToolbarButton = (function (_super) {
         if (ctr.list) {
             return this.openControlList(ctr);
         }
-        if (helpers_1.isFunction(ctr.popup)) {
+        if ((0, helpers_1.isFunction)(ctr.popup)) {
             return this.onTriggerClick(originalEvent);
         }
         if (ctr.command || ctr.name) {
-            helpers_1.call(helpers_1.isJoditObject(this.j)
+            (0, helpers_1.call)((0, helpers_1.isJoditObject)(this.j)
                 ? this.j.execCommand.bind(this.j)
                 : this.j.od.execCommand.bind(this.j.od), ctr.command || ctr.name, false, ctr.args && ctr.args[0]);
             this.j.e.fire('closeAllPopups');
         }
     };
     tslib_1.__decorate([
-        decorators_1.watch('state.hasTrigger')
+        (0, decorators_1.watch)('state.hasTrigger')
     ], ToolbarButton.prototype, "onChangeHasTrigger", null);
     ToolbarButton = tslib_1.__decorate([
         decorators_1.component
@@ -11738,8 +11742,8 @@ var ToolbarContent = (function (_super) {
         var _this = _super.call(this, jodit) || this;
         _this.control = control;
         _this.target = target;
-        _this.container.classList.add(_this.componentName + "_" + _this.clearName(control.name));
-        helpers_1.attr(_this.container, 'role', 'content');
+        _this.container.classList.add("".concat(_this.componentName, "_").concat(_this.clearName(control.name)));
+        (0, helpers_1.attr)(_this.container, 'role', 'content');
         return _this;
     }
     ToolbarContent.prototype.className = function () {
@@ -11747,9 +11751,9 @@ var ToolbarContent = (function (_super) {
     };
     ToolbarContent.prototype.update = function () {
         var content = this.control.getContent(this.j, this.control, this);
-        if (helpers_1.isString(content) || content.parentNode !== this.container) {
+        if ((0, helpers_1.isString)(content) || content.parentNode !== this.container) {
             dom_1.Dom.detach(this.container);
-            this.container.appendChild(helpers_1.isString(content) ? this.j.create.fromHTML(content) : content);
+            this.container.appendChild((0, helpers_1.isString)(content) ? this.j.create.fromHTML(content) : content);
         }
         _super.prototype.update.call(this);
     };
@@ -11792,18 +11796,18 @@ var dom_1 = __webpack_require__(32);
 var ui_1 = __webpack_require__(75);
 var Alert = function (msg, title, callback, className) {
     if (className === void 0) { className = 'jodit-dialog_alert'; }
-    if (helpers_1.isFunction(title)) {
+    if ((0, helpers_1.isFunction)(title)) {
         callback = title;
         title = undefined;
     }
-    var dialog = new dialog_1.Dialog(), container = dialog.c.div(className), okButton = ui_1.Button(dialog, 'ok', 'Ok');
-    helpers_1.asArray(msg).forEach(function (oneMessage) {
+    var dialog = new dialog_1.Dialog(), container = dialog.c.div(className), okButton = (0, ui_1.Button)(dialog, 'ok', 'Ok');
+    (0, helpers_1.asArray)(msg).forEach(function (oneMessage) {
         container.appendChild(dom_1.Dom.isNode(oneMessage, dialog.ow)
             ? oneMessage
             : dialog.c.fromHTML(oneMessage));
     });
     okButton.onAction(function () {
-        if (!callback || !helpers_1.isFunction(callback) || callback(dialog) !== false) {
+        if (!callback || !(0, helpers_1.isFunction)(callback) || callback(dialog) !== false) {
             dialog.close();
         }
     });
@@ -11832,18 +11836,18 @@ var dialog_1 = __webpack_require__(163);
 var ui_1 = __webpack_require__(75);
 var helpers_1 = __webpack_require__(19);
 var Prompt = function (msg, title, callback, placeholder, defaultValue) {
-    var dialog = new dialog_1.Dialog(), cancelButton = ui_1.Button(dialog, 'cancel', 'Cancel'), okButton = ui_1.Button(dialog, 'ok', 'Ok'), form = dialog.c.element('form', {
+    var dialog = new dialog_1.Dialog(), cancelButton = (0, ui_1.Button)(dialog, 'cancel', 'Cancel'), okButton = (0, ui_1.Button)(dialog, 'ok', 'Ok'), form = dialog.c.element('form', {
         class: 'jodit-dialog_prompt'
     }), inputElement = dialog.c.element('input', {
         autofocus: true,
         class: 'jodit-input'
     }), labelElement = dialog.c.element('label');
-    if (helpers_1.isFunction(title)) {
+    if ((0, helpers_1.isFunction)(title)) {
         callback = title;
         title = undefined;
     }
     if (placeholder) {
-        helpers_1.attr(inputElement, 'placeholder', placeholder);
+        (0, helpers_1.attr)(inputElement, 'placeholder', placeholder);
     }
     labelElement.appendChild(dialog.c.text(msg));
     form.appendChild(labelElement);
@@ -11851,7 +11855,7 @@ var Prompt = function (msg, title, callback, placeholder, defaultValue) {
     cancelButton.onAction(dialog.close);
     var onclick = function () {
         if (!callback ||
-            !helpers_1.isFunction(callback) ||
+            !(0, helpers_1.isFunction)(callback) ||
             callback(inputElement.value) !== false) {
             dialog.close();
         }
@@ -11891,7 +11895,7 @@ var helpers_1 = __webpack_require__(19);
 var ui_1 = __webpack_require__(75);
 var Confirm = function (msg, title, callback) {
     var dialog = new dialog_1.Dialog(), $div = dialog.c.fromHTML('<form class="jodit-dialog_prompt"></form>'), $label = dialog.c.element('label');
-    if (helpers_1.isFunction(title)) {
+    if ((0, helpers_1.isFunction)(title)) {
         callback = title;
         title = undefined;
     }
@@ -11902,8 +11906,8 @@ var Confirm = function (msg, title, callback) {
             dialog.close();
         }
     }; };
-    var $cancel = ui_1.Button(dialog, 'cancel', 'Cancel');
-    var $ok = ui_1.Button(dialog, 'ok', 'Yes');
+    var $cancel = (0, ui_1.Button)(dialog, 'cancel', 'Cancel');
+    var $ok = (0, ui_1.Button)(dialog, 'ok', 'Yes');
     $cancel.onAction(action(false));
     $ok.onAction(action(true));
     dialog.e.on($div, 'submit', function () {
@@ -11944,7 +11948,7 @@ var Plugin = (function (_super) {
         jodit.e
             .on('afterPluginSystemInit', function () {
             var _a;
-            if (helpers_1.isJoditObject(jodit)) {
+            if ((0, helpers_1.isJoditObject)(jodit)) {
                 (_a = _this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(function (btn) {
                     jodit.registerButton(btn);
                 });
@@ -11967,7 +11971,7 @@ var Plugin = (function (_super) {
         if (!this.isInDestruct) {
             this.setStatus(component_1.STATUSES.beforeDestruct);
             var j_1 = this.j;
-            if (helpers_1.isJoditObject(j_1)) {
+            if ((0, helpers_1.isJoditObject)(j_1)) {
                 (_a = this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(function (btn) {
                     j_1 === null || j_1 === void 0 ? void 0 : j_1.unregisterButton(btn);
                 });
@@ -12006,22 +12010,22 @@ var Create = (function () {
         this.document = document;
         this.createAttributes = createAttributes;
         this.applyAttributes = function (elm, attrs) {
-            helpers_1.each(attrs, function (key, value) {
-                if (helpers_1.isPlainObject(value) && key === 'style') {
-                    helpers_1.css(elm, value);
+            (0, helpers_1.each)(attrs, function (key, value) {
+                if ((0, helpers_1.isPlainObject)(value) && key === 'style') {
+                    (0, helpers_1.css)(elm, value);
                 }
                 else {
                     if (key === 'className') {
                         key = 'class';
                     }
-                    elm.setAttribute(helpers_1.kebabCase(key), value.toString());
+                    elm.setAttribute((0, helpers_1.kebabCase)(key), value.toString());
                 }
             });
         };
     }
     Object.defineProperty(Create.prototype, "doc", {
         get: function () {
-            return helpers_1.isFunction(this.document) ? this.document() : this.document;
+            return (0, helpers_1.isFunction)(this.document) ? this.document() : this.document;
         },
         enumerable: false,
         configurable: true
@@ -12031,7 +12035,7 @@ var Create = (function () {
         var elm = this.doc.createElement(tagName.toLowerCase());
         this.applyCreateAttributes(elm);
         if (childrenOrAttributes) {
-            if (helpers_1.isPlainObject(childrenOrAttributes)) {
+            if ((0, helpers_1.isPlainObject)(childrenOrAttributes)) {
                 this.applyAttributes(elm, childrenOrAttributes);
             }
             else {
@@ -12039,7 +12043,7 @@ var Create = (function () {
             }
         }
         if (children) {
-            helpers_1.asArray(children).forEach(function (child) {
+            (0, helpers_1.asArray)(children).forEach(function (child) {
                 return elm.appendChild(typeof child === 'string' ? _this.fromHTML(child) : child);
             });
         }
@@ -12083,7 +12087,7 @@ var Create = (function () {
             : div.firstChild;
         dom_1.Dom.safeRemove(child);
         if (refsToggleElement) {
-            var refElements_1 = helpers_1.refs(child);
+            var refElements_1 = (0, helpers_1.refs)(child);
             Object.keys(refsToggleElement).forEach(function (key) {
                 var elm = refElements_1[key];
                 if (elm && refsToggleElement[key] === false) {
@@ -12098,10 +12102,10 @@ var Create = (function () {
             var ca = this.createAttributes;
             if (ca && ca[elm.tagName.toLowerCase()]) {
                 var attrs = ca[elm.tagName.toLowerCase()];
-                if (helpers_1.isFunction(attrs)) {
+                if ((0, helpers_1.isFunction)(attrs)) {
                     attrs(elm);
                 }
-                else if (helpers_1.isPlainObject(attrs)) {
+                else if ((0, helpers_1.isPlainObject)(attrs)) {
                     this.applyAttributes(elm, attrs);
                 }
             }
@@ -12178,9 +12182,9 @@ var FileBrowser = (function (_super) {
         };
         _this.elementsMap = {};
         var self = _this;
-        self.options = helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions.filebrowser);
+        self.options = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions.filebrowser);
         self.storage = storage_1.Storage.makeStorage(_this.o.saveStateInStorage);
-        self.dataProvider = factories_1.makeDataProvider(self, self.options);
+        self.dataProvider = (0, factories_1.makeDataProvider)(self, self.options);
         self.dialog = new dialog_1.Dialog({
             fullsize: self.o.fullsize,
             theme: self.o.theme,
@@ -12216,7 +12220,7 @@ var FileBrowser = (function (_super) {
         ];
         keys.forEach(function (key) {
             if (_this.options[key] != null) {
-                _this.options[key] = helpers_1.ConfigProto(_this.options[key], _this.o.ajax);
+                _this.options[key] = (0, helpers_1.ConfigProto)(_this.options[key], _this.o.ajax);
             }
         });
         var view = _this.storage.get(consts_1.F_CLASS + '_view');
@@ -12269,7 +12273,7 @@ var FileBrowser = (function (_super) {
             var _this = this;
             return tslib_1.__generator(this, function (_a) {
                 errorUni = function (e) {
-                    throw e instanceof Error ? e : helpers_1.error(e);
+                    throw e instanceof Error ? e : (0, helpers_1.error)(e);
                 };
                 if (this.uploader) {
                     this.uploader.setPath(this.state.currentPath);
@@ -12326,7 +12330,7 @@ var FileBrowser = (function (_super) {
                     files: files_1,
                     isImages: isImages_1
                 };
-                if (helpers_1.isFunction(callback)) {
+                if ((0, helpers_1.isFunction)(callback)) {
                     callback(data);
                 }
                 _this.close();
@@ -12343,7 +12347,7 @@ var FileBrowser = (function (_super) {
     });
     FileBrowser.prototype.status = function (message, success) {
         var _this = this;
-        if (!helpers_1.isString(message)) {
+        if (!(0, helpers_1.isString)(message)) {
             message = message.message;
         }
         this.status_line.classList.remove('jodit-filebrowser_success');
@@ -12371,7 +12375,7 @@ var FileBrowser = (function (_super) {
         return this.async.promise(function (resolve, reject) {
             var _a;
             if (!_this.o.items || !_this.o.items.url) {
-                throw helpers_1.error('Need set options.filebrowser.ajax.url');
+                throw (0, helpers_1.error)('Need set options.filebrowser.ajax.url');
             }
             var localTimeout = 0;
             _this.e
@@ -12396,7 +12400,7 @@ var FileBrowser = (function (_super) {
     FileBrowser.prototype.initUploader = function (editor) {
         var _this = this;
         var _a;
-        var self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = helpers_1.ConfigProto(options || {}, config_1.Config.defaultOptions.uploader);
+        var self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.defaultOptions.uploader);
         var uploadHandler = function () {
             return _this.loadItems();
         };
@@ -12458,13 +12462,13 @@ config_1.Config.prototype.filebrowser = {
     extraButtons: [],
     filter: function (item, search) {
         search = search.toLowerCase();
-        if (helpers_1.isString(item)) {
+        if ((0, helpers_1.isString)(item)) {
             return item.toLowerCase().indexOf(search) !== -1;
         }
-        if (helpers_1.isString(item.name)) {
+        if ((0, helpers_1.isString)(item.name)) {
             return item.name.toLowerCase().indexOf(search) !== -1;
         }
-        if (helpers_1.isString(item.file)) {
+        if ((0, helpers_1.isString)(item.file)) {
             return item.file.toLowerCase().indexOf(search) !== -1;
         }
         return true;
@@ -12481,14 +12485,14 @@ config_1.Config.prototype.filebrowser = {
             }
             return 0;
         };
-        if (helpers_1.isString(a)) {
+        if ((0, helpers_1.isString)(a)) {
             return compareStr(a.toLowerCase(), b.toLowerCase());
         }
         if (a[sortAttr] === undefined || sortAttr === 'name') {
-            if (helpers_1.isString(a.name)) {
+            if ((0, helpers_1.isString)(a.name)) {
                 return compareStr(a.name.toLowerCase(), b.name.toLowerCase());
             }
-            if (helpers_1.isString(a.file)) {
+            if ((0, helpers_1.isString)(a.file)) {
                 return compareStr(a.file.toLowerCase(), b.file.toLowerCase());
             }
             return 0;
@@ -12499,7 +12503,7 @@ config_1.Config.prototype.filebrowser = {
                 return asc ? f - s : s - f;
             }
             case 'size': {
-                var f = helpers_1.humanSizeToBytes(a.size), s = helpers_1.humanSizeToBytes(b.size);
+                var f = (0, helpers_1.humanSizeToBytes)(a.size), s = (0, helpers_1.humanSizeToBytes)(b.size);
                 return asc ? f - s : s - f;
             }
         }
@@ -12541,7 +12545,7 @@ config_1.Config.prototype.filebrowser = {
         return resp.success;
     },
     getMessage: function (resp) {
-        return resp.data.messages !== undefined && helpers_1.isArray(resp.data.messages)
+        return resp.data.messages !== undefined && (0, helpers_1.isArray)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
     },
@@ -12556,17 +12560,16 @@ config_1.Config.prototype.filebrowser = {
         if (item.file !== undefined) {
             name = item.file;
         }
-        var info = "<div class=\"" + consts_1.ITEM_CLASS + "-info\">" + (showName ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filename\">" + name + "</span>" : '') + (showSize
-            ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filesize\">" + item.size + "</span>"
-            : '') + (showTime
-            ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filechanged\">" + showTime + "</span>"
-            : '') + "</div>";
-        return "<a\n\t\t\tdata-jodit-filebrowser-item=\"true\"\n\t\t\tdata-is-file=\"" + (item.isImage ? 0 : 1) + "\"\n\t\t\tdraggable=\"true\"\n\t\t\tclass=\"" + consts_1.ITEM_CLASS + "\"\n\t\t\thref=\"" + item.fileURL + "\"\n\t\t\tdata-source=\"" + source_name + "\"\n\t\t\tdata-path=\"" + item.path + "\"\n\t\t\tdata-name=\"" + name + "\"\n\t\t\ttitle=\"" + name + "\"\n\t\t\tdata-url=\"" + item.fileURL + "\">\n\t\t\t\t<img\n\t\t\t\t\tdata-is-file=\"" + (item.isImage ? 0 : 1) + "\"\n\t\t\t\t\tdata-src=\"" + item.fileURL + "\"\n\t\t\t\t\tsrc=\"" + item.imageURL + "\"\n\t\t\t\t\talt=\"" + name + "\"\n\t\t\t\t\tloading=\"lazy\"\n\t\t\t\t/>\n\t\t\t\t" + (showName || showSize || showTime ? info : '') + "\n\t\t\t</a>";
+        var info = "<div class=\"".concat(consts_1.ITEM_CLASS, "-info\">").concat(showName ? "<span class=\"".concat(consts_1.ITEM_CLASS, "-info-filename\">").concat(name, "</span>") : '').concat(showSize
+            ? "<span class=\"".concat(consts_1.ITEM_CLASS, "-info-filesize\">").concat(item.size, "</span>")
+            : '').concat(showTime
+            ? "<span class=\"".concat(consts_1.ITEM_CLASS, "-info-filechanged\">").concat(showTime, "</span>")
+            : '', "</div>");
+        return "<a\n\t\t\tdata-jodit-filebrowser-item=\"true\"\n\t\t\tdata-is-file=\"".concat(item.isImage ? 0 : 1, "\"\n\t\t\tdraggable=\"true\"\n\t\t\tclass=\"").concat(consts_1.ITEM_CLASS, "\"\n\t\t\thref=\"").concat(item.fileURL, "\"\n\t\t\tdata-source=\"").concat(source_name, "\"\n\t\t\tdata-path=\"").concat(item.path, "\"\n\t\t\tdata-name=\"").concat(name, "\"\n\t\t\ttitle=\"").concat(name, "\"\n\t\t\tdata-url=\"").concat(item.fileURL, "\">\n\t\t\t\t<img\n\t\t\t\t\tdata-is-file=\"").concat(item.isImage ? 0 : 1, "\"\n\t\t\t\t\tdata-src=\"").concat(item.fileURL, "\"\n\t\t\t\t\tsrc=\"").concat(item.imageURL, "\"\n\t\t\t\t\talt=\"").concat(name, "\"\n\t\t\t\t\tloading=\"lazy\"\n\t\t\t\t/>\n\t\t\t\t").concat(showName || showSize || showTime ? info : '', "\n\t\t\t</a>");
     },
     ajax: tslib_1.__assign(tslib_1.__assign({}, config_1.Config.prototype.defaultAjaxOptions), { url: '', async: true, data: {}, cache: true, contentType: 'application/x-www-form-urlencoded; charset=UTF-8', method: 'POST', processData: true, dataType: 'json', headers: {}, prepareData: function (data) {
             return data;
-        },
-        process: function (resp) {
+        }, process: function (resp) {
             return resp;
         } }),
     create: {
@@ -12701,12 +12704,12 @@ config_1.Config.prototype.controls.filebrowser = {
         isInput: true,
         getContent: function (fb) {
             var select = fb.c.fromHTML('<select class="jodit-input jodit-select">' +
-                ("<option value=\"changed-asc\">" + fb.i18n('Sort by changed') + " (\u2B06)</option>") +
-                ("<option value=\"changed-desc\">" + fb.i18n('Sort by changed') + " (\u2B07)</option>") +
-                ("<option value=\"name-asc\">" + fb.i18n('Sort by name') + " (\u2B06)</option>") +
-                ("<option value=\"name-desc\">" + fb.i18n('Sort by name') + " (\u2B07)</option>") +
-                ("<option value=\"size-asc\">" + fb.i18n('Sort by size') + " (\u2B06)</option>") +
-                ("<option value=\"size-desc\">" + fb.i18n('Sort by size') + " (\u2B07)</option>") +
+                "<option value=\"changed-asc\">".concat(fb.i18n('Sort by changed'), " (\u2B06)</option>") +
+                "<option value=\"changed-desc\">".concat(fb.i18n('Sort by changed'), " (\u2B07)</option>") +
+                "<option value=\"name-asc\">".concat(fb.i18n('Sort by name'), " (\u2B06)</option>") +
+                "<option value=\"name-desc\">".concat(fb.i18n('Sort by name'), " (\u2B07)</option>") +
+                "<option value=\"size-asc\">".concat(fb.i18n('Sort by size'), " (\u2B06)</option>") +
+                "<option value=\"size-desc\">".concat(fb.i18n('Sort by size'), " (\u2B07)</option>") +
                 '</select>');
             select.value = fb.state.sortBy;
             fb.e
@@ -12824,9 +12827,9 @@ var DataProvider = (function () {
             ajax_2 === null || ajax_2 === void 0 ? void 0 : ajax_2.abort();
             ai.delete(name);
         }
-        var opts = helpers_1.ConfigProto(this.options[name] !== undefined
+        var opts = (0, helpers_1.ConfigProto)(this.options[name] !== undefined
             ? this.options[name]
-            : {}, helpers_1.ConfigProto({
+            : {}, (0, helpers_1.ConfigProto)({
             onProgress: this.progressHandler
         }, this.o.ajax));
         if (opts.prepareData) {
@@ -12933,7 +12936,7 @@ var DataProvider = (function () {
         sources.forEach(function (source) {
             if (source.files && source.files.length) {
                 var sort_1 = _this.o.sort;
-                if (helpers_1.isFunction(sort_1) && mods.sortBy) {
+                if ((0, helpers_1.isFunction)(sort_1) && mods.sortBy) {
                     source.files.sort(function (a, b) { return sort_1(a, b, mods.sortBy); });
                 }
                 source.files.forEach(function (item) {
@@ -12951,7 +12954,7 @@ var DataProvider = (function () {
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        path = helpers_1.normalizeRelativePath(path);
+                        path = (0, helpers_1.normalizeRelativePath)(path);
                         return [4, this.permissions(path, source)];
                     case 1:
                         _a.sent();
@@ -12976,19 +12979,19 @@ var DataProvider = (function () {
     };
     DataProvider.prototype.getPathByUrl = function (url) {
         var _this = this;
-        helpers_1.set('options.getLocalFileByUrl.data.url', url, this);
+        (0, helpers_1.set)('options.getLocalFileByUrl.data.url', url, this);
         return this.get('getLocalFileByUrl', function (resp) {
             if (_this.isSuccess(resp)) {
                 return resp.data;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.createFolder = function (name, path, source) {
         var _this = this;
         var create = this.o.create;
         if (!create) {
-            throw helpers_1.error('Set Create api options');
+            throw (0, helpers_1.error)('Set Create api options');
         }
         create.data.source = source;
         create.data.path = path;
@@ -12997,7 +13000,7 @@ var DataProvider = (function () {
             if (_this.isSuccess(resp)) {
                 return true;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.move = function (filepath, path, source, isFile) {
@@ -13007,7 +13010,7 @@ var DataProvider = (function () {
             : 'folderMove';
         var option = this.options[mode];
         if (!option) {
-            throw helpers_1.error('Set Move api options');
+            throw (0, helpers_1.error)('Set Move api options');
         }
         option.data.from = filepath;
         option.data.path = path;
@@ -13016,14 +13019,14 @@ var DataProvider = (function () {
             if (_this.isSuccess(resp)) {
                 return true;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.remove = function (action, path, file, source) {
         var _this = this;
         var fr = this.o[action];
         if (!fr) {
-            throw helpers_1.error("Set \"" + action + "\" api options");
+            throw (0, helpers_1.error)("Set \"".concat(action, "\" api options"));
         }
         fr.data.path = path;
         fr.data.name = file;
@@ -13033,7 +13036,7 @@ var DataProvider = (function () {
                 resp = fr.process.call(_this, resp);
             }
             if (!_this.isSuccess(resp)) {
-                throw helpers_1.error(_this.getMessage(resp));
+                throw (0, helpers_1.error)(_this.getMessage(resp));
             }
             return _this.getMessage(resp);
         });
@@ -13048,7 +13051,7 @@ var DataProvider = (function () {
         var _this = this;
         var fr = this.o[action];
         if (!fr) {
-            throw helpers_1.error("Set \"" + action + "\" api options");
+            throw (0, helpers_1.error)("Set \"".concat(action, "\" api options"));
         }
         fr.data.path = path;
         fr.data.name = name;
@@ -13059,7 +13062,7 @@ var DataProvider = (function () {
                 resp = fr.process.call(self, resp);
             }
             if (!_this.isSuccess(resp)) {
-                throw helpers_1.error(_this.getMessage(resp));
+                throw (0, helpers_1.error)(_this.getMessage(resp));
             }
             return _this.getMessage(resp);
         });
@@ -13094,7 +13097,7 @@ var DataProvider = (function () {
             if (_this.isSuccess(resp)) {
                 return true;
             }
-            throw helpers_1.error(_this.getMessage(resp));
+            throw (0, helpers_1.error)(_this.getMessage(resp));
         });
     };
     DataProvider.prototype.crop = function (path, source, name, newname, box) {
@@ -13118,7 +13121,7 @@ var DataProvider = (function () {
     ], DataProvider.prototype, "isSuccess", null);
     return DataProvider;
 }());
-exports.default = DataProvider;
+exports["default"] = DataProvider;
 
 
 /***/ }),
@@ -13151,7 +13154,7 @@ var FileBrowserItem = (function () {
     };
     Object.defineProperty(FileBrowserItem.prototype, "path", {
         get: function () {
-            return helpers_1.normalizePath(this.data.source.path ? this.data.source.path + '/' : '/');
+            return (0, helpers_1.normalizePath)(this.data.source.path ? this.data.source.path + '/' : '/');
         },
         enumerable: false,
         configurable: true
@@ -13161,7 +13164,7 @@ var FileBrowserItem = (function () {
             var timestamp = new Date().getTime().toString(), _a = this.data, thumbIsAbsolute = _a.thumbIsAbsolute, source = _a.source, thumb = _a.thumb, file = _a.file, path = thumb || file;
             return thumbIsAbsolute && path
                 ? path
-                : helpers_1.normalizeUrl(source.baseurl, source.path, path || '') +
+                : (0, helpers_1.normalizeUrl)(source.baseurl, source.path, path || '') +
                     '?_tmst=' +
                     timestamp;
         },
@@ -13177,7 +13180,7 @@ var FileBrowserItem = (function () {
             }
             return fileIsAbsolute && name
                 ? name
-                : helpers_1.normalizeUrl(source.baseurl, source.path, name || '');
+                : (0, helpers_1.normalizeUrl)(source.baseurl, source.path, name || '');
         },
         enumerable: false,
         configurable: true
@@ -13299,15 +13302,15 @@ function stateListeners() {
                 var folderElm = create.a(consts_1.F_CLASS + '__tree-item', {
                     draggable: 'draggable',
                     href: 'javascript:void(0)',
-                    'data-path': normalize_1.normalizePath(source.path, name + '/'),
+                    'data-path': (0, normalize_1.normalizePath)(source.path, name + '/'),
                     'data-name': name,
                     'data-source': sourceName,
                     'data-source-path': source.path
                 }, create.span(consts_1.F_CLASS + '__tree-item-title', name));
                 var action = function (actionName) { return function (e) {
-                    _this.e.fire(actionName + ".filebrowser", {
+                    _this.e.fire("".concat(actionName, ".filebrowser"), {
                         name: name,
-                        path: normalize_1.normalizePath(source.path + '/'),
+                        path: (0, normalize_1.normalizePath)(source.path + '/'),
                         source: sourceName
                     });
                     e.stopPropagation();
@@ -13319,7 +13322,7 @@ function stateListeners() {
                 }
                 if (options.renameFolder &&
                     _this.dataProvider.canI('FolderRename')) {
-                    var btn = ui_1.Button(_this, {
+                    var btn = (0, ui_1.Button)(_this, {
                         icon: { name: 'pencil' },
                         name: 'rename',
                         tooltip: 'Rename',
@@ -13330,7 +13333,7 @@ function stateListeners() {
                 }
                 if (options.deleteFolder &&
                     _this.dataProvider.canI('FolderRemove')) {
-                    var btn = ui_1.Button(_this, {
+                    var btn = (0, ui_1.Button)(_this, {
                         icon: { name: 'cancel' },
                         name: 'remove',
                         tooltip: 'Delete',
@@ -13342,10 +13345,10 @@ function stateListeners() {
             });
             if (options.createNewFolder &&
                 _this.dataProvider.canI('FolderCreate')) {
-                var button = ui_1.Button(_this, 'plus', 'Add folder', 'secondary');
+                var button = (0, ui_1.Button)(_this, 'plus', 'Add folder', 'secondary');
                 button.onAction(function () {
                     _this.e.fire('addFolder', {
-                        path: normalize_1.normalizePath(source.path + '/'),
+                        path: (0, normalize_1.normalizePath)(source.path + '/'),
                         source: sourceName
                     });
                 });
@@ -13390,7 +13393,7 @@ function nativeListeners() {
     };
     self.e
         .on(self.tree, 'dragstart', function (e) {
-        var a = exports.getItem(e.target, self.dialog.container);
+        var a = (0, exports.getItem)(e.target, self.dialog.container);
         if (!a) {
             return;
         }
@@ -13400,37 +13403,37 @@ function nativeListeners() {
     })
         .on(self.tree, 'drop', function (e) {
         if ((self.o.moveFile || self.o.moveFolder) && dragElement) {
-            var path = helpers_1.attr(dragElement, '-path') || '';
+            var path = (0, helpers_1.attr)(dragElement, '-path') || '';
             if (!self.o.moveFolder &&
                 dragElement.classList.contains(consts_1.F_CLASS + '__tree-item')) {
                 return false;
             }
             if (dragElement.classList.contains(consts_1.ITEM_CLASS)) {
-                path += helpers_1.attr(dragElement, '-name');
+                path += (0, helpers_1.attr)(dragElement, '-name');
                 if (!self.o.moveFile) {
                     return false;
                 }
             }
-            var a = exports.getItem(e.target, self.dialog.container);
+            var a = (0, exports.getItem)(e.target, self.dialog.container);
             if (!a) {
                 return;
             }
             self.dataProvider
-                .move(path, helpers_1.attr(a, '-path') || '', helpers_1.attr(a, '-source') || '', dragElement.classList.contains(consts_1.ITEM_CLASS))
+                .move(path, (0, helpers_1.attr)(a, '-path') || '', (0, helpers_1.attr)(a, '-source') || '', dragElement.classList.contains(consts_1.ITEM_CLASS))
                 .then(function () {
                 self.loadTree();
             }, self.status);
             dragElement = false;
         }
     })
-        .on(self.files, 'contextmenu', context_menu_1.default(self))
+        .on(self.files, 'contextmenu', (0, context_menu_1.default)(self))
         .on(self.files, 'click', function (e) {
-        if (!helpers_1.ctrlKey(e)) {
+        if (!(0, helpers_1.ctrlKey)(e)) {
             _this.state.activeElements = [];
         }
     })
         .on(self.files, 'click', function (e) {
-        var a = exports.getItem(e.target, self.dialog.container);
+        var a = (0, exports.getItem)(e.target, self.dialog.container);
         if (!a) {
             return;
         }
@@ -13438,20 +13441,20 @@ function nativeListeners() {
         if (!item) {
             return;
         }
-        if (!helpers_1.ctrlKey(e)) {
+        if (!(0, helpers_1.ctrlKey)(e)) {
             self.state.activeElements = [item];
         }
         else {
-            self.state.activeElements = tslib_1.__spreadArray(tslib_1.__spreadArray([], self.state.activeElements), [
+            self.state.activeElements = tslib_1.__spreadArray(tslib_1.__spreadArray([], self.state.activeElements, true), [
                 item
-            ]);
+            ], false);
         }
         e.stopPropagation();
         return false;
     })
         .on(self.files, 'dragstart', function (e) {
         if (self.o.moveFile) {
-            var a = exports.getItem(e.target, self.dialog.container);
+            var a = (0, exports.getItem)(e.target, self.dialog.container);
             if (!a) {
                 return;
             }
@@ -13489,23 +13492,23 @@ var image_editor_1 = __webpack_require__(195);
 var CLASS_PREVIEW = consts_1.F_CLASS + '_preview_', preview_tpl_next = function (next, right) {
     if (next === void 0) { next = 'next'; }
     if (right === void 0) { right = 'right'; }
-    return "<a href=\"javascript:void(0)\" class=\"" + CLASS_PREVIEW + "navigation " + CLASS_PREVIEW + "navigation-" + next + "\">" +
+    return "<a href=\"javascript:void(0)\" class=\"".concat(CLASS_PREVIEW, "navigation ").concat(CLASS_PREVIEW, "navigation-").concat(next, "\">") +
         '' +
         ui_1.Icon.get('angle-' + right) +
         '</a>';
 };
-exports.default = (function (self) {
+exports["default"] = (function (self) {
     if (!self.o.contextMenu) {
         return function () { };
     }
-    var contextmenu = factories_1.makeContextMenu(self);
+    var contextmenu = (0, factories_1.makeContextMenu)(self);
     return function (e) {
-        var a = native_listeners_1.getItem(e.target, self.dialog.container);
+        var a = (0, native_listeners_1.getItem)(e.target, self.dialog.container);
         if (!a) {
             return;
         }
         var item = a;
-        var opt = self.options, ga = function (key) { return helpers_1.attr(item, key) || ''; };
+        var opt = self.options, ga = function (key) { return (0, helpers_1.attr)(item, key) || ''; };
         self.async.setTimeout(function () {
             contextmenu.show(e.clientX, e.clientY, [
                 ga('data-is-file') !== '1' &&
@@ -13594,7 +13597,7 @@ exports.default = (function (self) {
                                     item = dom_1.Dom.prevWithClass(item, consts_1.ITEM_CLASS);
                                 }
                                 if (!item) {
-                                    throw helpers_1.error('Need element');
+                                    throw (0, helpers_1.error)('Need element');
                                 }
                                 dom_1.Dom.detach(temp_content);
                                 dom_1.Dom.detach(preview_box);
@@ -13729,7 +13732,7 @@ var ImageEditor = (function (_super) {
                 wn = nw * (h / nh);
                 hn = h;
             }
-            helpers_1.css(_this.crop_box, {
+            (0, helpers_1.css)(_this.crop_box, {
                 width: wn,
                 height: hn
             });
@@ -13752,8 +13755,8 @@ var ImageEditor = (function (_super) {
             else {
                 _this.new_h = ImageEditor_1.calcValueByPercent(h, _this.o.cropDefaultHeight);
             }
-            helpers_1.css(_this.cropHandler, {
-                backgroundImage: 'url(' + helpers_1.attr(_this.cropImage, 'src') + ')',
+            (0, helpers_1.css)(_this.cropHandler, {
+                backgroundImage: 'url(' + (0, helpers_1.attr)(_this.cropImage, 'src') + ')',
                 width: _this.new_w,
                 height: _this.new_h,
                 left: w / 2 - _this.new_w / 2,
@@ -13766,8 +13769,8 @@ var ImageEditor = (function (_super) {
                 return;
             }
             var ratioX = _this.cropImage.offsetWidth / _this.naturalWidth, ratioY = _this.cropImage.offsetHeight / _this.naturalHeight;
-            _this.cropBox.x = helpers_1.css(_this.cropHandler, 'left') / ratioX;
-            _this.cropBox.y = helpers_1.css(_this.cropHandler, 'top') / ratioY;
+            _this.cropBox.x = (0, helpers_1.css)(_this.cropHandler, 'left') / ratioX;
+            _this.cropBox.y = (0, helpers_1.css)(_this.cropHandler, 'top') / ratioY;
             _this.cropBox.w = _this.cropHandler.offsetWidth / ratioX;
             _this.cropBox.h = _this.cropHandler.offsetHeight / ratioY;
             _this.sizes.textContent =
@@ -13779,18 +13782,18 @@ var ImageEditor = (function (_super) {
         };
         _this.setHandlers = function () {
             var self = _this;
-            var _a = helpers_1.refs(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
+            var _a = (0, helpers_1.refs)(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
             self.j.e
                 .on([
                 self.editor.querySelector('.jodit_bottomright'),
                 self.cropHandler
-            ], "mousedown." + jie, _this.onResizeHandleMouseDown)
-                .on(_this.j.ow, "resize." + jie, function () {
+            ], "mousedown.".concat(jie), _this.onResizeHandleMouseDown)
+                .on(_this.j.ow, "resize.".concat(jie), function () {
                 _this.j.e.fire(self.resizeHandler, 'updatesize');
                 self.showCrop();
                 _this.j.e.fire(self.cropHandler, 'updatesize');
             });
-            helpers_1.$$('.jodit-button-group', self.editor).forEach(function (group) {
+            (0, helpers_1.$$)('.jodit-button-group', self.editor).forEach(function (group) {
                 var input = group.querySelector('input');
                 self.j.e.on(group, 'click', function () {
                     input.checked = !input.checked;
@@ -13798,9 +13801,9 @@ var ImageEditor = (function (_super) {
                 });
             });
             self.j.e
-                .on(helpers_1.toArray(_this.editor.querySelectorAll("." + jie + "__slider-title")), 'click', _this.onTitleModeClick)
+                .on((0, helpers_1.toArray)(_this.editor.querySelectorAll(".".concat(jie, "__slider-title"))), 'click', _this.onTitleModeClick)
                 .on([widthInput, heightInput], 'input', _this.onChangeSizeInput);
-            var _b = helpers_1.refs(_this.editor), keepAspectRatioResize = _b.keepAspectRatioResize, keepAspectRatioCrop = _b.keepAspectRatioCrop;
+            var _b = (0, helpers_1.refs)(_this.editor), keepAspectRatioResize = _b.keepAspectRatioResize, keepAspectRatioCrop = _b.keepAspectRatioCrop;
             if (keepAspectRatioResize) {
                 keepAspectRatioResize.addEventListener('change', function () {
                     _this.resizeUseRatio = keepAspectRatioResize.checked;
@@ -13813,7 +13816,7 @@ var ImageEditor = (function (_super) {
             }
             self.j.e
                 .on(self.resizeHandler, 'updatesize', function () {
-                helpers_1.css(self.resizeHandler, {
+                (0, helpers_1.css)(self.resizeHandler, {
                     top: 0,
                     left: 0,
                     width: self.image.offsetWidth || self.naturalWidth,
@@ -13825,7 +13828,7 @@ var ImageEditor = (function (_super) {
                 if (!self.cropImage) {
                     return;
                 }
-                var new_x = helpers_1.css(self.cropHandler, 'left'), new_y = helpers_1.css(self.cropHandler, 'top'), new_width = self.cropHandler.offsetWidth, new_height = self.cropHandler.offsetHeight;
+                var new_x = (0, helpers_1.css)(self.cropHandler, 'left'), new_y = (0, helpers_1.css)(self.cropHandler, 'top'), new_width = self.cropHandler.offsetWidth, new_height = self.cropHandler.offsetHeight;
                 if (new_x < 0) {
                     new_x = 0;
                 }
@@ -13844,7 +13847,7 @@ var ImageEditor = (function (_super) {
                         new_width = new_height * self.ratio;
                     }
                 }
-                helpers_1.css(self.cropHandler, {
+                (0, helpers_1.css)(self.cropHandler, {
                     width: new_width,
                     height: new_height,
                     left: new_x,
@@ -13867,24 +13870,24 @@ var ImageEditor = (function (_super) {
                     };
                     switch (button) {
                         case self.buttons.saveas:
-                            dialog_1.Prompt(self.j.i18n('Enter new name'), self.j.i18n('Save in new file'), function (name) {
-                                if (!helpers_1.trim(name)) {
-                                    dialog_1.Alert(self.j.i18n('The name should not be empty')).bindDestruct(_this.j);
+                            (0, dialog_1.Prompt)(self.j.i18n('Enter new name'), self.j.i18n('Save in new file'), function (name) {
+                                if (!(0, helpers_1.trim)(name)) {
+                                    (0, dialog_1.Alert)(self.j.i18n('The name should not be empty')).bindDestruct(_this.j);
                                     return false;
                                 }
                                 self.onSave(name, data, self.hide, function (e) {
-                                    dialog_1.Alert(e.message).bindDestruct(self.j);
+                                    (0, dialog_1.Alert)(e.message).bindDestruct(self.j);
                                 });
                             }).bindDestruct(_this.j);
                             break;
                         case self.buttons.save:
                             self.onSave(undefined, data, self.hide, function (e) {
-                                dialog_1.Alert(e.message).bindDestruct(self.j);
+                                (0, dialog_1.Alert)(e.message).bindDestruct(self.j);
                             });
                             break;
                         case self.buttons.reset:
                             if (self.activeTab === TABS.resize) {
-                                helpers_1.css(self.image, {
+                                (0, helpers_1.css)(self.image, {
                                     width: null,
                                     height: null
                                 });
@@ -13908,18 +13911,18 @@ var ImageEditor = (function (_super) {
         _this.resizeUseRatio = o.resizeUseRatio;
         _this.cropUseRatio = o.cropUseRatio;
         _this.buttons = {
-            reset: button_1.Button(_this.j, 'update', 'Reset'),
-            save: button_1.Button(_this.j, 'save', 'Save'),
-            saveas: button_1.Button(_this.j, 'save', 'Save as ...')
+            reset: (0, button_1.Button)(_this.j, 'update', 'Reset'),
+            save: (0, button_1.Button)(_this.j, 'save', 'Save'),
+            saveas: (0, button_1.Button)(_this.j, 'save', 'Save as ...')
         };
         _this.activeTab = o.resize ? TABS.resize : TABS.crop;
-        _this.editor = form_1.form(_this.j, _this.options);
-        var _a = helpers_1.refs(_this.editor), resizeBox = _a.resizeBox, cropBox = _a.cropBox;
+        _this.editor = (0, form_1.form)(_this.j, _this.options);
+        var _a = (0, helpers_1.refs)(_this.editor), resizeBox = _a.resizeBox, cropBox = _a.cropBox;
         _this.resize_box = resizeBox;
         _this.crop_box = cropBox;
-        _this.sizes = _this.editor.querySelector("." + jie + "__area." + jie + "__area_crop .jodit-image-editor__sizes");
-        _this.resizeHandler = _this.editor.querySelector("." + jie + "__resizer");
-        _this.cropHandler = _this.editor.querySelector("." + jie + "__croper");
+        _this.sizes = _this.editor.querySelector(".".concat(jie, "__area.").concat(jie, "__area_crop .jodit-image-editor__sizes"));
+        _this.resizeHandler = _this.editor.querySelector(".".concat(jie, "__resizer"));
+        _this.cropHandler = _this.editor.querySelector(".".concat(jie, "__croper"));
         _this.dialog = new dialog_1.Dialog({
             fullsize: _this.j.o.fullsize,
             globalFullSize: _this.j.o.globalFullSize,
@@ -13946,30 +13949,30 @@ var ImageEditor = (function (_super) {
         if (!slide) {
             return;
         }
-        helpers_1.$$("." + jie + "__slider,." + jie + "__area", self.editor).forEach(function (elm) {
-            return elm.classList.remove(jie + "_active");
+        (0, helpers_1.$$)(".".concat(jie, "__slider,.").concat(jie, "__area"), self.editor).forEach(function (elm) {
+            return elm.classList.remove("".concat(jie, "_active"));
         });
-        slide.classList.add(jie + "_active");
-        self.activeTab = helpers_1.attr(slide, '-area') || TABS.resize;
-        var tab = self.editor.querySelector("." + jie + "__area." + jie + "__area_" + self.activeTab);
+        slide.classList.add("".concat(jie, "_active"));
+        self.activeTab = (0, helpers_1.attr)(slide, '-area') || TABS.resize;
+        var tab = self.editor.querySelector(".".concat(jie, "__area.").concat(jie, "__area_") + self.activeTab);
         if (tab) {
-            tab.classList.add(jie + "_active");
+            tab.classList.add("".concat(jie, "_active"));
         }
         if (self.activeTab === TABS.crop) {
             self.showCrop();
         }
     };
     ImageEditor.prototype.onChangeSizeInput = function (e) {
-        var self = this, input = e.target, _a = helpers_1.refs(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput, isWidth = helpers_1.attr(input, 'data-ref') === 'widthInput', x = parseInt(input.value, 10), minX = isWidth ? self.o.min_width : self.o.min_height, minY = !isWidth ? self.o.min_width : self.o.min_height;
+        var self = this, input = e.target, _a = (0, helpers_1.refs)(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput, isWidth = (0, helpers_1.attr)(input, 'data-ref') === 'widthInput', x = parseInt(input.value, 10), minX = isWidth ? self.o.min_width : self.o.min_height, minY = !isWidth ? self.o.min_width : self.o.min_height;
         var y;
         if (x > minX) {
-            helpers_1.css(self.image, isWidth ? 'width' : 'height', x);
+            (0, helpers_1.css)(self.image, isWidth ? 'width' : 'height', x);
             if (self.resizeUseRatio) {
                 y = isWidth
                     ? Math.round(x / self.ratio)
                     : Math.round(x * self.ratio);
                 if (y > minY) {
-                    helpers_1.css(self.image, !isWidth ? 'width' : 'height', y);
+                    (0, helpers_1.css)(self.image, !isWidth ? 'width' : 'height', y);
                     if (isWidth) {
                         heightInput.value = y.toString();
                     }
@@ -13990,8 +13993,8 @@ var ImageEditor = (function (_super) {
         self.start_x = e.clientX;
         self.start_y = e.clientY;
         if (self.activeTab === TABS.crop) {
-            self.top_x = helpers_1.css(self.cropHandler, 'left');
-            self.top_y = helpers_1.css(self.cropHandler, 'top');
+            self.top_x = (0, helpers_1.css)(self.cropHandler, 'left');
+            self.top_y = (0, helpers_1.css)(self.cropHandler, 'top');
             self.width = self.cropHandler.offsetWidth;
             self.height = self.cropHandler.offsetHeight;
         }
@@ -14015,7 +14018,7 @@ var ImageEditor = (function (_super) {
         if (!self.clicked) {
             return;
         }
-        var _a = helpers_1.refs(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
+        var _a = (0, helpers_1.refs)(this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
         self.diff_x = e.clientX - self.start_x;
         self.diff_y = e.clientY - self.start_y;
         if ((self.activeTab === TABS.resize && self.resizeUseRatio) ||
@@ -14035,11 +14038,11 @@ var ImageEditor = (function (_super) {
         }
         if (self.activeTab === TABS.resize) {
             if (self.new_w > self.o.resizeMinWidth) {
-                helpers_1.css(self.image, 'width', self.new_w + 'px');
+                (0, helpers_1.css)(self.image, 'width', self.new_w + 'px');
                 widthInput.value = self.new_w.toString();
             }
             if (self.new_h > self.o.resizeMinHeight) {
-                helpers_1.css(self.image, 'height', self.new_h + 'px');
+                (0, helpers_1.css)(self.image, 'height', self.new_h + 'px');
                 heightInput.value = self.new_h.toString();
             }
             this.j.e.fire(self.resizeHandler, 'updatesize');
@@ -14052,7 +14055,7 @@ var ImageEditor = (function (_super) {
                 if (self.top_y + self.new_h > self.cropImage.offsetHeight) {
                     self.new_h = self.cropImage.offsetHeight - self.top_y;
                 }
-                helpers_1.css(self.cropHandler, {
+                (0, helpers_1.css)(self.cropHandler, {
                     width: self.new_w,
                     height: self.new_h
                 });
@@ -14065,7 +14068,7 @@ var ImageEditor = (function (_super) {
                             self.top_x -
                             self.cropHandler.offsetWidth;
                 }
-                helpers_1.css(self.cropHandler, 'left', self.top_x + self.diff_x);
+                (0, helpers_1.css)(self.cropHandler, 'left', self.top_x + self.diff_x);
                 if (self.top_y + self.diff_y + self.cropHandler.offsetHeight >
                     self.cropImage.offsetHeight) {
                     self.diff_y =
@@ -14073,7 +14076,7 @@ var ImageEditor = (function (_super) {
                             self.top_y -
                             self.cropHandler.offsetHeight;
                 }
-                helpers_1.css(self.cropHandler, 'top', self.top_y + self.diff_y);
+                (0, helpers_1.css)(self.cropHandler, 'top', self.top_y + self.diff_y);
             }
             this.j.e.fire(self.cropHandler, 'updatesize');
         }
@@ -14093,9 +14096,9 @@ var ImageEditor = (function (_super) {
         return this.j.async.promise(function (resolve) {
             var timestamp = new Date().getTime();
             _this.image = _this.j.c.element('img');
-            helpers_1.$$('img,.jodit-icon_loader', _this.resize_box).forEach(dom_1.Dom.safeRemove);
-            helpers_1.$$('img,.jodit-icon_loader', _this.crop_box).forEach(dom_1.Dom.safeRemove);
-            helpers_1.css(_this.cropHandler, 'background', 'transparent');
+            (0, helpers_1.$$)('img,.jodit-icon_loader', _this.resize_box).forEach(dom_1.Dom.safeRemove);
+            (0, helpers_1.$$)('img,.jodit-icon_loader', _this.crop_box).forEach(dom_1.Dom.safeRemove);
+            (0, helpers_1.css)(_this.cropHandler, 'background', 'transparent');
             _this.onSave = save;
             _this.resize_box.appendChild(_this.j.c.element('i', { class: 'jodit-icon_loader' }));
             _this.crop_box.appendChild(_this.j.c.element('i', { class: 'jodit-icon_loader' }));
@@ -14107,7 +14110,7 @@ var ImageEditor = (function (_super) {
             }
             _this.image.setAttribute('src', url);
             _this.dialog.open();
-            var _a = helpers_1.refs(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
+            var _a = (0, helpers_1.refs)(_this.editor), widthInput = _a.widthInput, heightInput = _a.heightInput;
             var onload = function () {
                 if (_this.isDestructed) {
                     return;
@@ -14121,7 +14124,7 @@ var ImageEditor = (function (_super) {
                 _this.resize_box.appendChild(_this.image);
                 _this.cropImage = _this.image.cloneNode(true);
                 _this.crop_box.appendChild(_this.cropImage);
-                helpers_1.$$('.jodit-icon_loader', _this.editor).forEach(dom_1.Dom.safeRemove);
+                (0, helpers_1.$$)('.jodit-icon_loader', _this.editor).forEach(dom_1.Dom.safeRemove);
                 if (_this.activeTab === TABS.crop) {
                     _this.showCrop();
                 }
@@ -14149,8 +14152,8 @@ var ImageEditor = (function (_super) {
             this.j.e
                 .off(this.j.ow, 'mousemove', this.onGlobalMouseMove)
                 .off(this.j.ow, 'mouseup', this.onGlobalMouseUp)
-                .off(this.ow, "." + jie)
-                .off("." + jie);
+                .off(this.ow, ".".concat(jie))
+                .off(".".concat(jie));
         }
         _super.prototype.destruct.call(this);
     };
@@ -14173,7 +14176,7 @@ var ImageEditor = (function (_super) {
         decorators_1.autobind
     ], ImageEditor.prototype, "onTitleModeClick", null);
     tslib_1.__decorate([
-        decorators_1.debounce()
+        (0, decorators_1.debounce)()
     ], ImageEditor.prototype, "onChangeSizeInput", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -14182,7 +14185,7 @@ var ImageEditor = (function (_super) {
         decorators_1.autobind
     ], ImageEditor.prototype, "onGlobalMouseUp", null);
     tslib_1.__decorate([
-        decorators_1.throttle(10)
+        (0, decorators_1.throttle)(10)
     ], ImageEditor.prototype, "onGlobalMouseMove", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -14259,17 +14262,17 @@ var form = function (editor, o) {
     var i = editor.i18n.bind(editor);
     var switcher = function (label, ref, active) {
         if (active === void 0) { active = true; }
-        return "<div class=\"jodit-form__group\">\n\t\t<label>" + i(label) + "</label>\n\t\t<div class=\"jodit-button-group jodit-button_radio_group\">\n\t\t\t<input " + act(active, 'checked') + " data-ref=\"" + ref + "\" type=\"checkbox\" class=\"jodit-input\"/>\n\n\t\t\t<button type=\"button\" data-yes=\"1\" class=\"jodit-ui-button jodit-ui-button_status_success\">" + i('Yes') + "</button>\n\n\t\t\t<button type=\"button\" class=\"jodit-ui-button jodit-ui-button_status_danger\">" + i('No') + "</button>\n\t\t</div>\n\t</div>";
+        return "<div class=\"jodit-form__group\">\n\t\t<label>".concat(i(label), "</label>\n\t\t<div class=\"jodit-button-group jodit-button_radio_group\">\n\t\t\t<input ").concat(act(active, 'checked'), " data-ref=\"").concat(ref, "\" type=\"checkbox\" class=\"jodit-input\"/>\n\n\t\t\t<button type=\"button\" data-yes=\"1\" class=\"jodit-ui-button jodit-ui-button_status_success\">").concat(i('Yes'), "</button>\n\n\t\t\t<button type=\"button\" class=\"jodit-ui-button jodit-ui-button_status_danger\">").concat(i('No'), "</button>\n\t\t</div>\n\t</div>");
     };
-    return editor.create.fromHTML("<form class=\"" + jie + " jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-3-4 jodit_col-sm-5-5\">\n\t\t\t" + (o.resize
-        ? "<div class=\"" + jie + "__area " + jie + "__area_resize " + jie + "_active\">\n\t\t\t\t\t\t\t<div data-ref=\"resizeBox\" class=\"" + jie + "__box\"></div>\n\t\t\t\t\t\t\t<div class=\"" + jie + "__resizer\">\n\t\t\t\t\t\t\t\t<i class=\"jodit_bottomright\"></i>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>"
-        : '') + "\n\t\t\t" + (o.crop
-        ? "<div class=\"" + jie + "__area " + jie + "__area_crop " + act(!o.resize) + "\">\n\t\t\t\t\t\t\t<div data-ref=\"cropBox\" class=\"" + jie + "__box\">\n\t\t\t\t\t\t\t\t<div class=\"" + jie + "__croper\">\n\t\t\t\t\t\t\t\t\t<i class=\"jodit_bottomright\"></i>\n\t\t\t\t\t\t\t\t\t<i class=\"" + jie + "__sizes\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>"
-        : '') + "\n\t\t\t</div>\n\t\t\t<div class=\"jodit_col-lg-1-4 jodit_col-sm-5-5\">\n\t\t\t" + (o.resize
-        ? "<div data-area=\"resize\" class=\"" + jie + "__slider " + jie + "_active\">\n\t\t\t\t\t\t\t<div class=\"" + jie + "__slider-title\">\n\t\t\t\t\t\t\t\t" + gi('resize') + "\n\t\t\t\t\t\t\t\t" + i('Resize') + "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"" + jie + "__slider-content\">\n\t\t\t\t\t\t\t\t<div class=\"jodit-form__group\">\n\t\t\t\t\t\t\t\t\t<label>\n\t\t\t\t\t\t\t\t\t\t" + i('Width') + "\n\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t<input type=\"number\" data-ref=\"widthInput\" class=\"jodit-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"jodit-form__group\">\n\t\t\t\t\t\t\t\t\t<label>\n\t\t\t\t\t\t\t\t\t\t" + i('Height') + "\n\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t<input type=\"number\" data-ref=\"heightInput\" class=\"jodit-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t" + switcher('Keep Aspect Ratio', 'keepAspectRatioResize') + "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>"
-        : '') + "\n\t\t\t" + (o.crop
-        ? "<div data-area=\"crop\" class=\"" + jie + "__slider " + act(!o.resize) + "'\">\n\t\t\t\t\t\t\t<div class=\"" + jie + "__slider-title\">\n\t\t\t\t\t\t\t\t" + gi('crop') + "\n\t\t\t\t\t\t\t\t" + i('Crop') + "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"" + jie + "__slider-content\">\n\t\t\t\t\t\t\t\t" + switcher('Keep Aspect Ratio', 'keepAspectRatioCrop') + "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>"
-        : '') + "\n\t\t\t</div>\n\t\t</div>\n\t</form>");
+    return editor.create.fromHTML("<form class=\"".concat(jie, " jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-3-4 jodit_col-sm-5-5\">\n\t\t\t").concat(o.resize
+        ? "<div class=\"".concat(jie, "__area ").concat(jie, "__area_resize ").concat(jie, "_active\">\n\t\t\t\t\t\t\t<div data-ref=\"resizeBox\" class=\"").concat(jie, "__box\"></div>\n\t\t\t\t\t\t\t<div class=\"").concat(jie, "__resizer\">\n\t\t\t\t\t\t\t\t<i class=\"jodit_bottomright\"></i>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>")
+        : '', "\n\t\t\t").concat(o.crop
+        ? "<div class=\"".concat(jie, "__area ").concat(jie, "__area_crop ").concat(act(!o.resize), "\">\n\t\t\t\t\t\t\t<div data-ref=\"cropBox\" class=\"").concat(jie, "__box\">\n\t\t\t\t\t\t\t\t<div class=\"").concat(jie, "__croper\">\n\t\t\t\t\t\t\t\t\t<i class=\"jodit_bottomright\"></i>\n\t\t\t\t\t\t\t\t\t<i class=\"").concat(jie, "__sizes\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>")
+        : '', "\n\t\t\t</div>\n\t\t\t<div class=\"jodit_col-lg-1-4 jodit_col-sm-5-5\">\n\t\t\t").concat(o.resize
+        ? "<div data-area=\"resize\" class=\"".concat(jie, "__slider ").concat(jie, "_active\">\n\t\t\t\t\t\t\t<div class=\"").concat(jie, "__slider-title\">\n\t\t\t\t\t\t\t\t").concat(gi('resize'), "\n\t\t\t\t\t\t\t\t").concat(i('Resize'), "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"").concat(jie, "__slider-content\">\n\t\t\t\t\t\t\t\t<div class=\"jodit-form__group\">\n\t\t\t\t\t\t\t\t\t<label>\n\t\t\t\t\t\t\t\t\t\t").concat(i('Width'), "\n\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t<input type=\"number\" data-ref=\"widthInput\" class=\"jodit-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"jodit-form__group\">\n\t\t\t\t\t\t\t\t\t<label>\n\t\t\t\t\t\t\t\t\t\t").concat(i('Height'), "\n\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t<input type=\"number\" data-ref=\"heightInput\" class=\"jodit-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t").concat(switcher('Keep Aspect Ratio', 'keepAspectRatioResize'), "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>")
+        : '', "\n\t\t\t").concat(o.crop
+        ? "<div data-area=\"crop\" class=\"".concat(jie, "__slider ").concat(act(!o.resize), "'\">\n\t\t\t\t\t\t\t<div class=\"").concat(jie, "__slider-title\">\n\t\t\t\t\t\t\t\t").concat(gi('crop'), "\n\t\t\t\t\t\t\t\t").concat(i('Crop'), "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"").concat(jie, "__slider-content\">\n\t\t\t\t\t\t\t\t").concat(switcher('Keep Aspect Ratio', 'keepAspectRatioCrop'), "\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>")
+        : '', "\n\t\t\t</div>\n\t\t</div>\n\t</form>"));
 };
 exports.form = form;
 
@@ -14323,14 +14326,14 @@ function selfListeners() {
                 .join('/');
         }
         else {
-            path = helpers_1.normalizePath(data.path, data.name);
+            path = (0, helpers_1.normalizePath)(data.path, data.name);
         }
         self.state.currentPath = path;
         self.state.currentSource =
             data.name === '.' ? data_provider_1.DEFAULT_SOURCE_NAME : data.source;
     })
         .on('removeFolder.filebrowser', function (data) {
-        dialog_1.Confirm(self.i18n('Are you sure?'), self.i18n('Delete'), function (yes) {
+        (0, dialog_1.Confirm)(self.i18n('Are you sure?'), self.i18n('Delete'), function (yes) {
             if (yes) {
                 dp.folderRemove(data.path, data.name, data.source)
                     .then(function (message) {
@@ -14342,8 +14345,8 @@ function selfListeners() {
         }).bindDestruct(self);
     })
         .on('renameFolder.filebrowser', function (data) {
-        dialog_1.Prompt(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
-            if (!checker_1.isValidName(newName)) {
+        (0, dialog_1.Prompt)(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
+            if (!(0, checker_1.isValidName)(newName)) {
                 self.status(self.i18n('Enter new name'));
                 return false;
             }
@@ -14358,7 +14361,7 @@ function selfListeners() {
         }, self.i18n('type name'), data.name).bindDestruct(self);
     })
         .on('addFolder.filebrowser', function (data) {
-        dialog_1.Prompt(self.i18n('Enter Directory name'), self.i18n('Create directory'), function (name) {
+        (0, dialog_1.Prompt)(self.i18n('Enter Directory name'), self.i18n('Create directory'), function (name) {
             dp.createFolder(name, data.path, data.source).then(function () {
                 self.loadTree();
             }, self.status);
@@ -14366,7 +14369,7 @@ function selfListeners() {
     })
         .on('fileRemove.filebrowser', function () {
         if (self.state.activeElements.length) {
-            dialog_1.Confirm(self.i18n('Are you sure?'), '', function (yes) {
+            (0, dialog_1.Confirm)(self.i18n('Are you sure?'), '', function (yes) {
                 if (yes) {
                     var promises_1 = [];
                     self.state.activeElements.forEach(function (item) {
@@ -14388,8 +14391,8 @@ function selfListeners() {
     })
         .on('fileRename.filebrowser', function (name, path, source) {
         if (self.state.activeElements.length === 1) {
-            dialog_1.Prompt(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
-                if (!checker_1.isValidName(newName)) {
+            (0, dialog_1.Prompt)(self.i18n('Enter new name'), self.i18n('Rename'), function (newName) {
+                if (!(0, checker_1.isValidName)(newName)) {
                     self.status(self.i18n('Enter new name'));
                     return false;
                 }
@@ -14543,7 +14546,7 @@ var Observer = (function (_super) {
         _super.prototype.destruct.call(this);
     };
     tslib_1.__decorate([
-        decorators_1.debounce()
+        (0, decorators_1.debounce)()
     ], Observer.prototype, "onChange", null);
     return Observer;
 }(component_1.ViewComponent));
@@ -14931,7 +14934,7 @@ var ApplyStyle = (function () {
         }
         else {
             selInfo = sel.save();
-            helpers_1.normalizeNode(sel.area.firstChild);
+            (0, helpers_1.normalizeNode)(sel.area.firstChild);
             sel.wrapInTag(this.applyToElement);
         }
         sel.restore(selInfo);
@@ -14974,12 +14977,12 @@ var ApplyStyle = (function () {
             }
         }
         var newWrapper = dom_1.Dom.replace(wrapper, this.style.element, this.jodit.createInside, true);
-        helpers_1.attr(newWrapper, 'size', null);
+        (0, helpers_1.attr)(newWrapper, 'size', null);
         if (this.style.elementIsBlock) {
             this.postProcessListElement(newWrapper);
         }
         if (this.style.options.style && this.style.elementIsDefault) {
-            helpers_1.css(newWrapper, this.style.options.style);
+            (0, helpers_1.css)(newWrapper, this.style.options.style);
         }
         if (this.style.options.className) {
             newWrapper.classList.toggle(this.style.options.className);
@@ -15029,7 +15032,7 @@ var ApplyStyle = (function () {
             leftRange.setEndBefore(font);
             var leftFragment = leftRange.extractContents();
             if ((!leftFragment.textContent ||
-                !helpers_1.trim(leftFragment.textContent).length) &&
+                !(0, helpers_1.trim)(leftFragment.textContent).length) &&
                 leftFragment.firstChild) {
                 dom_1.Dom.unwrap(leftFragment.firstChild);
             }
@@ -15040,7 +15043,7 @@ var ApplyStyle = (function () {
             leftRange.setEndAfter(wrapper);
             var rightFragment = leftRange.extractContents();
             if ((!rightFragment.textContent ||
-                !helpers_1.trim(rightFragment.textContent).length) &&
+                !(0, helpers_1.trim)(rightFragment.textContent).length) &&
                 rightFragment.firstChild) {
                 dom_1.Dom.unwrap(rightFragment.firstChild);
             }
@@ -15051,15 +15054,15 @@ var ApplyStyle = (function () {
         return false;
     };
     ApplyStyle.prototype.elementHasSameStyle = function (elm, rules) {
-        return Boolean(checker_1.isPlainObject(rules) &&
+        return Boolean((0, checker_1.isPlainObject)(rules) &&
             !dom_1.Dom.isTag(elm, 'font') &&
             dom_1.Dom.isHTMLElement(elm, this.jodit.ew) &&
-            helpers_1.each(rules, function (property, checkValue) {
-                var value = helpers_1.css(elm, property, undefined, true);
-                return (!checker_1.isVoid(value) &&
+            (0, helpers_1.each)(rules, function (property, checkValue) {
+                var value = (0, helpers_1.css)(elm, property, undefined, true);
+                return (!(0, checker_1.isVoid)(value) &&
                     value !== '' &&
-                    !checker_1.isVoid(checkValue) &&
-                    helpers_1.normalizeCssValue(property, checkValue)
+                    !(0, checker_1.isVoid)(checkValue) &&
+                    (0, helpers_1.normalizeCssValue)(property, checkValue)
                         .toString()
                         .toLowerCase() === value.toString().toLowerCase());
             }));
@@ -15086,15 +15089,15 @@ var ApplyStyle = (function () {
         if (style && elm.nodeName.toLowerCase() === this.style.defaultTag) {
             Object.keys(style).forEach(function (rule) {
                 if (_this.mode === mode.UNWRAP ||
-                    helpers_1.css(elm, rule) ===
-                        helpers_1.normalizeCssValue(rule, style[rule])) {
-                    helpers_1.css(elm, rule, '');
+                    (0, helpers_1.css)(elm, rule) ===
+                        (0, helpers_1.normalizeCssValue)(rule, style[rule])) {
+                    (0, helpers_1.css)(elm, rule, '');
                     if (_this.mode === undefined) {
                         _this.mode = mode.UNWRAP;
                     }
                 }
                 else {
-                    helpers_1.css(elm, rule, style[rule]);
+                    (0, helpers_1.css)(elm, rule, style[rule]);
                     if (_this.mode === undefined) {
                         _this.mode = mode.WRAP;
                     }
@@ -15103,7 +15106,7 @@ var ApplyStyle = (function () {
         }
         var isBlock = dom_1.Dom.isBlock(elm, this.jodit.ew);
         var isSuitableInline = !isBlock &&
-            (!helpers_1.attr(elm, 'style') ||
+            (!(0, helpers_1.attr)(elm, 'style') ||
                 elm.nodeName.toLowerCase() !== this.style.defaultTag);
         var isSuitableBlock = !isSuitableInline &&
             isBlock &&
@@ -15257,7 +15260,7 @@ var Select = (function () {
                         return;
                     }
                     if (current.nodeName.match(/^(UL|OL)$/)) {
-                        return helpers_1.toArray(current.childNodes).forEach(forEvery_1);
+                        return (0, helpers_1.toArray)(current.childNodes).forEach(forEvery_1);
                     }
                     if (dom_1.Dom.isTag(current, 'li')) {
                         if (current.firstChild) {
@@ -15290,7 +15293,7 @@ var Select = (function () {
     });
     Select.prototype.errorNode = function (node) {
         if (!dom_1.Dom.isNode(node, this.win)) {
-            throw helpers_1.error('Parameter node must be instance of Node');
+            throw (0, helpers_1.error)('Parameter node must be instance of Node');
         }
     };
     Object.defineProperty(Select.prototype, "area", {
@@ -15357,7 +15360,7 @@ var Select = (function () {
     };
     Select.prototype.removeNode = function (node) {
         if (!dom_1.Dom.isOrContains(this.j.editor, node, true)) {
-            throw helpers_1.error("Selection.removeNode can remove only editor's children");
+            throw (0, helpers_1.error)("Selection.removeNode can remove only editor's children");
         }
         dom_1.Dom.safeRemove(node);
         this.j.e.fire('afterRemoveNode', node);
@@ -15388,7 +15391,7 @@ var Select = (function () {
         return false;
     };
     Select.prototype.removeMarkers = function () {
-        helpers_1.$$('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(dom_1.Dom.safeRemove);
+        (0, helpers_1.$$)('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(dom_1.Dom.safeRemove);
     };
     Select.prototype.marker = function (atStart, range) {
         if (atStart === void 0) { atStart = false; }
@@ -15418,7 +15421,7 @@ var Select = (function () {
     Select.prototype.restore = function (selectionInfo) {
         var _this = this;
         if (selectionInfo === void 0) { selectionInfo = []; }
-        if (helpers_1.isArray(selectionInfo)) {
+        if ((0, helpers_1.isArray)(selectionInfo)) {
             var range_1 = false;
             selectionInfo.forEach(function (selection) {
                 var end = _this.area.querySelector('#' + selection.endId), start = _this.area.querySelector('#' + selection.startId);
@@ -15692,8 +15695,8 @@ var Select = (function () {
     Select.prototype.insertImage = function (url, styles, defaultWidth) {
         if (styles === void 0) { styles = null; }
         if (defaultWidth === void 0) { defaultWidth = null; }
-        var image = helpers_1.isString(url) ? this.j.createInside.element('img') : url;
-        if (helpers_1.isString(url)) {
+        var image = (0, helpers_1.isString)(url) ? this.j.createInside.element('img') : url;
+        if ((0, helpers_1.isString)(url)) {
             image.setAttribute('src', url);
         }
         if (defaultWidth != null) {
@@ -15704,10 +15707,10 @@ var Select = (function () {
                 String(dw).indexOf('%') < 0) {
                 dw += 'px';
             }
-            helpers_1.css(image, 'width', dw);
+            (0, helpers_1.css)(image, 'width', dw);
         }
         if (styles && typeof styles === 'object') {
-            helpers_1.css(image, styles);
+            (0, helpers_1.css)(image, styles);
         }
         var onload = function () {
             if (image.naturalHeight < image.offsetHeight ||
@@ -15740,17 +15743,17 @@ var Select = (function () {
         };
         if (dom_1.Dom.isText(container)) {
             var text = ((_b = container.nodeValue) === null || _b === void 0 ? void 0 : _b.length) ? container.nodeValue : '';
-            if (end && text.replace(constants_1.INVISIBLE_SPACE_REG_EXP_END(), '').length > offset) {
+            if (end && text.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_END)(), '').length > offset) {
                 return false;
             }
-            var inv = constants_1.INVISIBLE_SPACE_REG_EXP_START().exec(text);
+            var inv = (0, constants_1.INVISIBLE_SPACE_REG_EXP_START)().exec(text);
             if (start &&
                 ((inv && inv[0].length < offset) || (!inv && offset > 0))) {
                 return false;
             }
         }
         else {
-            var children = helpers_1.toArray(container.childNodes);
+            var children = (0, helpers_1.toArray)(container.childNodes);
             if (end) {
                 if (children.slice(offset).some(check)) {
                     return false;
@@ -15762,7 +15765,7 @@ var Select = (function () {
                 }
             }
         }
-        return !helpers_1.call(start ? dom_1.Dom.prev : dom_1.Dom.next, current, check, parentBlock);
+        return !(0, helpers_1.call)(start ? dom_1.Dom.prev : dom_1.Dom.next, current, check, parentBlock);
     };
     Select.prototype.cursorOnTheLeft = function (parentBlock) {
         return this.cursorInTheEdge(true, parentBlock);
@@ -15783,7 +15786,7 @@ var Select = (function () {
         if (!dom_1.Dom.up(node, function (elm) {
             return elm === _this.area || (elm && elm.parentNode === _this.area);
         }, this.area)) {
-            throw helpers_1.error('Node element must be in editor');
+            throw (0, helpers_1.error)('Node element must be in editor');
         }
         var range = this.createRange();
         var fakeNode = null;
@@ -15813,7 +15816,7 @@ var Select = (function () {
         if (!dom_1.Dom.up(node, function (elm) {
             return elm === _this.area || (elm && elm.parentNode === _this.area);
         }, this.area)) {
-            throw helpers_1.error('Node element must be in editor');
+            throw (0, helpers_1.error)('Node element must be in editor');
         }
         var range = this.createRange();
         var start = node, last = node;
@@ -15858,7 +15861,7 @@ var Select = (function () {
         if (!dom_1.Dom.up(node, function (elm) {
             return elm === _this.area || (elm && elm.parentNode === _this.area);
         }, this.area)) {
-            throw helpers_1.error('Node element must be in editor');
+            throw (0, helpers_1.error)('Node element must be in editor');
         }
         var range = this.createRange();
         range[inward ? 'selectNodeContents' : 'selectNode'](node);
@@ -15881,7 +15884,7 @@ var Select = (function () {
     });
     Select.prototype.wrapInTag = function (tagOrCallback) {
         var _this = this;
-        helpers_1.$$('*[style*=font-size]', this.area).forEach(function (elm) {
+        (0, helpers_1.$$)('*[style*=font-size]', this.area).forEach(function (elm) {
             elm.style &&
                 elm.style.fontSize &&
                 elm.setAttribute('data-font-size', elm.style.fontSize.toString());
@@ -15891,25 +15894,25 @@ var Select = (function () {
         }
         else {
             var font = this.j.createInside.element('font');
-            helpers_1.attr(font, 'size', 7);
+            (0, helpers_1.attr)(font, 'size', 7);
             this.insertNode(font, false, false);
         }
-        helpers_1.$$('*[data-font-size]', this.area).forEach(function (elm) {
-            var fontSize = helpers_1.attr(elm, 'data-font-size');
+        (0, helpers_1.$$)('*[data-font-size]', this.area).forEach(function (elm) {
+            var fontSize = (0, helpers_1.attr)(elm, 'data-font-size');
             if (elm.style && fontSize) {
                 elm.style.fontSize = fontSize;
                 elm.removeAttribute('data-font-size');
             }
         });
         var result = [];
-        helpers_1.$$('font[size="7"]', this.area).forEach(function (font) {
+        (0, helpers_1.$$)('font[size="7"]', this.area).forEach(function (font) {
             try {
                 if (font.firstChild &&
                     font.firstChild === font.lastChild &&
                     _this.isMarker(font.firstChild)) {
                     return;
                 }
-                if (helpers_1.isFunction(tagOrCallback)) {
+                if ((0, helpers_1.isFunction)(tagOrCallback)) {
                     tagOrCallback(font);
                 }
                 else {
@@ -16148,15 +16151,15 @@ var Table = (function (_super) {
         return 'Table';
     };
     Table.prototype.recalculateStyles = function () {
-        var style = global_1.getContainer(this.j, Table, 'style', true);
+        var style = (0, global_1.getContainer)(this.j, Table, 'style', true);
         var selectors = [];
         this.selected.forEach(function (td) {
-            var selector = helpers_1.cssPath(td);
+            var selector = (0, helpers_1.cssPath)(td);
             selector && selectors.push(selector);
         });
         style.innerHTML = selectors.length
             ? selectors.join(',') +
-                ("{" + this.jodit.options.table.selectionCellStyle + "}")
+                "{".concat(this.jodit.options.table.selectionCellStyle, "}")
             : '';
     };
     Table.prototype.addSelection = function (td) {
@@ -16184,11 +16187,11 @@ var Table = (function (_super) {
         }
     };
     Table.prototype.getAllSelectedCells = function () {
-        return helpers_1.toArray(this.selected);
+        return (0, helpers_1.toArray)(this.selected);
     };
     Table.getSelectedCellsByTable = function (table) {
         var cells = Table.selectedByTable.get(table);
-        return cells ? helpers_1.toArray(cells) : [];
+        return cells ? (0, helpers_1.toArray)(cells) : [];
     };
     Table.prototype.destruct = function () {
         this.selected.clear();
@@ -16205,7 +16208,7 @@ var Table = (function (_super) {
     };
     Table.formalMatrix = function (table, callback) {
         var matrix = [[]];
-        var rows = helpers_1.toArray(table.rows);
+        var rows = (0, helpers_1.toArray)(table.rows);
         var setCell = function (cell, i) {
             if (matrix[i] === undefined) {
                 matrix[i] = [];
@@ -16229,7 +16232,7 @@ var Table = (function (_super) {
             }
         };
         for (var i = 0; i < rows.length; i += 1) {
-            var cells = helpers_1.toArray(rows[i].cells);
+            var cells = (0, helpers_1.toArray)(rows[i].cells);
             for (var j = 0; j < cells.length; j += 1) {
                 if (setCell(cells[j], i) === false) {
                     return matrix;
@@ -16267,14 +16270,14 @@ var Table = (function (_super) {
         }
         else {
             row = line.cloneNode(true);
-            helpers_1.$$('td,th', line).forEach(function (cell) {
-                var rowspan = helpers_1.attr(cell, 'rowspan');
+            (0, helpers_1.$$)('td,th', line).forEach(function (cell) {
+                var rowspan = (0, helpers_1.attr)(cell, 'rowspan');
                 if (rowspan && parseInt(rowspan, 10) > 1) {
                     var newRowSpan = parseInt(rowspan, 10) - 1;
-                    helpers_1.attr(cell, 'rowspan', newRowSpan > 1 ? newRowSpan : null);
+                    (0, helpers_1.attr)(cell, 'rowspan', newRowSpan > 1 ? newRowSpan : null);
                 }
             });
-            helpers_1.$$('td,th', row).forEach(function (cell) {
+            (0, helpers_1.$$)('td,th', row).forEach(function (cell) {
                 cell.innerHTML = '';
             });
         }
@@ -16286,14 +16289,14 @@ var Table = (function (_super) {
             line.parentNode && line.parentNode.insertBefore(row, line);
         }
         else {
-            (helpers_1.$$(':scope>tbody', table)[0] || table).appendChild(row);
+            ((0, helpers_1.$$)(':scope>tbody', table)[0] || table).appendChild(row);
         }
     };
     Table.removeRow = function (table, rowIndex) {
         var box = Table.formalMatrix(table);
         var dec;
         var row = table.rows[rowIndex];
-        helpers_1.each(box[rowIndex], function (j, cell) {
+        (0, helpers_1.each)(box[rowIndex], function (j, cell) {
             dec = false;
             if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
                 dec = true;
@@ -16321,7 +16324,7 @@ var Table = (function (_super) {
             if (dec &&
                 (cell.parentNode === row || cell !== box[rowIndex][j - 1])) {
                 var rowSpan = cell.rowSpan;
-                helpers_1.attr(cell, 'rowspan', rowSpan - 1 > 1 ? (rowSpan - 1).toString() : null);
+                (0, helpers_1.attr)(cell, 'rowspan', rowSpan - 1 > 1 ? (rowSpan - 1).toString() : null);
             }
         });
         dom_1.Dom.safeRemove(row);
@@ -16358,14 +16361,14 @@ var Table = (function (_super) {
                 }
             }
             if (!added) {
-                box[i][j].setAttribute('colspan', (parseInt(helpers_1.attr(box[i][j], 'colspan') || '1', 10) + 1).toString());
+                box[i][j].setAttribute('colspan', (parseInt((0, helpers_1.attr)(box[i][j], 'colspan') || '1', 10) + 1).toString());
             }
         }
     };
     Table.removeColumn = function (table, j) {
         var box = Table.formalMatrix(table);
         var dec;
-        helpers_1.each(box, function (i, cells) {
+        (0, helpers_1.each)(box, function (i, cells) {
             var td = cells[j];
             dec = false;
             if (j - 1 >= 0 && box[i][j - 1] === td) {
@@ -16379,7 +16382,7 @@ var Table = (function (_super) {
             }
             if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
                 var colSpan = td.colSpan;
-                helpers_1.attr(td, 'colspan', colSpan - 1 > 1 ? (colSpan - 1).toString() : null);
+                (0, helpers_1.attr)(td, 'colspan', colSpan - 1 > 1 ? (colSpan - 1).toString() : null);
             }
         });
     };
@@ -16490,7 +16493,7 @@ var Table = (function (_super) {
                     box[i][j].removeAttribute('colspan');
                 }
                 if (box[i][j].hasAttribute('class') &&
-                    !helpers_1.attr(box[i][j], 'class')) {
+                    !(0, helpers_1.attr)(box[i][j], 'class')) {
                     box[i][j].removeAttribute('class');
                 }
             }
@@ -16513,7 +16516,7 @@ var Table = (function (_super) {
                         if (i === bound[0][0] && td.style.width) {
                             w += td.offsetWidth;
                         }
-                        if (helpers_1.trim(cell.innerHTML.replace(/<br(\/)?>/g, '')) !== '') {
+                        if ((0, helpers_1.trim)(cell.innerHTML.replace(/<br(\/)?>/g, '')) !== '') {
                             html.push(cell.innerHTML);
                         }
                         if (cs > 1) {
@@ -16553,7 +16556,7 @@ var Table = (function (_super) {
                 delete first.__i_am_already_was;
                 Table.__unmark(__marked);
                 Table.normalizeTable(table);
-                helpers_1.each(helpers_1.toArray(table.rows), function (index, tr) {
+                (0, helpers_1.each)((0, helpers_1.toArray)(table.rows), function (index, tr) {
                     if (!tr.cells.length) {
                         dom_1.Dom.safeRemove(tr);
                     }
@@ -16663,7 +16666,7 @@ var Table = (function (_super) {
     Table.__unmark = function (marked) {
         marked.forEach(function (cell) {
             if (cell.__marked_value) {
-                helpers_1.each(cell.__marked_value, function (key, value) {
+                (0, helpers_1.each)(cell.__marked_value, function (key, value) {
                     switch (key) {
                         case 'remove':
                             dom_1.Dom.safeRemove(cell);
@@ -16696,7 +16699,7 @@ var Table = (function (_super) {
     };
     Table.selectedByTable = new WeakMap();
     tslib_1.__decorate([
-        decorators_1.debounce()
+        (0, decorators_1.debounce)()
     ], Table.prototype, "recalculateStyles", null);
     return Table;
 }(component_1.ViewComponent));
@@ -16751,7 +16754,7 @@ config_1.Config.prototype.uploader = {
     headers: null,
     data: null,
     filesVariableName: function (i) {
-        return "files[" + i + "]";
+        return "files[".concat(i, "]");
     },
     withCredentials: false,
     pathVariableName: 'path',
@@ -16764,7 +16767,7 @@ config_1.Config.prototype.uploader = {
         return resp.success;
     },
     getMessage: function (resp) {
-        return resp.data.messages !== undefined && helpers_1.isArray(resp.data.messages)
+        return resp.data.messages !== undefined && (0, helpers_1.isArray)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
     },
@@ -16776,7 +16779,7 @@ config_1.Config.prototype.uploader = {
     },
     defaultHandlerSuccess: function (resp) {
         var j = this.j || this;
-        if (!helpers_1.isJoditObject(j)) {
+        if (!(0, helpers_1.isJoditObject)(j)) {
             return;
         }
         if (resp.files && resp.files.length) {
@@ -16815,7 +16818,7 @@ var Uploader = (function (_super) {
         _this.path = '';
         _this.source = 'default';
         _this.ajaxInstances = [];
-        _this.options = helpers_1.ConfigProto(options || {}, helpers_1.ConfigProto(config_1.Config.defaultOptions.uploader, helpers_1.isJoditObject(editor) ? editor.o.uploader : {}));
+        _this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(config_1.Config.defaultOptions.uploader, (0, helpers_1.isJoditObject)(editor) ? editor.o.uploader : {}));
         return _this;
     }
     Uploader.prototype.className = function () {
@@ -16847,7 +16850,7 @@ var Uploader = (function (_super) {
             if (data instanceof FD) {
                 return data;
             }
-            if (helpers_1.isString(data)) {
+            if ((0, helpers_1.isString)(data)) {
                 return data;
             }
             var newdata_1 = new FD();
@@ -16888,7 +16891,7 @@ var Uploader = (function (_super) {
                 },
                 method: _this.o.method || 'POST',
                 data: request,
-                url: helpers_1.isFunction(_this.o.url)
+                url: (0, helpers_1.isFunction)(_this.o.url)
                     ? _this.o.url(request)
                     : _this.o.url,
                 headers: _this.o.headers,
@@ -16927,12 +16930,12 @@ var Uploader = (function (_super) {
     Uploader.prototype.sendFiles = function (files, handlerSuccess, handlerError, process) {
         var _this = this;
         if (!files) {
-            return Promise.reject(helpers_1.error('Need files'));
+            return Promise.reject((0, helpers_1.error)('Need files'));
         }
         var uploader = this;
-        var fileList = helpers_1.toArray(files);
+        var fileList = (0, helpers_1.toArray)(files);
         if (!fileList.length) {
-            return Promise.reject(helpers_1.error('Need files'));
+            return Promise.reject((0, helpers_1.error)('Need files'));
         }
         var promises = [];
         if (this.o.insertImageAsBase64URI) {
@@ -17003,7 +17006,7 @@ var Uploader = (function (_super) {
             if (process) {
                 process(form_1);
             }
-            if (uploader.o.data && helpers_1.isPlainObject(uploader.o.data)) {
+            if (uploader.o.data && (0, helpers_1.isPlainObject)(uploader.o.data)) {
                 Object.keys(uploader.o.data).forEach(function (key) {
                     form_1.append(key, uploader.o.data[key]);
                 });
@@ -17020,11 +17023,11 @@ var Uploader = (function (_super) {
                     }
                 }
                 else {
-                    if (helpers_1.isFunction(handlerError ||
+                    if ((0, helpers_1.isFunction)(handlerError ||
                         uploader.o.defaultHandlerError)) {
                         (handlerError ||
                             uploader.options
-                                .defaultHandlerError).call(uploader, helpers_1.error(uploader.o.getMessage.call(uploader, resp)));
+                                .defaultHandlerError).call(uploader, (0, helpers_1.error)(uploader.o.getMessage.call(uploader, resp)));
                         return;
                     }
                 }
@@ -17065,12 +17068,12 @@ var Uploader = (function (_super) {
                             'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
                         contenteditable: true
                     });
-                    global_1.getContainer(_this.j, Uploader).appendChild(div_1);
-                    var selection_1 = helpers_1.isJoditObject(_this.j)
+                    (0, global_1.getContainer)(_this.j, Uploader).appendChild(div_1);
+                    var selection_1 = (0, helpers_1.isJoditObject)(_this.j)
                         ? _this.j.s.save()
                         : null, restore_1 = function () {
                         return selection_1 &&
-                            helpers_1.isJoditObject(_this.j) &&
+                            (0, helpers_1.isJoditObject)(_this.j) &&
                             _this.j.s.restore(selection_1);
                     };
                     div_1.focus();
@@ -17078,7 +17081,7 @@ var Uploader = (function (_super) {
                         var child = div_1.firstChild;
                         dom_1.Dom.safeRemove(div_1);
                         if (child && child.hasAttribute('src')) {
-                            var src = helpers_1.attr(child, 'src') || '';
+                            var src = (0, helpers_1.attr)(child, 'src') || '';
                             restore_1();
                             self.sendFiles([Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
                         }
@@ -17174,7 +17177,7 @@ var Uploader = (function (_super) {
             }
             else {
                 if (typeof (handlerError || uploader.o.defaultHandlerError) === 'function') {
-                    (handlerError || _this.o.defaultHandlerError).call(uploader, helpers_1.error(uploader.o.getMessage.call(_this, resp)));
+                    (handlerError || _this.o.defaultHandlerError).call(uploader, (0, helpers_1.error)(uploader.o.getMessage.call(_this, resp)));
                     return;
                 }
             }
@@ -17258,21 +17261,21 @@ if (true) {
     };
 }
 var get = function (value) { return value.default || value; }, hashLang = {};
-if (checker_1.isArray(get(en))) {
+if ((0, checker_1.isArray)(get(en))) {
     get(en).forEach(function (key, index) {
         hashLang[index] = key;
     });
 }
 Object.keys(exp).forEach(function (lang) {
     var list = get(exp[lang]);
-    if (checker_1.isArray(list)) {
+    if ((0, checker_1.isArray)(list)) {
         exp[lang] = {};
         list.forEach(function (value, index) {
             exp[lang][hashLang[index]] = value;
         });
     }
 });
-exports.default = exp;
+exports["default"] = exp;
 
 
 /***/ }),
@@ -21619,7 +21622,7 @@ var addNewLine = (function (_super) {
     tslib_1.__extends(addNewLine, _super);
     function addNewLine() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.line = _this.j.c.fromHTML("<div role=\"button\" tabIndex=\"-1\" title=\"" + _this.j.i18n('Break') + "\" class=\"jodit-add-new-line\"><span>" + modules_1.Icon.get('enter') + "</span></div>");
+        _this.line = _this.j.c.fromHTML("<div role=\"button\" tabIndex=\"-1\" title=\"".concat(_this.j.i18n('Break'), "\" class=\"jodit-add-new-line\"><span>").concat(modules_1.Icon.get('enter'), "</span></div>"));
         _this.isMatchedTag = function (node) {
             return Boolean(node &&
                 _this.j.o.addNewLineTagsTriggers.includes(node.nodeName.toLowerCase()));
@@ -21660,7 +21663,7 @@ var addNewLine = (function (_super) {
                 editor.editor.appendChild(p);
             }
             editor.s.setCursorIn(p);
-            helpers_1.scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
+            (0, helpers_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
             editor.e.fire('synchro');
             _this.hideForce();
             e.preventDefault();
@@ -21671,7 +21674,7 @@ var addNewLine = (function (_super) {
                 editor.o.addNewLineOnDBLClick &&
                 e.target === editor.editor &&
                 editor.s.isCollapsed()) {
-                var editorBound = helpers_1.offset(editor.editor, editor, editor.ed);
+                var editorBound = (0, helpers_1.offset)(editor.editor, editor, editor.ed);
                 var top_1 = e.pageY - editor.ew.pageYOffset;
                 var p = editor.createInside.element(editor.o.enter);
                 if (Math.abs(top_1 - editorBound.top) <
@@ -21711,11 +21714,11 @@ var addNewLine = (function (_super) {
                     currentElement = parentBox;
                 }
             }
-            var pos = helpers_1.position(currentElement, _this.j);
+            var pos = (0, helpers_1.position)(currentElement, _this.j);
             var top = false;
             var clientY = e.clientY;
             if (_this.j.iframe) {
-                var top_2 = helpers_1.position(_this.j.iframe, _this.j, true).top;
+                var top_2 = (0, helpers_1.position)(_this.j.iframe, _this.j, true).top;
                 clientY += top_2;
             }
             var delta = _this.j.o.addNewLineDeltaShow;
@@ -21728,7 +21731,7 @@ var addNewLine = (function (_super) {
                 _this.preview = false;
             }
             if (top !== false &&
-                !helpers_1.call(_this.preview ? modules_1.Dom.prev : modules_1.Dom.next, currentElement, _this.canGetFocus, editor.editor)) {
+                !(0, helpers_1.call)(_this.preview ? modules_1.Dom.prev : modules_1.Dom.next, currentElement, _this.canGetFocus, editor.editor)) {
                 _this.line.style.top = top + 'px';
                 _this.current = currentElement;
                 _this.show();
@@ -21830,10 +21833,10 @@ config_1.Config.prototype.controls.about = {
         }), i18n = editor.i18n.bind(editor);
         dialog.setMod('theme', editor.o.theme);
         dialog.setHeader(i18n('About Jodit'));
-        dialog.setContent("<div class=\"jodit-about\">\n\t\t\t\t\t<div>" + i18n('Jodit Editor') + " v." + editor.getVersion() + "</div>\n\t\t\t\t\t<div>" + i18n('License: %s', !helpers_1.isLicense(editor.o.license)
+        dialog.setContent("<div class=\"jodit-about\">\n\t\t\t\t\t<div>".concat(i18n('Jodit Editor'), " v.").concat(editor.getVersion(), "</div>\n\t\t\t\t\t<div>").concat(i18n('License: %s', !(0, helpers_1.isLicense)(editor.o.license)
             ? 'MIT'
-            : helpers_1.normalizeLicense(editor.o.license)) + "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/\" target=\"_blank\">http://xdsoft.net/jodit/</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/doc/\" target=\"_blank\">" + i18n("Jodit User's Guide") + "</a>\n\t\t\t\t\t\t" + i18n('contains detailed help for using') + "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>" + i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') + "</div>\n\t\t\t\t</div>");
-        helpers_1.css(dialog.dialog, {
+            : (0, helpers_1.normalizeLicense)(editor.o.license)), "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/\" target=\"_blank\">http://xdsoft.net/jodit/</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/doc/\" target=\"_blank\">").concat(i18n("Jodit User's Guide"), "</a>\n\t\t\t\t\t\t").concat(i18n('contains detailed help for using'), "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>").concat(i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'), "</div>\n\t\t\t\t</div>"));
+        (0, helpers_1.css)(dialog.dialog, {
             minHeight: 200,
             minWidth: 420
         });
@@ -21975,7 +21978,7 @@ config_1.Config.prototype.controls.classSpan = {
         return false;
     },
     childTemplate: function (e, key, value) {
-        return "<span class=\"" + key + "\">" + e.i18n(value) + "</span>";
+        return "<span class=\"".concat(key, "\">").concat(e.i18n(value), "</span>");
     },
     tooltip: 'Insert className'
 };
@@ -22091,7 +22094,7 @@ var Delete = (function (_super) {
         if (current && dom_1.Dom.isTag(current.firstChild, 'br')) {
             jodit.s.removeNode(current.firstChild);
         }
-        if (!helpers_1.trim(jodit.editor.textContent || '') &&
+        if (!(0, helpers_1.trim)(jodit.editor.textContent || '') &&
             !jodit.editor.querySelector('img') &&
             (!current || !dom_1.Dom.closest(current, 'table', jodit.editor))) {
             jodit.editor.innerHTML = '';
@@ -22117,7 +22120,7 @@ var Delete = (function (_super) {
             if (!dom_1.Dom.isOrContains(jodit.editor, fakeNode)) {
                 return;
             }
-            helpers_2.normalizeCursorPosition(fakeNode, backspace);
+            (0, helpers_2.normalizeCursorPosition)(fakeNode, backspace);
             if (this.checkRemoveInseparableElement(fakeNode, backspace) ||
                 this.checkRemoveChar(fakeNode, backspace, block) ||
                 this.checkTableCell(fakeNode, backspace) ||
@@ -22148,8 +22151,8 @@ var Delete = (function (_super) {
     Delete.prototype.checkRemoveChar = function (fakeNode, backspace, block) {
         var _a, _b, _c;
         var step = backspace ? -1 : 1;
-        var anotherSibling = helpers_2.getSibling(fakeNode, !backspace);
-        var sibling = helpers_2.getSibling(fakeNode, backspace), removeNeighbor = null;
+        var anotherSibling = (0, helpers_2.getSibling)(fakeNode, !backspace);
+        var sibling = (0, helpers_2.getSibling)(fakeNode, backspace), removeNeighbor = null;
         var charRemoved = false, removed;
         while (sibling && (dom_1.Dom.isText(sibling) || dom_1.Dom.isInlineBlock(sibling))) {
             while (dom_1.Dom.isInlineBlock(sibling)) {
@@ -22161,7 +22164,7 @@ var Delete = (function (_super) {
                 break;
             }
             if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
-                var value = helpers_1.toArray(sibling.nodeValue);
+                var value = (0, helpers_1.toArray)(sibling.nodeValue);
                 var length_1 = value.length;
                 var index = backspace ? length_1 - 1 : 0;
                 if (value[index] === constants_1.INVISIBLE_SPACE) {
@@ -22186,7 +22189,7 @@ var Delete = (function (_super) {
                 if (!anotherSibling ||
                     !dom_1.Dom.isText(anotherSibling) ||
                     (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
-                    !helpers_1.trimInv(anotherSibling.nodeValue || '').length) {
+                    !(0, helpers_1.trimInv)(anotherSibling.nodeValue || '').length) {
                     for (var i = backspace ? value.length - 1 : 0; backspace ? (i >= 0) : (i < value.length); i += backspace ? -1 : 1) {
                         if (value[i] === ' ') {
                             value[i] = constants_1.NBSP_SPACE;
@@ -22201,19 +22204,19 @@ var Delete = (function (_super) {
             if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
                 removeNeighbor = sibling;
             }
-            if (!helpers_1.isVoid(removed) && removed !== constants_1.INVISIBLE_SPACE) {
+            if (!(0, helpers_1.isVoid)(removed) && removed !== constants_1.INVISIBLE_SPACE) {
                 charRemoved = true;
-                helpers_1.call(backspace ? dom_1.Dom.after : dom_1.Dom.before, sibling, fakeNode);
+                (0, helpers_1.call)(backspace ? dom_1.Dom.after : dom_1.Dom.before, sibling, fakeNode);
                 if (block) {
                     while (this.checkRemoveChar(fakeNode, backspace, false)) { }
                 }
                 break;
             }
-            var nextSibling = helpers_2.getSibling(sibling, backspace);
+            var nextSibling = (0, helpers_2.getSibling)(sibling, backspace);
             if (!nextSibling &&
                 sibling.parentNode &&
                 sibling.parentNode !== this.root) {
-                nextSibling = helpers_2.findMostNestedNeighbor(sibling, !backspace, this.root, true);
+                nextSibling = (0, helpers_2.findMostNestedNeighbor)(sibling, !backspace, this.root, true);
             }
             if (removeNeighbor) {
                 dom_1.Dom.safeRemove(removeNeighbor);
@@ -22251,7 +22254,7 @@ var Delete = (function (_super) {
         if (dom_1.Dom.isElement(neighbor) &&
             (dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS) ||
                 dom_1.Dom.isEmpty(neighbor) ||
-                helpers_1.attr(neighbor, 'contenteditable') === 'false')) {
+                (0, helpers_1.attr)(neighbor, 'contenteditable') === 'false')) {
             dom_1.Dom.safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
             if (dom_1.Dom.isTag(neighbor, 'br')) {
@@ -22273,7 +22276,7 @@ var Delete = (function (_super) {
         if (!prn || !dom_1.Dom.isEmpty(prn)) {
             return;
         }
-        var neighbor = helpers_2.findNotEmptyNeighbor(fakeNode, backspace, this.root);
+        var neighbor = (0, helpers_2.findNotEmptyNeighbor)(fakeNode, backspace, this.root);
         do {
             if (prn && dom_1.Dom.isEmpty(prn) && !dom_1.Dom.isCell(prn, this.j.ew)) {
                 dom_1.Dom.after(prn, fakeNode);
@@ -22308,11 +22311,11 @@ var Delete = (function (_super) {
             dom_1.Dom.isTag(prev.firstElementChild, 'li')) {
             var _a = this.j.s, setCursorBefore = _a.setCursorBefore, setCursorAfter = _a.setCursorAfter;
             var target = next.lastElementChild, second = prev.firstElementChild;
-            helpers_1.call(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, second, fakeNode);
+            (0, helpers_1.call)(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, second, fakeNode);
             dom_1.Dom.moveContent(prev, next, !backspace);
             dom_1.Dom.safeRemove(prev);
-            helpers_1.call(backspace ? dom_1.Dom.append : dom_1.Dom.prepend, target, fakeNode);
-            helpers_1.call(backspace ? setCursorBefore : setCursorAfter, fakeNode);
+            (0, helpers_1.call)(backspace ? dom_1.Dom.append : dom_1.Dom.prepend, target, fakeNode);
+            (0, helpers_1.call)(backspace ? setCursorBefore : setCursorAfter, fakeNode);
             return true;
         }
     };
@@ -22321,7 +22324,7 @@ var Delete = (function (_super) {
         if (!parent) {
             return;
         }
-        var neighbor = helpers_2.findNotEmptySibling(parent, backspace);
+        var neighbor = (0, helpers_2.findNotEmptySibling)(parent, backspace);
         if (neighbor && dom_1.Dom.isEmpty(neighbor)) {
             dom_1.Dom.safeRemove(neighbor);
             this.j.s.setCursorBefore(fakeNode);
@@ -22332,13 +22335,13 @@ var Delete = (function (_super) {
         var jodit = this.jodit;
         var nextBox = fakeNode, mainClosestBox = nextBox;
         while (nextBox &&
-            !helpers_2.findNotEmptySibling(nextBox, backspace) &&
+            !(0, helpers_2.findNotEmptySibling)(nextBox, backspace) &&
             nextBox.parentElement !== this.root) {
             nextBox = nextBox.parentElement;
             mainClosestBox = nextBox;
         }
         if (dom_1.Dom.isElement(mainClosestBox)) {
-            var sibling = helpers_2.findNotEmptySibling(mainClosestBox, backspace);
+            var sibling = (0, helpers_2.findNotEmptySibling)(mainClosestBox, backspace);
             if (sibling &&
                 (this.checkMoveListContent(mainClosestBox, sibling, backspace) ||
                     this.moveContentAndRemoveEmpty(mainClosestBox, sibling, backspace))) {
@@ -22382,7 +22385,7 @@ var Delete = (function (_super) {
         if (!parent) {
             return;
         }
-        var neighbor = helpers_2.getSiblingBox(parent, backspace, this.root);
+        var neighbor = (0, helpers_2.getSiblingBox)(parent, backspace, this.root);
         if (!neighbor) {
             return;
         }
@@ -22405,7 +22408,7 @@ var Delete = (function (_super) {
             dom_1.Dom.moveContent(parent, neighbor, !backspace);
             var next = void 0;
             do {
-                next = helpers_2.findMostNestedNeighbor(startNeighbor, backspace, this.root);
+                next = (0, helpers_2.findMostNestedNeighbor)(startNeighbor, backspace, this.root);
                 if (next === parent) {
                     var nextParentNode = next;
                     do {
@@ -22421,9 +22424,9 @@ var Delete = (function (_super) {
         }
         if (dom_1.Dom.isTag(parent, 'li') &&
             this.j.s.cursorInTheEdge(backspace, parent)) {
-            helpers_1.call(backspace ? dom_1.Dom.before : dom_1.Dom.after, parent, fakeNode);
+            (0, helpers_1.call)(backspace ? dom_1.Dom.before : dom_1.Dom.after, parent, fakeNode);
             var result = this.checkJoinNeighbors(fakeNode, backspace);
-            helpers_1.call(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, parent, fakeNode);
+            (0, helpers_1.call)(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, parent, fakeNode);
             this.j.s.setCursorBefore(fakeNode);
             return result;
         }
@@ -22500,14 +22503,14 @@ function getSibling(node, backspace) {
 }
 exports.getSibling = getSibling;
 function findNotEmptyNeighbor(node, backspace, root) {
-    return utils_1.call(backspace ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { return Boolean(n && (!dom_1.Dom.isText(n) || string_1.trim((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)); }, root);
+    return (0, utils_1.call)(backspace ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { return Boolean(n && (!dom_1.Dom.isText(n) || (0, string_1.trim)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)); }, root);
 }
 exports.findNotEmptyNeighbor = findNotEmptyNeighbor;
 function findNotEmptySibling(node, backspace) {
     return dom_1.Dom.findSibling(node, backspace, function (n) {
         var _a;
         return (!dom_1.Dom.isEmptyTextNode(n) &&
-            Boolean(!dom_1.Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && string_1.trim(n.nodeValue))));
+            Boolean(!dom_1.Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && (0, string_1.trim)(n.nodeValue))));
     });
 }
 exports.findNotEmptySibling = findNotEmptySibling;
@@ -22639,7 +22642,7 @@ function bold(editor) {
     var callBack = function (command) {
         var control = config_1.Config.defaultOptions.controls[command], cssOptions = tslib_1.__assign({}, control.css), cssRules = {};
         Object.keys(cssOptions).forEach(function (key) {
-            cssRules[key] = helpers_1.isArray(cssOptions[key])
+            cssRules[key] = (0, helpers_1.isArray)(cssOptions[key])
                 ? cssOptions[key][0]
                 : cssOptions[key];
         });
@@ -22780,9 +22783,9 @@ var cleanHtml = (function (_super) {
                     modules_1.Dom.all(currentParagraph, function (node) {
                         if (node && modules_1.Dom.isText(node)) {
                             if (node.nodeValue != null &&
-                                constants_1.INVISIBLE_SPACE_REG_EXP().test(node.nodeValue) &&
-                                node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '').length !== 0) {
-                                node.nodeValue = node.nodeValue.replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '');
+                                (0, constants_1.INVISIBLE_SPACE_REG_EXP)().test(node.nodeValue) &&
+                                node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '').length !== 0) {
+                                node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
                                 if (node === currentNode &&
                                     editor.s.isCollapsed()) {
                                     editor.s.setCursorAfter(node);
@@ -22816,7 +22819,7 @@ var cleanHtml = (function (_super) {
         var current = editor.s.current();
         var replaceOldTags = editor.o.cleanHTML.replaceOldTags;
         if (replaceOldTags && current) {
-            var tags = helpers_1.keys(replaceOldTags, false);
+            var tags = (0, helpers_1.keys)(replaceOldTags, false);
             if (editor.s.isCollapsed()) {
                 var oldParent = modules_1.Dom.closest(current, tags, editor.editor);
                 if (oldParent) {
@@ -22847,11 +22850,11 @@ var cleanHtml = (function (_super) {
         var attributesReg = /([^[]*)\[([^\]]+)]/;
         var seperator = /[\s]*,[\s]*/, attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
         var tagsHash = {};
-        if (helpers_1.isString(tags)) {
+        if ((0, helpers_1.isString)(tags)) {
             tags.split(seperator).map(function (elm) {
-                elm = helpers_1.trim(elm);
+                elm = (0, helpers_1.trim)(elm);
                 var attr = attributesReg.exec(elm), allowAttributes = {}, attributeMap = function (attrName) {
-                    attrName = helpers_1.trim(attrName);
+                    attrName = (0, helpers_1.trim)(attrName);
                     var val = attrReg.exec(attrName);
                     if (val) {
                         allowAttributes[val[1]] = val[2];
@@ -22967,7 +22970,7 @@ var cleanHtml = (function (_super) {
             modules_1.Dom.isElement(node) &&
             node.nodeName.match(constants_1.IS_INLINE) != null &&
             !this.j.s.isMarker(node) &&
-            helpers_1.trim(node.innerHTML).length === 0 &&
+            (0, helpers_1.trim)(node.innerHTML).length === 0 &&
             !modules_1.Dom.isOrContains(node, current));
     };
     cleanHtml.hasNotEmptyTextSibling = function (node, next) {
@@ -22985,7 +22988,7 @@ var cleanHtml = (function (_super) {
         this.j.e.off('.cleanHtml');
     };
     tslib_1.__decorate([
-        decorators_1.debounce(function (ctx) { return ctx.jodit.o.cleanHTML.timeout; })
+        (0, decorators_1.debounce)(function (ctx) { return ctx.jodit.o.cleanHTML.timeout; })
     ], cleanHtml.prototype, "onChangeCleanHTML", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -23018,7 +23021,7 @@ var WrapTextNodes = (function (_super) {
     function WrapTextNodes() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isSuitableStart = function (n) {
-            return (dom_1.Dom.isText(n) && checker_1.isString(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
+            return (dom_1.Dom.isText(n) && (0, checker_1.isString)(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
                 (_this.isNotClosed(n) && !_this.jodit.selection.isMarker(n));
         };
         _this.isSuitable = function (n) {
@@ -23200,12 +23203,12 @@ config_1.Config.prototype.controls.paste = {
                             !error && editor.e.fire('afterPaste');
                         }
                         else if (text.length) {
-                            helpers_1.pasteInsertHtml(null, editor, text);
+                            (0, helpers_1.pasteInsertHtml)(null, editor, text);
                             editor.e.fire('afterPaste');
                         }
                         else {
                             if (error) {
-                                dialog_1.Alert(editor.i18n("Your browser doesn't support direct access to the clipboard."), function () {
+                                (0, dialog_1.Alert)(editor.i18n("Your browser doesn't support direct access to the clipboard."), function () {
                                     editor.s.focus();
                                 }).bindDestruct(editor);
                             }
@@ -23277,11 +23280,11 @@ function pasteInsertHtml(e, editor, html) {
         editor.s.insertCursorAtPoint(e.clientX, e.clientY);
     }
     var result = editor.e.fire('beforePasteInsert', html);
-    if (!helpers_1.isVoid(result) &&
-        (helpers_1.isString(result) || helpers_1.isNumber(result) || dom_1.Dom.isNode(result, editor.ew))) {
+    if (!(0, helpers_1.isVoid)(result) &&
+        ((0, helpers_1.isString)(result) || (0, helpers_1.isNumber)(result) || dom_1.Dom.isNode(result, editor.ew))) {
         html = result;
     }
-    if (helpers_1.isString(html)) {
+    if ((0, helpers_1.isString)(html)) {
         html = removeExtraFragments(html);
     }
     editor.s.insertHTML(html);
@@ -23290,7 +23293,7 @@ exports.pasteInsertHtml = pasteInsertHtml;
 function getAllTypes(dt) {
     var types = dt.types;
     var types_str = '';
-    if (helpers_1.isArray(types) || helpers_1.type(types) === 'domstringlist') {
+    if ((0, helpers_1.isArray)(types) || (0, helpers_1.type)(types) === 'domstringlist') {
         for (var i = 0; i < types.length; i += 1) {
             types_str += types[i] + ';';
         }
@@ -23345,15 +23348,15 @@ var clipboard = (function () {
         var _a;
         (_a = this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(function (btn) { return editor.registerButton(btn); });
         editor.e
-            .off("copy." + exports.pluginKey + " cut." + exports.pluginKey)
-            .on("copy." + exports.pluginKey + " cut." + exports.pluginKey, function (event) {
+            .off("copy.".concat(exports.pluginKey, " cut.").concat(exports.pluginKey))
+            .on("copy.".concat(exports.pluginKey, " cut.").concat(exports.pluginKey), function (event) {
             var _a;
             var selectedText = editor.s.html;
-            var clipboardData = helpers_2.getDataTransfer(event) ||
-                helpers_2.getDataTransfer(editor.ew) ||
-                helpers_2.getDataTransfer(event.originalEvent);
+            var clipboardData = (0, helpers_2.getDataTransfer)(event) ||
+                (0, helpers_2.getDataTransfer)(editor.ew) ||
+                (0, helpers_2.getDataTransfer)(event.originalEvent);
             if (clipboardData) {
-                clipboardData.setData(constants_1.TEXT_PLAIN, helpers_1.stripTags(selectedText));
+                clipboardData.setData(constants_1.TEXT_PLAIN, (0, helpers_1.stripTags)(selectedText));
                 clipboardData.setData(constants_1.TEXT_HTML, selectedText);
             }
             editor.buffer.set(exports.pluginKey, selectedText);
@@ -23439,24 +23442,24 @@ var paste = (function (_super) {
         if (!this.j.o.processPasteHTML) {
             return;
         }
-        var dt = helpers_1.getDataTransfer(e), texts = [dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML), dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN)];
+        var dt = (0, helpers_1.getDataTransfer)(e), texts = [dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML), dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN)];
         for (var _i = 0, texts_1 = texts; _i < texts_1.length; _i++) {
             var text = texts_1[_i];
-            if (helpers_2.isHTML(text) &&
+            if ((0, helpers_2.isHTML)(text) &&
                 (this.processWordHTML(e, text) || this.processHTML(e, text))) {
                 return false;
             }
         }
     };
     paste.prototype.defaultPasteProcess = function (e) {
-        var dt = helpers_1.getDataTransfer(e);
+        var dt = (0, helpers_1.getDataTransfer)(e);
         var text = (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML)) || (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN));
-        if (dt && text && helpers_2.trim(text) !== '') {
-            var result = this.j.e.fire('processPaste', e, text, helpers_1.getAllTypes(dt));
+        if (dt && text && (0, helpers_2.trim)(text) !== '') {
+            var result = this.j.e.fire('processPaste', e, text, (0, helpers_1.getAllTypes)(dt));
             if (result !== undefined) {
                 text = result;
             }
-            if (helpers_2.isString(text) || dom_1.Dom.isNode(text, this.j.ew)) {
+            if ((0, helpers_2.isString)(text) || dom_1.Dom.isNode(text, this.j.ew)) {
                 this.insertByType(e, text, this.j.o.defaultActionOnPaste);
             }
             e.preventDefault();
@@ -23465,7 +23468,7 @@ var paste = (function (_super) {
     };
     paste.prototype.processWordHTML = function (e, text) {
         var _this = this;
-        if (this.j.o.processPasteFromWord && helpers_2.isHtmlFromWord(text)) {
+        if (this.j.o.processPasteFromWord && (0, helpers_2.isHtmlFromWord)(text)) {
             if (this.j.o.askBeforePasteFromWord) {
                 this.askInsertTypeDialog('The pasted content is coming from a Microsoft Word/Excel document. ' +
                     'Do you want to keep the format or clean it up?', 'Word Paste Detected', function (insertType) {
@@ -23501,46 +23504,46 @@ var paste = (function (_super) {
         var _a;
         switch (insertType) {
             case constants_1.INSERT_AS_HTML: {
-                html = helpers_2.applyStyles(html);
+                html = (0, helpers_2.applyStyles)(html);
                 if (this.j.o.beautifyHTML) {
                     var value = (_a = this.j.events) === null || _a === void 0 ? void 0 : _a.fire('beautifyHTML', html);
-                    if (helpers_2.isString(value)) {
+                    if ((0, helpers_2.isString)(value)) {
                         html = value;
                     }
                 }
                 break;
             }
             case constants_1.INSERT_AS_TEXT: {
-                html = helpers_2.cleanFromWord(html);
+                html = (0, helpers_2.cleanFromWord)(html);
                 break;
             }
             case constants_1.INSERT_ONLY_TEXT: {
-                html = helpers_2.stripTags(helpers_2.cleanFromWord(html));
+                html = (0, helpers_2.stripTags)((0, helpers_2.cleanFromWord)(html));
                 break;
             }
         }
-        helpers_1.pasteInsertHtml(e, this.j, html);
+        (0, helpers_1.pasteInsertHtml)(e, this.j, html);
     };
     paste.prototype.insertByType = function (e, html, action) {
         if (this.j.o.cachedActionOnPaste) {
             this.pasteStack.push({ html: html, action: action });
         }
-        if (helpers_2.isString(html)) {
+        if ((0, helpers_2.isString)(html)) {
             this.j.buffer.set(clipboard_1.pluginKey, html);
             switch (action) {
                 case constants_1.INSERT_CLEAR_HTML:
-                    html = helpers_2.cleanFromWord(html);
+                    html = (0, helpers_2.cleanFromWord)(html);
                     break;
                 case constants_1.INSERT_ONLY_TEXT:
-                    html = helpers_2.stripTags(html);
+                    html = (0, helpers_2.stripTags)(html);
                     break;
                 case constants_1.INSERT_AS_TEXT:
-                    html = helpers_2.htmlspecialchars(html);
+                    html = (0, helpers_2.htmlspecialchars)(html);
                     break;
                 default:
             }
         }
-        helpers_1.pasteInsertHtml(e, this.j, html);
+        (0, helpers_1.pasteInsertHtml)(e, this.j, html);
     };
     paste.prototype.askInsertTypeDialog = function (msg, title, callback, clearButton, insertText) {
         var _a, _b, _c, _d;
@@ -23549,24 +23552,24 @@ var paste = (function (_super) {
         if (((_b = (_a = this.j) === null || _a === void 0 ? void 0 : _a.e) === null || _b === void 0 ? void 0 : _b.fire('beforeOpenPasteDialog', msg, title, callback, clearButton, insertText)) === false) {
             return;
         }
-        var dialog = dialog_1.Confirm("<div style=\"word-break: normal; white-space: normal\">" + this.j.i18n(msg) + "</div>", this.j.i18n(title));
+        var dialog = (0, dialog_1.Confirm)("<div style=\"word-break: normal; white-space: normal\">".concat(this.j.i18n(msg), "</div>"), this.j.i18n(title));
         dialog.bindDestruct(this.j);
-        helpers_2.markOwner(this.j, dialog.container);
-        var keep = button_1.Button(this.j, {
+        (0, helpers_2.markOwner)(this.j, dialog.container);
+        var keep = (0, button_1.Button)(this.j, {
             text: 'Keep',
             name: 'keep',
             status: 'primary',
             tabIndex: 0
         });
-        var clear = button_1.Button(this.j, {
+        var clear = (0, button_1.Button)(this.j, {
             text: clearButton,
             tabIndex: 0
         });
-        var clear2 = button_1.Button(this.j, {
+        var clear2 = (0, button_1.Button)(this.j, {
             text: insertText,
             tabIndex: 0
         });
-        var cancel = button_1.Button(this.j, {
+        var cancel = (0, button_1.Button)(this.j, {
             text: 'Cancel',
             tabIndex: 0
         });
@@ -23591,8 +23594,8 @@ var paste = (function (_super) {
         return dialog;
     };
     paste.prototype.onProcessPasteReplaceNl2Br = function (event, text, type) {
-        if (type === constants_1.TEXT_PLAIN + ';' && !helpers_2.isHTML(text)) {
-            return helpers_2.nl2br(text);
+        if (type === constants_1.TEXT_PLAIN + ';' && !(0, helpers_2.isHTML)(text)) {
+            return (0, helpers_2.nl2br)(text);
         }
     };
     paste.prototype.useFakeDivBox = function (event) {
@@ -23726,7 +23729,7 @@ var pasteStorage = (function (_super) {
         };
         _this.selectIndex = function (index) {
             if (_this.listBox) {
-                helpers_1.toArray(_this.listBox.childNodes).forEach(function (a, i) {
+                (0, helpers_1.toArray)(_this.listBox.childNodes).forEach(function (a, i) {
                     a.classList.remove('jodit_active');
                     if (index === i && _this.previewBox) {
                         a.classList.add('jodit_active');
@@ -23751,11 +23754,11 @@ var pasteStorage = (function (_super) {
             _this.list.forEach(function (html, index) {
                 var a = _this.j.c.element('a');
                 a.textContent =
-                    index + 1 + '. ' + html.replace(constants_1.SPACE_REG_EXP(), '');
+                    index + 1 + '. ' + html.replace((0, constants_1.SPACE_REG_EXP)(), '');
                 _this.j.e.on(a, 'keydown', _this.onKeyDown);
-                helpers_1.attr(a, 'href', 'javascript:void(0)');
-                helpers_1.attr(a, 'data-index', index.toString());
-                helpers_1.attr(a, 'tab-index', '-1');
+                (0, helpers_1.attr)(a, 'href', 'javascript:void(0)');
+                (0, helpers_1.attr)(a, 'data-index', index.toString());
+                (0, helpers_1.attr)(a, 'tab-index', '-1');
                 _this.listBox && _this.listBox.appendChild(a);
             });
             _this.dialog && _this.dialog.open();
@@ -23794,7 +23797,7 @@ var pasteStorage = (function (_super) {
         this.j.e.on(this.listBox, 'click dblclick', function (e) {
             var a = e.target;
             if (dom_1.Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
-                _this.selectIndex(parseInt(helpers_1.attr(a, '-index') || '0', 10));
+                _this.selectIndex(parseInt((0, helpers_1.attr)(a, '-index') || '0', 10));
             }
             if (e.type === 'dblclick') {
                 _this.paste();
@@ -23880,7 +23883,7 @@ var copyStyles = [
     'fontFamily'
 ];
 var getStyle = function (editor, key, box, defaultStyles) {
-    var result = helpers_1.css(box, key);
+    var result = (0, helpers_1.css)(box, key);
     if (result === defaultStyles[key]) {
         if (box.parentNode &&
             box !== editor.editor &&
@@ -23920,7 +23923,7 @@ config_1.Config.prototype.controls.copyformat = {
             var ideal_1 = editor.createInside.span();
             editor.editor.appendChild(ideal_1);
             copyStyles.forEach(function (key) {
-                defaultStyles_1[key] = helpers_1.css(ideal_1, key);
+                defaultStyles_1[key] = (0, helpers_1.css)(ideal_1, key);
             });
             if (ideal_1 !== editor.editor) {
                 dom_1.Dom.safeRemove(ideal_1);
@@ -23931,7 +23934,7 @@ config_1.Config.prototype.controls.copyformat = {
                 var currentNode = editor.s.current();
                 if (currentNode) {
                     if (dom_1.Dom.isTag(currentNode, 'img')) {
-                        helpers_1.css(currentNode, format_1);
+                        (0, helpers_1.css)(currentNode, format_1);
                     }
                     else {
                         editor.s.applyStyle(format_1);
@@ -23975,16 +23978,16 @@ var helpers_1 = __webpack_require__(19);
 var widget_1 = __webpack_require__(255);
 config_1.Config.prototype.controls.brush = {
     update: function (button) {
-        var color = helpers_1.dataBind(button, 'color');
+        var color = (0, helpers_1.dataBind)(button, 'color');
         var editor = button.j;
         var update = function (key, value) {
-            if (value && value !== helpers_1.css(editor.editor, key).toString()) {
+            if (value && value !== (0, helpers_1.css)(editor.editor, key).toString()) {
                 button.state.icon.fill = value;
                 return;
             }
         };
         if (color) {
-            var mode = helpers_1.dataBind(button, 'color');
+            var mode = (0, helpers_1.dataBind)(button, 'color');
             update(mode === 'color' ? mode : 'background-color', color);
             return;
         }
@@ -23994,8 +23997,8 @@ config_1.Config.prototype.controls.brush = {
                 return (modules_1.Dom.isBlock(elm, editor.ew) ||
                     (elm && modules_1.Dom.isElement(elm)));
             }, editor.editor) || editor.editor;
-            update('color', helpers_1.css(currentBpx, 'color').toString());
-            update('background-color', helpers_1.css(currentBpx, 'background-color').toString());
+            update('color', (0, helpers_1.css)(currentBpx, 'color').toString());
+            update('background-color', (0, helpers_1.css)(currentBpx, 'background-color').toString());
         }
         button.state.icon.fill = '';
         button.state.activated = false;
@@ -24012,7 +24015,7 @@ config_1.Config.prototype.controls.brush = {
             }
             modules_1.Dom.up(current, function (node) {
                 if (modules_1.Dom.isHTMLElement(node, editor.ew)) {
-                    var color_1 = helpers_1.css(node, 'color', undefined, true), background = helpers_1.css(node, 'background-color', undefined, true);
+                    var color_1 = (0, helpers_1.css)(node, 'color', undefined, true), background = (0, helpers_1.css)(node, 'background-color', undefined, true);
                     if (color_1) {
                         colorHEX = color_1.toString();
                         return true;
@@ -24024,26 +24027,26 @@ config_1.Config.prototype.controls.brush = {
                 }
             }, editor.editor);
         }
-        var backgroundTag = widget_1.ColorPickerWidget(editor, function (value) {
+        var backgroundTag = (0, widget_1.ColorPickerWidget)(editor, function (value) {
             if (!currentElement) {
                 editor.execCommand('background', false, value);
             }
             else {
                 currentElement.style.backgroundColor = value;
             }
-            helpers_1.dataBind(button, 'color', value);
-            helpers_1.dataBind(button, 'color-mode', 'background');
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'background');
             close();
         }, bg_color);
-        var colorTab = widget_1.ColorPickerWidget(editor, function (value) {
+        var colorTab = (0, widget_1.ColorPickerWidget)(editor, function (value) {
             if (!currentElement) {
                 editor.execCommand('forecolor', false, value);
             }
             else {
                 currentElement.style.color = value;
             }
-            helpers_1.dataBind(button, 'color', value);
-            helpers_1.dataBind(button, 'color-mode', 'color');
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'color');
             close();
         }, colorHEX);
         tabs = [
@@ -24059,11 +24062,11 @@ config_1.Config.prototype.controls.brush = {
         if (editor.o.colorPickerDefaultTab !== 'background') {
             tabs = tabs.reverse();
         }
-        return widget_1.TabsWidget(editor, tabs, currentElement, editor.o.showTabsColorPicker);
+        return (0, widget_1.TabsWidget)(editor, tabs, currentElement, editor.o.showTabsColorPicker);
     },
     exec: function (jodit, current, _a) {
         var button = _a.button;
-        var mode = helpers_1.dataBind(button, 'color-mode'), color = helpers_1.dataBind(button, 'color');
+        var mode = (0, helpers_1.dataBind)(button, 'color-mode'), color = (0, helpers_1.dataBind)(button, 'color');
         if (!mode) {
             return false;
         }
@@ -24092,7 +24095,7 @@ function color(editor) {
         group: 'color'
     });
     var callback = function (command, second, third) {
-        var colorHEX = helpers_1.normalizeColor(third);
+        var colorHEX = (0, helpers_1.normalizeColor)(third);
         switch (command) {
             case 'background':
                 editor.s.applyStyle({
@@ -24151,11 +24154,11 @@ var helpers_1 = __webpack_require__(19);
 var ui_1 = __webpack_require__(75);
 var dom_1 = __webpack_require__(32);
 var ColorPickerWidget = function (editor, callback, coldColor) {
-    var valueHex = helpers_1.normalizeColor(coldColor), form = editor.c.div('jodit-color-picker'), iconPalette = editor.o.textIcons
-        ? "<span>" + editor.i18n('palette') + "</span>"
+    var valueHex = (0, helpers_1.normalizeColor)(coldColor), form = editor.c.div('jodit-color-picker'), iconPalette = editor.o.textIcons
+        ? "<span>".concat(editor.i18n('palette'), "</span>")
         : ui_1.Icon.get('palette'), eachColor = function (colors) {
         var stack = [];
-        if (helpers_1.isPlainObject(colors)) {
+        if ((0, helpers_1.isPlainObject)(colors)) {
             Object.keys(colors).forEach(function (key) {
                 stack.push('<div class="jodit-color-picker__group jodit-color-picker__group-' +
                     key +
@@ -24164,7 +24167,7 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
                 stack.push('</div>');
             });
         }
-        else if (helpers_1.isArray(colors)) {
+        else if ((0, helpers_1.isArray)(colors)) {
             colors.forEach(function (color) {
                 stack.push('<a ' +
                     (valueHex === color
@@ -24185,8 +24188,8 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
         eachColor(editor.o.colors) +
         '</div>'));
     form.appendChild(editor.c.fromHTML('<div data-ref="extra" class="jodit-color-picker__extra"></div>'));
-    var extra = helpers_1.refs(form).extra;
-    if (editor.o.showBrowserColorPicker && helpers_1.hasBrowserColorPicker()) {
+    var extra = (0, helpers_1.refs)(form).extra;
+    if (editor.o.showBrowserColorPicker && (0, helpers_1.hasBrowserColorPicker)()) {
         extra.appendChild(editor.c.fromHTML('<div class="jodit-color-picker__native">' +
             iconPalette +
             '<input type="color" value="#ffffff"/>' +
@@ -24198,7 +24201,7 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
                 return;
             }
             var color = target.value || '';
-            if (helpers_1.isFunction(callback)) {
+            if ((0, helpers_1.isFunction)(callback)) {
                 callback(color);
             }
             e.preventDefault();
@@ -24217,7 +24220,7 @@ var ColorPickerWidget = function (editor, callback, coldColor) {
         if (!dom_1.Dom.isTag(target, 'a')) {
             return;
         }
-        var color = helpers_1.attr(target, '-color') || '';
+        var color = (0, helpers_1.attr)(target, '-color') || '';
         if (callback && typeof callback === 'function') {
             callback(color);
         }
@@ -24265,14 +24268,14 @@ var TabsWidget = function (editor, tabs, state, visibleTabs) {
     box.appendChild(tabBox);
     tabs.forEach(function (_a) {
         var icon = _a.icon, name = _a.name, content = _a.content;
-        var tab = editor.c.div('jodit-tab'), button = ui_1.Button(editor, icon || name, name);
+        var tab = editor.c.div('jodit-tab'), button = (0, ui_1.Button)(editor, icon || name, name);
         if (!firstTab) {
             firstTab = name;
         }
         buttons.appendChild(button.container);
         buttonList.push(button);
         button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
-        if (!helpers_1.isFunction(content)) {
+        if (!(0, helpers_1.isFunction)(content)) {
             tab.appendChild(content);
         }
         else {
@@ -24283,12 +24286,12 @@ var TabsWidget = function (editor, tabs, state, visibleTabs) {
             buttonList.forEach(function (b) {
                 b.state.activated = false;
             });
-            helpers_1.$$('.jodit-tab', tabBox).forEach(function (a) {
+            (0, helpers_1.$$)('.jodit-tab', tabBox).forEach(function (a) {
                 a.classList.remove('jodit-tab_active');
             });
             button.state.activated = true;
             tab.classList.add('jodit-tab_active');
-            if (helpers_1.isFunction(content)) {
+            if ((0, helpers_1.isFunction)(content)) {
                 content.call(editor);
             }
             if (state) {
@@ -24305,7 +24308,7 @@ var TabsWidget = function (editor, tabs, state, visibleTabs) {
     if (!tabcount) {
         return box;
     }
-    helpers_1.$$('a', buttons).forEach(function (a) {
+    (0, helpers_1.$$)('a', buttons).forEach(function (a) {
         a.style.width = (100 / tabcount).toFixed(10) + '%';
     });
     var tab = !state || !state.__activeTab || !nameToTab[state.__activeTab]
@@ -24352,15 +24355,15 @@ var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
         editor.o.uploader &&
         (editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI)) {
         var dragBox = editor.c.fromHTML('<div class="jodit-drag-and-drop__file-box">' +
-            ("<strong>" + editor.i18n(isImage ? 'Drop image' : 'Drop file') + "</strong>") +
-            ("<span><br>" + editor.i18n('or click') + "</span>") +
-            ("<input type=\"file\" accept=\"" + (isImage ? 'image/*' : '*') + "\" tabindex=\"-1\" dir=\"auto\" multiple=\"\"/>") +
+            "<strong>".concat(editor.i18n(isImage ? 'Drop image' : 'Drop file'), "</strong>") +
+            "<span><br>".concat(editor.i18n('or click'), "</span>") +
+            "<input type=\"file\" accept=\"".concat(isImage ? 'image/*' : '*', "\" tabindex=\"-1\" dir=\"auto\" multiple=\"\"/>") +
             '</div>');
         editor.uploader.bind(dragBox, function (resp) {
-            var handler = helpers_1.isFunction(callbacks.upload)
+            var handler = (0, helpers_1.isFunction)(callbacks.upload)
                 ? callbacks.upload
                 : editor.o.uploader.defaultHandlerSuccess;
-            if (helpers_1.isFunction(handler)) {
+            if ((0, helpers_1.isFunction)(handler)) {
                 handler.call(editor, resp);
             }
             editor.e.fire('closeAllPopups');
@@ -24410,19 +24413,19 @@ var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
         currentImage = null;
         if (elm &&
             !dom_1.Dom.isText(elm) &&
-            (dom_1.Dom.isTag(elm, 'img') || helpers_1.$$('img', elm).length)) {
-            currentImage = elm.tagName === 'IMG' ? elm : helpers_1.$$('img', elm)[0];
-            helpers_1.val(form.container, 'input[name=url]', helpers_1.attr(currentImage, 'src'));
-            helpers_1.val(form.container, 'input[name=text]', helpers_1.attr(currentImage, 'alt'));
+            (dom_1.Dom.isTag(elm, 'img') || (0, helpers_1.$$)('img', elm).length)) {
+            currentImage = elm.tagName === 'IMG' ? elm : (0, helpers_1.$$)('img', elm)[0];
+            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(currentImage, 'src'));
+            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(currentImage, 'alt'));
             button.state.text = 'Update';
         }
         if (elm && dom_1.Dom.isTag(elm, 'a')) {
-            helpers_1.val(form.container, 'input[name=url]', helpers_1.attr(elm, 'href'));
-            helpers_1.val(form.container, 'input[name=text]', helpers_1.attr(elm, 'title'));
+            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(elm, 'href'));
+            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(elm, 'title'));
             button.state.text = 'Update';
         }
         form.onSubmit(function (data) {
-            if (helpers_1.isFunction(callbacks.url)) {
+            if ((0, helpers_1.isFunction)(callbacks.url)) {
                 callbacks.url.call(editor, data.url, data.text);
             }
         });
@@ -24432,7 +24435,7 @@ var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
             content: form.container
         });
     }
-    return tabs_1.TabsWidget(editor, tabs);
+    return (0, tabs_1.TabsWidget)(editor, tabs);
 };
 exports.FileSelectorWidget = FileSelectorWidget;
 
@@ -24467,7 +24470,7 @@ var DragAndDrop = (function (_super) {
         _this.draggable = null;
         _this.bufferRange = null;
         _this.getText = function (event) {
-            var dt = helpers_2.getDataTransfer(event);
+            var dt = (0, helpers_2.getDataTransfer)(event);
             return dt ? dt.getData(constants_1.TEXT_HTML) || dt.getData(constants_1.TEXT_PLAIN) : null;
         };
         return _this;
@@ -24480,7 +24483,7 @@ var DragAndDrop = (function (_super) {
         var target = event.target;
         this.onDragEnd();
         this.isFragmentFromEditor = dom_1.Dom.isOrContains(this.j.editor, target, true);
-        this.isCopyMode = this.isFragmentFromEditor ? helpers_1.ctrlKey(event) : true;
+        this.isCopyMode = this.isFragmentFromEditor ? (0, helpers_1.ctrlKey)(event) : true;
         if (this.isFragmentFromEditor) {
             var sel = this.j.s.sel;
             var range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
@@ -24499,7 +24502,7 @@ var DragAndDrop = (function (_super) {
         }
         if (dom_1.Dom.isTag(target, 'img')) {
             this.draggable = target.cloneNode(true);
-            helpers_1.dataBind(this.draggable, 'target', target);
+            (0, helpers_1.dataBind)(this.draggable, 'target', target);
         }
         this.addDragListeners();
     };
@@ -24555,19 +24558,19 @@ var DragAndDrop = (function (_super) {
             }
             else if (this.draggable) {
                 if (this.isCopyMode) {
-                    var _a = helpers_1.attr(this.draggable, '-is-file') === '1'
+                    var _a = (0, helpers_1.attr)(this.draggable, '-is-file') === '1'
                         ? ['a', 'href']
                         : ['img', 'src'], tagName = _a[0], field = _a[1];
                     fragment = this.j.createInside.element(tagName);
-                    fragment.setAttribute(field, helpers_1.attr(this.draggable, 'data-src') ||
-                        helpers_1.attr(this.draggable, 'src') ||
+                    fragment.setAttribute(field, (0, helpers_1.attr)(this.draggable, 'data-src') ||
+                        (0, helpers_1.attr)(this.draggable, 'src') ||
                         '');
                     if (tagName === 'a') {
-                        fragment.textContent = helpers_1.attr(fragment, field) || '';
+                        fragment.textContent = (0, helpers_1.attr)(fragment, field) || '';
                     }
                 }
                 else {
-                    fragment = helpers_1.dataBind(this.draggable, 'target');
+                    fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
                 }
             }
             else if (this.getText(event)) {
@@ -24605,7 +24608,7 @@ var DragAndDrop = (function (_super) {
         decorators_1.autobind
     ], DragAndDrop.prototype, "onDragStart", null);
     tslib_1.__decorate([
-        decorators_1.throttle(function (ctx) { return ctx.j.defaultTimeout / 10; })
+        (0, decorators_1.throttle)(function (ctx) { return ctx.j.defaultTimeout / 10; })
     ], DragAndDrop.prototype, "onDrag", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -24652,7 +24655,7 @@ var DragAndDropElement = (function (_super) {
     }
     DragAndDropElement.prototype.afterInit = function () {
         this.dragList = this.j.o.draggableTags
-            ? helpers_1.splitArray(this.j.o.draggableTags)
+            ? (0, helpers_1.splitArray)(this.j.o.draggableTags)
                 .filter(Boolean)
                 .map(function (item) { return item.toLowerCase(); })
             : [];
@@ -24680,10 +24683,10 @@ var DragAndDropElement = (function (_super) {
         }
         this.startX = event.clientX;
         this.startY = event.clientY;
-        this.isCopyMode = helpers_1.ctrlKey(event);
+        this.isCopyMode = (0, helpers_1.ctrlKey)(event);
         this.onDragEnd();
         this.draggable = lastTarget.cloneNode(true);
-        helpers_1.dataBind(this.draggable, 'target', lastTarget);
+        (0, helpers_1.dataBind)(this.draggable, 'target', lastTarget);
         this.addDragListeners();
     };
     DragAndDropElement.prototype.onDrag = function (event) {
@@ -24698,8 +24701,8 @@ var DragAndDropElement = (function (_super) {
         this.wasMoved = true;
         this.j.e.fire('hidePopup hideResizer');
         if (!this.draggable.parentNode) {
-            var target = helpers_1.dataBind(this.draggable, 'target');
-            helpers_1.css(this.draggable, {
+            var target = (0, helpers_1.dataBind)(this.draggable, 'target');
+            (0, helpers_1.css)(this.draggable, {
                 zIndex: 10000000000000,
                 pointerEvents: 'none',
                 pointer: 'drag',
@@ -24710,9 +24713,9 @@ var DragAndDropElement = (function (_super) {
                 width: (_a = target === null || target === void 0 ? void 0 : target.offsetWidth) !== null && _a !== void 0 ? _a : 100,
                 height: (_b = target === null || target === void 0 ? void 0 : target.offsetHeight) !== null && _b !== void 0 ? _b : 100
             });
-            global_1.getContainer(this.j, DragAndDropElement).appendChild(this.draggable);
+            (0, global_1.getContainer)(this.j, DragAndDropElement).appendChild(this.draggable);
         }
-        helpers_1.css(this.draggable, {
+        (0, helpers_1.css)(this.draggable, {
             left: event.clientX,
             top: event.clientY
         });
@@ -24734,7 +24737,7 @@ var DragAndDropElement = (function (_super) {
             this.onDragEnd();
             return;
         }
-        var fragment = helpers_1.dataBind(this.draggable, 'target');
+        var fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
         this.onDragEnd();
         if (this.isCopyMode) {
             fragment = fragment.cloneNode(true);
@@ -24770,7 +24773,7 @@ var DragAndDropElement = (function (_super) {
         decorators_1.autobind
     ], DragAndDropElement.prototype, "onDragStart", null);
     tslib_1.__decorate([
-        decorators_1.throttle(function (ctx) { return ctx.j.defaultTimeout / 10; })
+        (0, decorators_1.throttle)(function (ctx) { return ctx.j.defaultTimeout / 10; })
     ], DragAndDropElement.prototype, "onDrag", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -24816,7 +24819,7 @@ var insertParagraph = function (editor, fake, wrapperTag, style) {
     range.collapse(true);
     editor.s.selectRange(range);
     dom_1.Dom.safeRemove(fake);
-    helpers_1.scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
+    (0, helpers_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
     (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('synchro');
     return p;
 };
@@ -24871,7 +24874,7 @@ var enter = (function (_super) {
             currentBox = this.wrapText(current);
         }
         if (!currentBox || currentBox === current) {
-            exports.insertParagraph(editor, null, isLi ? 'li' : defaultTag);
+            (0, exports.insertParagraph)(editor, null, isLi ? 'li' : defaultTag);
             return false;
         }
         if (!this.checkUnsplittableBox(currentBox)) {
@@ -24892,7 +24895,7 @@ var enter = (function (_super) {
             else {
                 fake = sel.setCursorBefore(currentBox);
             }
-            exports.insertParagraph(editor, fake, this.defaultTag);
+            (0, exports.insertParagraph)(editor, fake, this.defaultTag);
             if (cursorOnTheLeft && !cursorOnTheRight) {
                 sel.setCursorIn(currentBox, true);
             }
@@ -24926,7 +24929,7 @@ var enter = (function (_super) {
             (!shiftKeyPressed && isMultiLineBlock)) {
             var br = this.j.createInside.element('br');
             this.j.s.insertNode(br, true);
-            helpers_1.scrollIntoViewIfNeeded(br, this.j.editor, this.j.ed);
+            (0, helpers_1.scrollIntoViewIfNeeded)(br, this.j.editor, this.j.ed);
             return false;
         }
         return true;
@@ -24986,8 +24989,8 @@ var enter = (function (_super) {
             fakeTextNode = this.j.s.setCursorBefore(ul);
         }
         dom_1.Dom.safeRemove(currentBox);
-        exports.insertParagraph(this.j, fakeTextNode, this.defaultTag);
-        if (!helpers_1.$$('li', ul).length) {
+        (0, exports.insertParagraph)(this.j, fakeTextNode, this.defaultTag);
+        if (!(0, helpers_1.$$)('li', ul).length) {
             dom_1.Dom.safeRemove(ul);
         }
     };
@@ -25024,8 +25027,8 @@ function errorMessages(editor) {
         var height_1;
         var messagesBox_1 = editor.c.div('jodit_error_box_for_messages'), recalcOffsets_1 = function () {
             height_1 = 5;
-            helpers_1.toArray(messagesBox_1.childNodes).forEach(function (elm) {
-                helpers_1.css(messagesBox_1, 'bottom', height_1 + 'px');
+            (0, helpers_1.toArray)(messagesBox_1.childNodes).forEach(function (elm) {
+                (0, helpers_1.css)(messagesBox_1, 'bottom', height_1 + 'px');
                 height_1 +=
                     elm.offsetWidth + editor.o.showMessageErrorOffsetPx;
             });
@@ -25103,16 +25106,16 @@ config_1.Config.prototype.controls.fontsize = {
     ],
     exec: function (editor, event, _a) {
         var control = _a.control;
-        return helpers_1.memorizeExec(editor, event, { control: control }, function (value) {
+        return (0, helpers_1.memorizeExec)(editor, event, { control: control }, function (value) {
             var _a;
             if (((_a = control.command) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'fontsize') {
-                return "" + value + editor.o.defaultFontSizePoints;
+                return "".concat(value).concat(editor.o.defaultFontSizePoints);
             }
             return value;
         });
     },
     childTemplate: function (editor, key, value) {
-        return "" + value + editor.o.defaultFontSizePoints;
+        return "".concat(value).concat(editor.o.defaultFontSizePoints);
     },
     tooltip: 'Font size',
     isChildActive: function (editor, control) {
@@ -25130,7 +25133,7 @@ config_1.Config.prototype.controls.fontsize = {
                 return (dom_1.Dom.isBlock(elm, editor.ew) ||
                     (elm && dom_1.Dom.isElement(elm)));
             }, editor.editor) || editor.editor;
-            var value = helpers_1.css(currentBpx, cssKey);
+            var value = (0, helpers_1.css)(currentBpx, cssKey);
             return Boolean(value &&
                 control.args &&
                 normalize(control.args[0].toString()) ===
@@ -25149,7 +25152,7 @@ config_1.Config.prototype.controls.font = tslib_1.__assign(tslib_1.__assign({}, 
         "'Times New Roman',Times,serif": 'Times New Roman',
         'Verdana,Geneva,sans-serif': 'Verdana'
     }, childTemplate: function (editor, key, value) {
-        return "<span style=\"font-family: " + key + "!important;\">" + value + "</span>";
+        return "<span style=\"font-family: ".concat(key, "!important;\">").concat(value, "</span>");
     }, data: {
         cssRule: 'font-family',
         normalize: function (v) {
@@ -25173,7 +25176,7 @@ function font(editor) {
         switch (command) {
             case 'fontsize':
                 editor.s.applyStyle({
-                    fontSize: helpers_1.normalizeSize(third)
+                    fontSize: (0, helpers_1.normalizeSize)(third)
                 });
                 break;
             case 'fontname':
@@ -25266,7 +25269,7 @@ config_1.Config.prototype.controls.paragraph = {
         return false;
     },
     childTemplate: function (e, key, value) {
-        return "<" + key + " style=\"margin:0;padding:0\"><span>" + e.i18n(value) + "</span></" + key + ">";
+        return "<".concat(key, " style=\"margin:0;padding:0\"><span>").concat(e.i18n(value), "</span></").concat(key, ">");
     },
     tooltip: 'Insert format block'
 };
@@ -25330,16 +25333,16 @@ function fullsize(editor) {
     var resize = function () {
         if (editor.events) {
             if (isEnabled) {
-                oldHeight = helpers_1.css(editor.container, 'height', undefined, true);
-                oldWidth = helpers_1.css(editor.container, 'width', undefined, true);
-                helpers_1.css(editor.container, {
+                oldHeight = (0, helpers_1.css)(editor.container, 'height', undefined, true);
+                oldWidth = (0, helpers_1.css)(editor.container, 'width', undefined, true);
+                (0, helpers_1.css)(editor.container, {
                     height: editor.ow.innerHeight,
                     width: editor.ow.innerWidth
                 });
                 wasToggled = true;
             }
             else if (wasToggled) {
-                helpers_1.css(editor.container, {
+                (0, helpers_1.css)(editor.container, {
                     height: oldHeight || 'auto',
                     width: oldWidth || 'auto'
                 });
@@ -25358,9 +25361,9 @@ function fullsize(editor) {
         isEnabled = enable;
         editor.container.classList.toggle('jodit_fullsize', enable);
         if (editor.toolbar) {
-            helpers_1.isJoditObject(editor) &&
+            (0, helpers_1.isJoditObject)(editor) &&
                 editor.toolbarContainer.appendChild(editor.toolbar.container);
-            helpers_1.css(editor.toolbar.container, 'width', 'auto');
+            (0, helpers_1.css)(editor.toolbar.container, 'width', 'auto');
         }
         if (editor.o.globalFullSize) {
             var node = editor.container.parentNode;
@@ -25436,7 +25439,7 @@ var hotkeys = (function (_super) {
                     modif.push(specialKey);
                 }
             });
-            return helpers_1.normalizeKeyAliases(modif.join('+'));
+            return (0, helpers_1.normalizeKeyAliases)(modif.join('+'));
         };
         _this.specialKeys = {
             8: 'backspace',
@@ -25509,9 +25512,9 @@ var hotkeys = (function (_super) {
     }
     hotkeys.prototype.afterInit = function (editor) {
         var _this = this;
-        helpers_1.keys(editor.o.commandToHotkeys, false).forEach(function (commandName) {
+        (0, helpers_1.keys)(editor.o.commandToHotkeys, false).forEach(function (commandName) {
             var shortcuts = editor.o.commandToHotkeys[commandName];
-            if (shortcuts && (helpers_1.isArray(shortcuts) || helpers_1.isString(shortcuts))) {
+            if (shortcuts && ((0, helpers_1.isArray)(shortcuts) || (0, helpers_1.isString)(shortcuts))) {
                 editor.registerHotkeyToCommand(shortcuts, commandName);
             }
         });
@@ -25660,11 +25663,11 @@ function iframe(editor) {
                 .contentWindow.document;
         doc.open();
         doc.write(opt.iframeDoctype +
-            ("<html dir=\"" + opt.direction + "\" class=\"jodit\" lang=\"" + helpers_1.defaultLanguage(opt.language) + "\">") +
+            "<html dir=\"".concat(opt.direction, "\" class=\"jodit\" lang=\"").concat((0, helpers_1.defaultLanguage)(opt.language), "\">") +
             '<head>' +
-            ("<title>" + opt.iframeTitle + "</title>") +
+            "<title>".concat(opt.iframeTitle, "</title>") +
             (opt.iframeBaseUrl
-                ? "<base href=\"" + opt.iframeBaseUrl + "\"/>"
+                ? "<base href=\"".concat(opt.iframeBaseUrl, "\"/>")
                 : '') +
             '</head>' +
             '<body class="jodit-wysiwyg"></body>' +
@@ -25706,7 +25709,7 @@ function iframe(editor) {
             editor.editorWindow = editor.iframe.contentWindow;
             var docMode = opt.editHTMLDocumentMode;
             var toggleEditable = function () {
-                helpers_1.attr(doc.body, 'contenteditable', (editor.getMode() !== constants_1.MODE_SOURCE &&
+                (0, helpers_1.attr)(doc.body, 'contenteditable', (editor.getMode() !== constants_1.MODE_SOURCE &&
                     !editor.getReadOnly()) ||
                     null);
             };
@@ -25731,7 +25734,7 @@ function iframe(editor) {
             if (docMode) {
                 var tag = editor.element.tagName;
                 if (tag !== 'TEXTAREA' && tag !== 'INPUT') {
-                    throw helpers_2.error('If enable `editHTMLDocumentMode` - source element should be INPUT or TEXTAREA');
+                    throw (0, helpers_2.error)('If enable `editHTMLDocumentMode` - source element should be INPUT or TEXTAREA');
                 }
                 editor.e
                     .on('beforeGetNativeEditorValue', function () {
@@ -25770,7 +25773,7 @@ function iframe(editor) {
                     if (editor.editor &&
                         editor.iframe &&
                         opt.height === 'auto') {
-                        helpers_1.css(editor.iframe, 'height', editor.editor.offsetHeight);
+                        (0, helpers_1.css)(editor.iframe, 'height', editor.editor.offsetHeight);
                     }
                 }, editor.defaultTimeout / 2);
                 editor.e
@@ -25795,7 +25798,7 @@ function iframe(editor) {
             }
             return false;
         };
-        return helpers_1.callPromise(result, init);
+        return (0, helpers_1.callPromise)(result, init);
     });
 }
 exports.iframe = iframe;
@@ -25861,7 +25864,7 @@ config_1.Config.prototype.image = {
     selectImageAfterClose: true
 };
 var normalSizeToString = function (value) {
-    value = helpers_1.trim(value);
+    value = (0, helpers_1.trim)(value);
     return /^[0-9]+$/.test(value) ? value + 'px' : value;
 };
 var normalSizeFromString = function (value) {
@@ -25888,9 +25891,9 @@ var imageProperties = (function (_super) {
         if (!this.form) {
             return;
         }
-        var _a = helpers_1.refs(this.form), marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin;
+        var _a = (0, helpers_1.refs)(this.form), marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin;
         [marginRight, marginBottom, marginLeft].forEach(function (elm) {
-            helpers_1.attr(elm, 'disabled', _this.state.marginIsLocked || null);
+            (0, helpers_1.attr)(elm, 'disabled', _this.state.marginIsLocked || null);
         });
         lockMargin.innerHTML = modules_1.Icon.get(this.state.marginIsLocked ? 'lock' : 'unlock');
     };
@@ -25898,7 +25901,7 @@ var imageProperties = (function (_super) {
         if (!this.form) {
             return;
         }
-        var _a = helpers_1.refs(this.form), lockSize = _a.lockSize, imageWidth = _a.imageWidth;
+        var _a = (0, helpers_1.refs)(this.form), lockSize = _a.lockSize, imageWidth = _a.imageWidth;
         lockSize.innerHTML = modules_1.Icon.get(this.state.sizeIsLocked ? 'lock' : 'unlock');
         lockSize.classList.remove('jodit-properties__lock');
         lockSize.classList.remove('jodit-properties__unlock');
@@ -25910,7 +25913,7 @@ var imageProperties = (function (_super) {
     imageProperties.prototype.open = function () {
         this.makeForm();
         this.j.e.fire('hidePopup');
-        helpers_1.markOwner(this.j, this.dialog.container);
+        (0, helpers_1.markOwner)(this.j, this.dialog.container);
         this.state.marginIsLocked = true;
         this.state.sizeIsLocked = true;
         this.updateValues();
@@ -25932,8 +25935,8 @@ var imageProperties = (function (_super) {
             buttons: ['fullsize', 'dialog.close']
         });
         var editor = this.j, opt = editor.o, i18n = editor.i18n.bind(editor), buttons = {
-            check: button_1.Button(editor, 'ok', 'Apply'),
-            remove: button_1.Button(editor, 'bin', 'Delete')
+            check: (0, button_1.Button)(editor, 'ok', 'Apply'),
+            remove: (0, button_1.Button)(editor, 'bin', 'Delete')
         };
         editor.e.on(this.dialog, 'afterClose', function () {
             if (_this.state.image.parentNode &&
@@ -25947,23 +25950,23 @@ var imageProperties = (function (_super) {
         });
         var dialog = this.dialog;
         dialog.setHeader(i18n('Image properties'));
-        var mainForm = templates_1.form(editor);
+        var mainForm = (0, templates_1.form)(editor);
         this.form = mainForm;
         dialog.setContent(mainForm);
-        var tabsBox = helpers_1.refs(this.form).tabsBox;
+        var tabsBox = (0, helpers_1.refs)(this.form).tabsBox;
         if (tabsBox) {
-            tabsBox.appendChild(widget_1.TabsWidget(editor, [
-                { name: 'Image', content: templates_1.mainTab(editor) },
-                { name: 'Advanced', content: templates_1.positionTab(editor) }
+            tabsBox.appendChild((0, widget_1.TabsWidget)(editor, [
+                { name: 'Image', content: (0, templates_1.mainTab)(editor) },
+                { name: 'Advanced', content: (0, templates_1.positionTab)(editor) }
             ]));
         }
         buttons.check.onAction(this.onApply);
-        var _a = helpers_1.refs(this.form), changeImage = _a.changeImage, editImage = _a.editImage;
+        var _a = (0, helpers_1.refs)(this.form), changeImage = _a.changeImage, editImage = _a.editImage;
         editor.e.on(changeImage, 'click', this.openImagePopup);
         if (opt.image.useImageEditor) {
             editor.e.on(editImage, 'click', this.openImageEditor);
         }
-        var _b = helpers_1.refs(mainForm), lockSize = _b.lockSize, lockMargin = _b.lockMargin, imageWidth = _b.imageWidth, imageHeight = _b.imageHeight;
+        var _b = (0, helpers_1.refs)(mainForm), lockSize = _b.lockSize, lockMargin = _b.lockMargin, imageWidth = _b.imageWidth, imageHeight = _b.imageHeight;
         if (lockSize) {
             editor.e.on(lockSize, 'click', function () {
                 _this.state.sizeIsLocked = !_this.state.sizeIsLocked;
@@ -25974,7 +25977,7 @@ var imageProperties = (function (_super) {
             e.preventDefault();
         });
         var changeSizes = function (event) {
-            if (!helpers_1.isNumeric(imageWidth.value) || !helpers_1.isNumeric(imageHeight.value)) {
+            if (!(0, helpers_1.isNumeric)(imageWidth.value) || !(0, helpers_1.isNumeric)(imageHeight.value)) {
                 return;
             }
             var w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
@@ -26001,17 +26004,17 @@ var imageProperties = (function (_super) {
         var _this = this;
         var opt = this.j.o;
         var image = this.state.image;
-        var _a = helpers_1.refs(this.form), marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin, imageSrc = _a.imageSrc, id = _a.id, classes = _a.classes, align = _a.align, style = _a.style, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, borderRadius = _a.borderRadius, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, imageViewSrc = _a.imageViewSrc, lockSize = _a.lockSize;
+        var _a = (0, helpers_1.refs)(this.form), marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, lockMargin = _a.lockMargin, imageSrc = _a.imageSrc, id = _a.id, classes = _a.classes, align = _a.align, style = _a.style, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, borderRadius = _a.borderRadius, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, imageViewSrc = _a.imageViewSrc, lockSize = _a.lockSize;
         var updateLock = function () {
             lockMargin.checked = _this.state.marginIsLocked;
             lockSize.checked = _this.state.sizeIsLocked;
         }, updateAlign = function () {
             if (image.style.cssFloat &&
                 ['left', 'right'].indexOf(image.style.cssFloat.toLowerCase()) !== -1) {
-                align.value = helpers_1.css(image, 'float');
+                align.value = (0, helpers_1.css)(image, 'float');
             }
             else {
-                if (helpers_1.css(image, 'display') === 'block' &&
+                if ((0, helpers_1.css)(image, 'display') === 'block' &&
                     image.style.marginLeft === 'auto' &&
                     image.style.marginRight === 'auto') {
                     align.value = 'center';
@@ -26020,19 +26023,19 @@ var imageProperties = (function (_super) {
         }, updateBorderRadius = function () {
             borderRadius.value = (parseInt(image.style.borderRadius || '0', 10) || '0').toString();
         }, updateId = function () {
-            id.value = helpers_1.attr(image, 'id') || '';
+            id.value = (0, helpers_1.attr)(image, 'id') || '';
         }, updateStyle = function () {
-            style.value = helpers_1.attr(image, 'style') || '';
+            style.value = (0, helpers_1.attr)(image, 'style') || '';
         }, updateClasses = function () {
-            classes.value = (helpers_1.attr(image, 'class') || '').replace(/jodit_focused_image[\s]*/, '');
+            classes.value = ((0, helpers_1.attr)(image, 'class') || '').replace(/jodit_focused_image[\s]*/, '');
         }, updateMargins = function () {
             if (!opt.image.editMargins) {
                 return;
             }
             var equal = true, wasEmptyField = false;
             [marginTop, marginRight, marginBottom, marginLeft].forEach(function (elm) {
-                var id = helpers_1.attr(elm, 'data-ref') || '';
-                var value = image.style.getPropertyValue(helpers_1.kebabCase(id));
+                var id = (0, helpers_1.attr)(elm, 'data-ref') || '';
+                var value = image.style.getPropertyValue((0, helpers_1.kebabCase)(id));
                 if (!value) {
                     wasEmptyField = true;
                     elm.value = '';
@@ -26051,10 +26054,10 @@ var imageProperties = (function (_super) {
             });
             _this.state.marginIsLocked = equal;
         }, updateSizes = function () {
-            var width = helpers_1.attr(image, 'width') ||
-                helpers_1.css(image, 'width', undefined, true) ||
-                false, height = helpers_1.attr(image, 'height') ||
-                helpers_1.css(image, 'height', undefined, true) ||
+            var width = (0, helpers_1.attr)(image, 'width') ||
+                (0, helpers_1.css)(image, 'width', undefined, true) ||
+                false, height = (0, helpers_1.attr)(image, 'height') ||
+                (0, helpers_1.css)(image, 'height', undefined, true) ||
                 false;
             imageWidth.value =
                 width !== false
@@ -26065,30 +26068,30 @@ var imageProperties = (function (_super) {
                     ? normalSizeFromString(height).toString()
                     : image.offsetHeight.toString();
             _this.state.sizeIsLocked = (function () {
-                if (!helpers_1.isNumeric(imageWidth.value) ||
-                    !helpers_1.isNumeric(imageHeight.value)) {
+                if (!(0, helpers_1.isNumeric)(imageWidth.value) ||
+                    !(0, helpers_1.isNumeric)(imageHeight.value)) {
                     return false;
                 }
                 var w = parseFloat(imageWidth.value), h = parseFloat(imageHeight.value);
                 return Math.abs(w - h * _this.state.ratio) < 1;
             })();
         }, updateText = function () {
-            imageTitle.value = helpers_1.attr(image, 'title') || '';
-            imageAlt.value = helpers_1.attr(image, 'alt') || '';
+            imageTitle.value = (0, helpers_1.attr)(image, 'title') || '';
+            imageAlt.value = (0, helpers_1.attr)(image, 'alt') || '';
             var a = modules_1.Dom.closest(image, 'a', _this.j.editor);
             if (a) {
-                imageLink.value = helpers_1.attr(a, 'href') || '';
+                imageLink.value = (0, helpers_1.attr)(a, 'href') || '';
                 imageLinkOpenInNewTab.checked =
-                    helpers_1.attr(a, 'target') === '_blank';
+                    (0, helpers_1.attr)(a, 'target') === '_blank';
             }
             else {
                 imageLink.value = '';
                 imageLinkOpenInNewTab.checked = false;
             }
         }, updateSrc = function () {
-            imageSrc.value = helpers_1.attr(image, 'src') || '';
+            imageSrc.value = (0, helpers_1.attr)(image, 'src') || '';
             if (imageViewSrc) {
-                helpers_1.attr(imageViewSrc, 'src', helpers_1.attr(image, 'src') || '');
+                (0, helpers_1.attr)(imageViewSrc, 'src', (0, helpers_1.attr)(image, 'src') || '');
             }
         };
         updateLock();
@@ -26103,14 +26106,14 @@ var imageProperties = (function (_super) {
         updateStyle();
     };
     imageProperties.prototype.onApply = function () {
-        var _a = helpers_1.refs(this.form), style = _a.style, imageSrc = _a.imageSrc, borderRadius = _a.borderRadius, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, align = _a.align, classes = _a.classes, id = _a.id;
+        var _a = (0, helpers_1.refs)(this.form), style = _a.style, imageSrc = _a.imageSrc, borderRadius = _a.borderRadius, imageTitle = _a.imageTitle, imageAlt = _a.imageAlt, imageLink = _a.imageLink, imageWidth = _a.imageWidth, imageHeight = _a.imageHeight, marginTop = _a.marginTop, marginRight = _a.marginRight, marginBottom = _a.marginBottom, marginLeft = _a.marginLeft, imageLinkOpenInNewTab = _a.imageLinkOpenInNewTab, align = _a.align, classes = _a.classes, id = _a.id;
         var opt = this.j.o;
         var image = this.state.image;
         if (opt.image.editStyle) {
-            helpers_1.attr(image, 'style', style.value || null);
+            (0, helpers_1.attr)(image, 'style', style.value || null);
         }
         if (imageSrc.value) {
-            helpers_1.attr(image, 'src', imageSrc.value);
+            (0, helpers_1.attr)(image, 'src', imageSrc.value);
         }
         else {
             modules_1.Dom.safeRemove(image);
@@ -26123,15 +26126,15 @@ var imageProperties = (function (_super) {
         else {
             image.style.borderRadius = '';
         }
-        helpers_1.attr(image, 'title', imageTitle.value || null);
-        helpers_1.attr(image, 'alt', imageAlt.value || null);
+        (0, helpers_1.attr)(image, 'title', imageTitle.value || null);
+        (0, helpers_1.attr)(image, 'alt', imageAlt.value || null);
         var link = modules_1.Dom.closest(image, 'a', this.j.editor);
         if (imageLink.value) {
             if (!link) {
                 link = modules_1.Dom.wrap(image, 'a', this.j);
             }
-            helpers_1.attr(link, 'href', imageLink.value);
-            helpers_1.attr(link, 'target', imageLinkOpenInNewTab.checked ? '_blank' : null);
+            (0, helpers_1.attr)(link, 'href', imageLink.value);
+            (0, helpers_1.attr)(link, 'target', imageLinkOpenInNewTab.checked ? '_blank' : null);
         }
         else {
             if (link && link.parentNode) {
@@ -26140,43 +26143,43 @@ var imageProperties = (function (_super) {
         }
         if (imageWidth.value !== image.offsetWidth.toString() ||
             imageHeight.value !== image.offsetHeight.toString()) {
-            helpers_1.css(image, {
-                width: helpers_1.trim(imageWidth.value)
+            (0, helpers_1.css)(image, {
+                width: (0, helpers_1.trim)(imageWidth.value)
                     ? normalSizeToString(imageWidth.value)
                     : null,
-                height: helpers_1.trim(imageHeight.value)
+                height: (0, helpers_1.trim)(imageHeight.value)
                     ? normalSizeToString(imageHeight.value)
                     : null
             });
-            helpers_1.attr(image, 'width', null);
-            helpers_1.attr(image, 'height', null);
+            (0, helpers_1.attr)(image, 'width', null);
+            (0, helpers_1.attr)(image, 'height', null);
         }
         var margins = [marginTop, marginRight, marginBottom, marginLeft];
         if (opt.image.editMargins) {
             if (!this.state.marginIsLocked) {
                 margins.forEach(function (margin) {
-                    var side = helpers_1.attr(margin, 'data-ref') || '';
-                    helpers_1.css(image, side, normalSizeToString(margin.value));
+                    var side = (0, helpers_1.attr)(margin, 'data-ref') || '';
+                    (0, helpers_1.css)(image, side, normalSizeToString(margin.value));
                 });
             }
             else {
-                helpers_1.css(image, 'margin', normalSizeToString(marginTop.value));
+                (0, helpers_1.css)(image, 'margin', normalSizeToString(marginTop.value));
             }
         }
         if (opt.image.editClass) {
-            helpers_1.attr(image, 'class', classes.value || null);
+            (0, helpers_1.attr)(image, 'class', classes.value || null);
         }
         if (opt.image.editId) {
-            helpers_1.attr(image, 'id', id.value || null);
+            (0, helpers_1.attr)(image, 'id', id.value || null);
         }
         if (opt.image.editAlign) {
             if (align.value) {
                 if (['right', 'left'].includes(align.value.toLowerCase())) {
-                    helpers_1.css(image, 'float', align.value);
-                    helpers_1.clearCenterAlign(image);
+                    (0, helpers_1.css)(image, 'float', align.value);
+                    (0, helpers_1.clearCenterAlign)(image);
                 }
                 else {
-                    helpers_1.css(image, {
+                    (0, helpers_1.css)(image, {
                         float: '',
                         display: 'block',
                         marginLeft: 'auto',
@@ -26185,11 +26188,11 @@ var imageProperties = (function (_super) {
                 }
             }
             else {
-                if (helpers_1.css(image, 'float') &&
-                    ['right', 'left'].indexOf(helpers_1.css(image, 'float').toString().toLowerCase()) !== -1) {
-                    helpers_1.css(image, 'float', '');
+                if ((0, helpers_1.css)(image, 'float') &&
+                    ['right', 'left'].indexOf((0, helpers_1.css)(image, 'float').toString().toLowerCase()) !== -1) {
+                    (0, helpers_1.css)(image, 'float', '');
                 }
-                helpers_1.clearCenterAlign(image);
+                (0, helpers_1.clearCenterAlign)(image);
             }
         }
         this.j.setEditorValue();
@@ -26197,20 +26200,20 @@ var imageProperties = (function (_super) {
     };
     imageProperties.prototype.openImageEditor = function () {
         var _this = this;
-        var url = helpers_1.attr(this.state.image, 'src') || '', a = this.j.c.element('a'), loadExternal = function () {
+        var url = (0, helpers_1.attr)(this.state.image, 'src') || '', a = this.j.c.element('a'), loadExternal = function () {
             if (a.host !== location.host) {
-                modules_1.Confirm(_this.j.i18n('You can only edit your own images. Download this image on the host?'), function (yes) {
+                (0, modules_1.Confirm)(_this.j.i18n('You can only edit your own images. Download this image on the host?'), function (yes) {
                     if (yes && _this.j.uploader) {
                         _this.j.uploader.uploadRemoteImage(a.href.toString(), function (resp) {
-                            modules_1.Alert(_this.j.i18n('The image has been successfully uploaded to the host!'), function () {
-                                if (helpers_1.isString(resp.newfilename)) {
-                                    helpers_1.attr(_this.state.image, 'src', resp.baseurl +
+                            (0, modules_1.Alert)(_this.j.i18n('The image has been successfully uploaded to the host!'), function () {
+                                if ((0, helpers_1.isString)(resp.newfilename)) {
+                                    (0, helpers_1.attr)(_this.state.image, 'src', resp.baseurl +
                                         resp.newfilename);
                                     _this.updateValues();
                                 }
                             }).bindDestruct(_this.j);
                         }, function (error) {
-                            modules_1.Alert(_this.j.i18n('There was an error loading %s', error.message)).bindDestruct(_this.j);
+                            (0, modules_1.Alert)(_this.j.i18n('There was an error loading %s', error.message)).bindDestruct(_this.j);
                         });
                     }
                 }).bindDestruct(_this.j);
@@ -26223,43 +26226,43 @@ var imageProperties = (function (_super) {
             .then(function (resp) {
             image_editor_1.openImageEditor.call(_this.j.filebrowser, a.href, resp.name, resp.path, resp.source, function () {
                 var timestamp = new Date().getTime();
-                helpers_1.attr(_this.state.image, 'src', url +
+                (0, helpers_1.attr)(_this.state.image, 'src', url +
                     (url.indexOf('?') !== -1 ? '' : '?') +
                     '&_tmp=' +
                     timestamp.toString());
                 _this.updateValues();
             }, function (error) {
-                modules_1.Alert(error.message).bindDestruct(_this.j);
+                (0, modules_1.Alert)(error.message).bindDestruct(_this.j);
             });
         })
             .catch(function (error) {
-            modules_1.Alert(error.message, loadExternal).bindDestruct(_this.j);
+            (0, modules_1.Alert)(error.message, loadExternal).bindDestruct(_this.j);
         });
     };
     imageProperties.prototype.openImagePopup = function (event) {
         var _this = this;
-        var popup = new modules_1.Popup(this.j), changeImage = helpers_1.refs(this.form).changeImage;
+        var popup = new modules_1.Popup(this.j), changeImage = (0, helpers_1.refs)(this.form).changeImage;
         popup.setZIndex(this.dialog.getZIndex() + 1);
         popup
-            .setContent(widget_1.FileSelectorWidget(this.j, {
+            .setContent((0, widget_1.FileSelectorWidget)(this.j, {
             upload: function (data) {
                 if (data.files && data.files.length) {
-                    helpers_1.attr(_this.state.image, 'src', data.baseurl + data.files[0]);
+                    (0, helpers_1.attr)(_this.state.image, 'src', data.baseurl + data.files[0]);
                 }
                 _this.updateValues();
                 popup.close();
             },
             filebrowser: function (data) {
                 if (data &&
-                    helpers_1.isArray(data.files) &&
+                    (0, helpers_1.isArray)(data.files) &&
                     data.files.length) {
-                    helpers_1.attr(_this.state.image, 'src', data.files[0]);
+                    (0, helpers_1.attr)(_this.state.image, 'src', data.files[0]);
                     popup.close();
                     _this.updateValues();
                 }
             }
         }, this.state.image, popup.close))
-            .open(function () { return helpers_1.position(changeImage); });
+            .open(function () { return (0, helpers_1.position)(changeImage); });
         event.stopPropagation();
     };
     imageProperties.prototype.afterInit = function (editor) {
@@ -26298,10 +26301,10 @@ var imageProperties = (function (_super) {
         editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
     };
     tslib_1.__decorate([
-        decorators_1.watch('state.marginIsLocked')
+        (0, decorators_1.watch)('state.marginIsLocked')
     ], imageProperties.prototype, "onChangeMarginIsLocked", null);
     tslib_1.__decorate([
-        decorators_1.watch('state.sizeIsLocked')
+        (0, decorators_1.watch)('state.sizeIsLocked')
     ], imageProperties.prototype, "onChangeSizeIsLocked", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -26360,7 +26363,7 @@ exports.form = void 0;
 var ui_1 = __webpack_require__(75);
 function form(editor) {
     var _a = editor.o.image, showPreview = _a.showPreview, editSize = _a.editSize, gi = ui_1.Icon.get.bind(ui_1.Icon);
-    return editor.c.fromHTML("<form class=\"jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-2-5 jodit_col-xs-5-5\">\n\t\t\t\t<div class=\"jodit-properties_view_box\">\n\t\t\t\t\t<div style=\"" + (!showPreview ? 'display:none' : '') + "\" class=\"jodit-properties_image_view\">\n\t\t\t\t\t\t<img data-ref=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style=\"" + (!editSize ? 'display:none' : '') + "\" class=\"jodit-form__group jodit-properties_image_sizes\">\n\t\t\t\t\t\t<input data-ref=\"imageWidth\" type=\"text\" class=\"jodit-input\"/>\n\t\t\t\t\t\t<a data-ref=\"lockSize\" class=\"jodit-properties__lock\">" + gi('lock') + "</a>\n\t\t\t\t\t\t<input data-ref=\"imageHeight\" type=\"text\" class=\"imageHeight jodit-input\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div data-ref=\"tabsBox\" class=\"jodit_col-lg-3-5 jodit_col-xs-5-5\"></div>\n\t\t</div>\n\t</form>");
+    return editor.c.fromHTML("<form class=\"jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-2-5 jodit_col-xs-5-5\">\n\t\t\t\t<div class=\"jodit-properties_view_box\">\n\t\t\t\t\t<div style=\"".concat(!showPreview ? 'display:none' : '', "\" class=\"jodit-properties_image_view\">\n\t\t\t\t\t\t<img data-ref=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style=\"").concat(!editSize ? 'display:none' : '', "\" class=\"jodit-form__group jodit-properties_image_sizes\">\n\t\t\t\t\t\t<input data-ref=\"imageWidth\" type=\"text\" class=\"jodit-input\"/>\n\t\t\t\t\t\t<a data-ref=\"lockSize\" class=\"jodit-properties__lock\">").concat(gi('lock'), "</a>\n\t\t\t\t\t\t<input data-ref=\"imageHeight\" type=\"text\" class=\"imageHeight jodit-input\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div data-ref=\"tabsBox\" class=\"jodit_col-lg-3-5 jodit_col-xs-5-5\"></div>\n\t\t</div>\n\t</form>"));
 }
 exports.form = form;
 
@@ -26381,7 +26384,7 @@ exports.mainTab = void 0;
 var ui_1 = __webpack_require__(75);
 function mainTab(editor) {
     var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor;
-    return editor.c.fromHTML("<div style=\"" + (!opt.image.editSrc ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Src') + "</label>\n\t\t\t<div class=\"jodit-input_group\">\n\t\t\t\t<input data-ref=\"imageSrc\" class=\"jodit-input\" type=\"text\"/>\n\t\t\t\t<div\n\t\t\t\t\tclass=\"jodit-input_group-buttons\"\n\t\t\t\t\tstyle=\"" + (hasFbUrl ? '' : 'display: none') + "\"\n\t\t\t\t>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"changeImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t>" + gi('image') + "</a>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"editImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t\tstyle=\"" + (hasEditor ? '' : 'display: none') + "\"\n\t\t\t\t\t\t>" + gi('crop') + "</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editTitle ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Title') + "</label>\n\t\t\t<input data-ref=\"imageTitle\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editAlt ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Alternative') + "</label>\n\t\t\t<input data-ref=\"imageAlt\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Link') + "</label>\n\t\t\t<input data-ref=\"imageLink\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label class=\"jodit_vertical_middle\">\n\t\t\t\t<input data-ref=\"imageLinkOpenInNewTab\" type=\"checkbox\" class=\"jodit-checkbox\"/>\n\t\t\t\t<span>" + i18n('Open link in new tab') + "</span>\n\t\t\t</label>\n\t\t</div>");
+    return editor.c.fromHTML("<div style=\"".concat(!opt.image.editSrc ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Src'), "</label>\n\t\t\t<div class=\"jodit-input_group\">\n\t\t\t\t<input data-ref=\"imageSrc\" class=\"jodit-input\" type=\"text\"/>\n\t\t\t\t<div\n\t\t\t\t\tclass=\"jodit-input_group-buttons\"\n\t\t\t\t\tstyle=\"").concat(hasFbUrl ? '' : 'display: none', "\"\n\t\t\t\t>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"changeImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t>").concat(gi('image'), "</a>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"editImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t\tstyle=\"").concat(hasEditor ? '' : 'display: none', "\"\n\t\t\t\t\t\t>").concat(gi('crop'), "</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editTitle ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Title'), "</label>\n\t\t\t<input data-ref=\"imageTitle\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editAlt ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Alternative'), "</label>\n\t\t\t<input data-ref=\"imageAlt\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editLink ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Link'), "</label>\n\t\t\t<input data-ref=\"imageLink\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editLink ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label class=\"jodit_vertical_middle\">\n\t\t\t\t<input data-ref=\"imageLinkOpenInNewTab\" type=\"checkbox\" class=\"jodit-checkbox\"/>\n\t\t\t\t<span>").concat(i18n('Open link in new tab'), "</span>\n\t\t\t</label>\n\t\t</div>"));
 }
 exports.mainTab = mainTab;
 
@@ -26402,7 +26405,7 @@ exports.positionTab = void 0;
 var ui_1 = __webpack_require__(75);
 function positionTab(editor) {
     var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon);
-    return editor.c.fromHTML("<div style=\"" + (!opt.image.editMargins ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Margins') + "</label>\n\t\t\t<div class=\"jodit-grid jodit_vertical_middle\">\n\t\t\t\t<input class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginTop\" type=\"text\" placeholder=\"" + i18n('top') + "\"/>\n\t\t\t\t<a style=\"text-align: center;\" data-ref=\"lockMargin\" class=\"jodit-properties__lock jodit_col-lg-1-5\">" + gi('lock') + "</a>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginRight\" type=\"text\" placeholder=\"" + i18n('right') + "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginBottom\" type=\"text\" placeholder=\"" + i18n('bottom') + "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginLeft\" type=\"text\" placeholder=\"" + i18n('left') + "\"/>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editStyle ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Styles') + "</label>\n\t\t\t<input data-ref=\"style\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editClass ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>" + i18n('Classes') + "</label>\n\t\t\t<input data-ref=\"classes\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"" + (!opt.image.editId ? 'display:none' : '') + "\" class=\"jodit-form__group\">\n\t\t\t<label>Id</label>\n\t\t\t<input data-ref=\"id\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"" + (!opt.image.editBorderRadius ? 'display:none' : '') + "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>" + i18n('Border radius') + "</label>\n\t\t\t\t<input data-ref=\"borderRadius\" type=\"number\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"" + (!opt.image.editAlign ? 'display:none' : '') + "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>" + i18n('Align') + "</label>\n\t\t\t<select data-ref=\"align\" class=\"jodit-select\">\n\t\t\t\t<option value=\"\">" + i18n('--Not Set--') + "</option>\n\t\t\t\t<option value=\"left\">" + i18n('Left') + "</option>\n\t\t\t\t<option value=\"center\">" + i18n('Center') + "</option>\n\t\t\t\t<option value=\"right\">" + i18n('Right') + "</option>\n\t\t\t</select>\n\t\t</div>");
+    return editor.c.fromHTML("<div style=\"".concat(!opt.image.editMargins ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Margins'), "</label>\n\t\t\t<div class=\"jodit-grid jodit_vertical_middle\">\n\t\t\t\t<input class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginTop\" type=\"text\" placeholder=\"").concat(i18n('top'), "\"/>\n\t\t\t\t<a style=\"text-align: center;\" data-ref=\"lockMargin\" class=\"jodit-properties__lock jodit_col-lg-1-5\">").concat(gi('lock'), "</a>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginRight\" type=\"text\" placeholder=\"").concat(i18n('right'), "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginBottom\" type=\"text\" placeholder=\"").concat(i18n('bottom'), "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginLeft\" type=\"text\" placeholder=\"").concat(i18n('left'), "\"/>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editStyle ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Styles'), "</label>\n\t\t\t<input data-ref=\"style\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editClass ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Classes'), "</label>\n\t\t\t<input data-ref=\"classes\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editId ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>Id</label>\n\t\t\t<input data-ref=\"id\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"").concat(!opt.image.editBorderRadius ? 'display:none' : '', "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>").concat(i18n('Border radius'), "</label>\n\t\t\t\t<input data-ref=\"borderRadius\" type=\"number\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"").concat(!opt.image.editAlign ? 'display:none' : '', "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>").concat(i18n('Align'), "</label>\n\t\t\t<select data-ref=\"align\" class=\"jodit-select\">\n\t\t\t\t<option value=\"\">").concat(i18n('--Not Set--'), "</option>\n\t\t\t\t<option value=\"left\">").concat(i18n('Left'), "</option>\n\t\t\t\t<option value=\"center\">").concat(i18n('Center'), "</option>\n\t\t\t\t<option value=\"right\">").concat(i18n('Right'), "</option>\n\t\t\t</select>\n\t\t</div>"));
 }
 exports.positionTab = positionTab;
 
@@ -26425,7 +26428,7 @@ var JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 function imageProcessor(editor) {
     editor.e.on('change afterInit changePlace', editor.async.debounce(function () {
         if (editor.editor) {
-            helpers_1.$$('img', editor.editor).forEach(function (elm) {
+            (0, helpers_1.$$)('img', editor.editor).forEach(function (elm) {
                 if (!elm[JODIT_IMAGE_PROCESSOR_BINDED]) {
                     elm[JODIT_IMAGE_PROCESSOR_BINDED] = true;
                     if (!elm.complete) {
@@ -26471,13 +26474,13 @@ config_1.Config.prototype.controls.image = {
         if (current &&
             !dom_1.Dom.isText(current) &&
             dom_1.Dom.isHTMLElement(current, editor.ew) &&
-            (dom_1.Dom.isTag(current, 'img') || helpers_1.$$('img', current).length)) {
+            (dom_1.Dom.isTag(current, 'img') || (0, helpers_1.$$)('img', current).length)) {
             sourceImage = dom_1.Dom.isTag(current, 'img')
                 ? current
-                : helpers_1.$$('img', current)[0];
+                : (0, helpers_1.$$)('img', current)[0];
         }
         var selInfo = editor.s.save();
-        return widget_1.FileSelectorWidget(editor, {
+        return (0, widget_1.FileSelectorWidget)(editor, {
             filebrowser: function (data) {
                 editor.s.restore(selInfo);
                 data.files &&
@@ -26594,7 +26597,7 @@ function indent(editor) {
                 value +=
                     editor.o.indentMargin * (command === 'outdent' ? -1 : 1);
                 currentBox.style[key] = value > 0 ? value + 'px' : '';
-                if (!helpers_1.attr(currentBox, 'style')) {
+                if (!(0, helpers_1.attr)(currentBox, 'style')) {
                     currentBox.removeAttribute('style');
                 }
             }
@@ -26704,17 +26707,17 @@ var inlinePopup = (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = null;
         _this.popup = new popup_1.Popup(_this.jodit);
-        _this.toolbar = factory_1.makeCollection(_this.jodit, _this.popup);
+        _this.toolbar = (0, factory_1.makeCollection)(_this.jodit, _this.popup);
         _this.snapRange = null;
         return _this;
     }
     inlinePopup.prototype.onClick = function (e) {
         var _this = this;
-        var node = e.target, elements = helpers_1.keys(this.j.o.popup, false), target = modules_1.Dom.isTag(node, 'img')
+        var node = e.target, elements = (0, helpers_1.keys)(this.j.o.popup, false), target = modules_1.Dom.isTag(node, 'img')
             ? node
             : modules_1.Dom.closest(node, elements, this.j.editor);
         if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
-            this.showPopup(function () { return helpers_1.position(target, _this.j); }, target.nodeName.toLowerCase(), target);
+            this.showPopup(function () { return (0, helpers_1.position)(target, _this.j); }, target.nodeName.toLowerCase(), target);
         }
     };
     inlinePopup.prototype.showPopup = function (rect, type, target) {
@@ -26726,13 +26729,13 @@ var inlinePopup = (function (_super) {
             this.previousTarget = target;
             var data = this.j.o.popup[type];
             var content = void 0;
-            if (helpers_1.isFunction(data)) {
+            if ((0, helpers_1.isFunction)(data)) {
                 content = data(this.j, target, this.popup.close);
             }
             else {
                 content = data;
             }
-            if (helpers_1.isArray(content)) {
+            if ((0, helpers_1.isArray)(content)) {
                 this.toolbar.build(content, target);
                 this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
                 content = this.toolbar.container;
@@ -26756,7 +26759,7 @@ var inlinePopup = (function (_super) {
         return !this.isExcludedTarget(type);
     };
     inlinePopup.prototype.isExcludedTarget = function (type) {
-        return helpers_1.splitArray(this.j.o.toolbarInlineDisableFor)
+        return (0, helpers_1.splitArray)(this.j.o.toolbarInlineDisableFor)
             .map(function (a) { return a.toLowerCase(); })
             .includes(type.toLowerCase());
     };
@@ -26766,12 +26769,12 @@ var inlinePopup = (function (_super) {
             .on('getDiffButtons.mobile', function (toolbar) {
             if (_this.toolbar === toolbar) {
                 var names_1 = _this.toolbar.getButtonsNames();
-                return helpers_1.toArray(jodit.registeredButtons)
+                return (0, helpers_1.toArray)(jodit.registeredButtons)
                     .filter(function (btn) {
                     return !_this.j.o.toolbarInlineDisabledButtons.includes(btn.name);
                 })
                     .filter(function (item) {
-                    var name = helpers_1.isString(item) ? item : item.name;
+                    var name = (0, helpers_1.isString)(item) ? item : item.name;
                     return (name &&
                         name !== '|' &&
                         name !== '\n' &&
@@ -26781,7 +26784,7 @@ var inlinePopup = (function (_super) {
         })
             .on('hidePopup', this.hidePopup)
             .on('showPopup', function (elm, rect, type) {
-            _this.showPopup(rect, type || (helpers_1.isString(elm) ? elm : elm.nodeName), helpers_1.isString(elm) ? undefined : elm);
+            _this.showPopup(rect, type || ((0, helpers_1.isString)(elm) ? elm : elm.nodeName), (0, helpers_1.isString)(elm) ? undefined : elm);
         })
             .on('click', this.onClick)
             .on('mousedown keydown', this.onSelectionStart)
@@ -26829,7 +26832,7 @@ var inlinePopup = (function (_super) {
         var sc = r.startContainer;
         return (modules_1.Dom.isElement(sc) &&
             sc === r.endContainer &&
-            modules_1.Dom.isTag(sc.childNodes[r.startOffset], helpers_1.keys(this.j.o.popup, false)) &&
+            modules_1.Dom.isTag(sc.childNodes[r.startOffset], (0, helpers_1.keys)(this.j.o.popup, false)) &&
             r.startOffset === r.endOffset - 1);
     };
     Object.defineProperty(inlinePopup.prototype, "tableModule", {
@@ -26849,7 +26852,7 @@ var inlinePopup = (function (_super) {
         decorators_1.autobind
     ], inlinePopup.prototype, "onClick", null);
     tslib_1.__decorate([
-        decorators_1.wait(function (ctx) { return !ctx.j.isLocked; })
+        (0, decorators_1.wait)(function (ctx) { return !ctx.j.isLocked; })
     ], inlinePopup.prototype, "showPopup", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -26861,7 +26864,7 @@ var inlinePopup = (function (_super) {
         decorators_1.autobind
     ], inlinePopup.prototype, "onSelectionEnd", null);
     tslib_1.__decorate([
-        decorators_1.debounce(function (ctx) { return ctx.defaultTimeout; })
+        (0, decorators_1.debounce)(function (ctx) { return ctx.defaultTimeout; })
     ], inlinePopup.prototype, "onSelectionChange", null);
     return inlinePopup;
 }(plugin_1.Plugin));
@@ -26895,9 +26898,9 @@ config_1.Config.prototype.toolbarInlineForSelection = false;
 config_1.Config.prototype.toolbarInlineDisableFor = [];
 config_1.Config.prototype.toolbarInlineDisabledButtons = ['source'];
 config_1.Config.prototype.popup = {
-    a: __webpack_require__(287)/* .default */ .Z,
-    img: __webpack_require__(288)/* .default */ .Z,
-    cells: __webpack_require__(289)/* .default */ .Z,
+    a: (__webpack_require__(287)/* ["default"] */ .Z),
+    img: (__webpack_require__(288)/* ["default"] */ .Z),
+    cells: (__webpack_require__(289)/* ["default"] */ .Z),
     jodit: [
         {
             name: 'bin',
@@ -26956,7 +26959,7 @@ exports.Z = [
         name: 'eye',
         tooltip: 'Open link',
         exec: function (editor, current) {
-            var href = utils_1.attr(current, 'href');
+            var href = (0, utils_1.attr)(current, 'href');
             if (current && href) {
                 editor.ow.open(href);
             }
@@ -27017,13 +27020,13 @@ exports.Z = [
             if (!dom_1.Dom.isTag(image, 'img')) {
                 return;
             }
-            var command = control.args && checker_1.isString(control.args[0])
+            var command = control.args && (0, checker_1.isString)(control.args[0])
                 ? control.args[0].toLowerCase()
                 : '';
             if (!command) {
                 return false;
             }
-            helpers_1.css(image, 'vertical-align', command === 'normal' ? '' : command);
+            (0, helpers_1.css)(image, 'vertical-align', command === 'normal' ? '' : command);
             editor.e.fire('recalcPositionPopup');
         }
     },
@@ -27036,7 +27039,7 @@ exports.Z = [
             if (!dom_1.Dom.isTag(image, 'img')) {
                 return;
             }
-            var command = control.args && checker_1.isString(control.args[0])
+            var command = control.args && (0, checker_1.isString)(control.args[0])
                 ? control.args[0].toLowerCase()
                 : '';
             if (!command) {
@@ -27044,12 +27047,12 @@ exports.Z = [
             }
             if (command !== 'normal') {
                 if (['right', 'left'].indexOf(command) !== -1) {
-                    helpers_1.css(image, 'float', command);
-                    helpers_1.clearCenterAlign(image);
+                    (0, helpers_1.css)(image, 'float', command);
+                    (0, helpers_1.clearCenterAlign)(image);
                 }
                 else {
-                    helpers_1.css(image, 'float', '');
-                    helpers_1.css(image, {
+                    (0, helpers_1.css)(image, 'float', '');
+                    (0, helpers_1.css)(image, {
                         display: 'block',
                         'margin-left': 'auto',
                         'margin-right': 'auto'
@@ -27057,11 +27060,11 @@ exports.Z = [
                 }
             }
             else {
-                if (helpers_1.css(image, 'float') &&
-                    ['right', 'left'].indexOf(helpers_1.css(image, 'float').toLowerCase()) !== -1) {
-                    helpers_1.css(image, 'float', '');
+                if ((0, helpers_1.css)(image, 'float') &&
+                    ['right', 'left'].indexOf((0, helpers_1.css)(image, 'float').toLowerCase()) !== -1) {
+                    (0, helpers_1.css)(image, 'float', '');
                 }
-                helpers_1.clearCenterAlign(image);
+                (0, helpers_1.clearCenterAlign)(image);
             }
             editor.setEditorValue();
             editor.e.fire('recalcPositionPopup');
@@ -27088,7 +27091,7 @@ var checker_1 = __webpack_require__(34);
 var helpers_1 = __webpack_require__(19);
 var widget_1 = __webpack_require__(255);
 var cmd = function (control) {
-    return control.args && checker_1.isString(control.args[0])
+    return control.args && (0, checker_1.isString)(control.args[0])
         ? control.args[0].toLowerCase()
         : '';
 };
@@ -27096,7 +27099,7 @@ exports.Z = [
     {
         name: 'brush',
         popup: function (editor) {
-            if (!checker_1.isJoditObject(editor)) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
             var selected = editor
@@ -27105,24 +27108,24 @@ exports.Z = [
             if (!selected.length) {
                 return false;
             }
-            var color = helpers_1.css(selected[0], 'color'), bg_color = helpers_1.css(selected[0], 'background-color'), br_color = helpers_1.css(selected[0], 'border-color'), $bg = widget_1.ColorPickerWidget(editor, function (value) {
+            var color = (0, helpers_1.css)(selected[0], 'color'), bg_color = (0, helpers_1.css)(selected[0], 'background-color'), br_color = (0, helpers_1.css)(selected[0], 'border-color'), $bg = (0, widget_1.ColorPickerWidget)(editor, function (value) {
                 selected.forEach(function (cell) {
-                    helpers_1.css(cell, 'background-color', value);
+                    (0, helpers_1.css)(cell, 'background-color', value);
                 });
                 editor.setEditorValue();
-            }, bg_color), $cl = widget_1.ColorPickerWidget(editor, function (value) {
+            }, bg_color), $cl = (0, widget_1.ColorPickerWidget)(editor, function (value) {
                 selected.forEach(function (cell) {
-                    helpers_1.css(cell, 'color', value);
+                    (0, helpers_1.css)(cell, 'color', value);
                 });
                 editor.setEditorValue();
             }, color);
-            var $br = widget_1.ColorPickerWidget(editor, function (value) {
+            var $br = (0, widget_1.ColorPickerWidget)(editor, function (value) {
                 selected.forEach(function (cell) {
-                    helpers_1.css(cell, 'border-color', value);
+                    (0, helpers_1.css)(cell, 'border-color', value);
                 });
                 editor.setEditorValue();
             }, br_color);
-            return widget_1.TabsWidget(editor, [
+            return (0, widget_1.TabsWidget)(editor, [
                 { name: 'Background', content: $bg },
                 { name: 'Text', content: $cl },
                 { name: 'Border', content: $br }
@@ -27141,7 +27144,7 @@ exports.Z = [
                 .getInstance('Table', editor.o)
                 .getAllSelectedCells()
                 .forEach(function (cell) {
-                helpers_1.css(cell, 'vertical-align', command === 'normal' ? '' : command);
+                (0, helpers_1.css)(cell, 'vertical-align', command === 'normal' ? '' : command);
             });
         },
         tooltip: 'Vertical align'
@@ -27172,7 +27175,7 @@ exports.Z = [
         },
         exec: function (editor, table, _a) {
             var control = _a.control;
-            if (!checker_1.isJoditObject(editor)) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
             var command = cmd(control);
@@ -27188,7 +27191,7 @@ exports.Z = [
         },
         exec: function (editor, table, _a) {
             var control = _a.control;
-            if (!checker_1.isJoditObject(editor)) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
             var command = cmd(control);
@@ -27207,7 +27210,7 @@ exports.Z = [
         },
         exec: function (editor, table, _a) {
             var control = _a.control;
-            if (!checker_1.isJoditObject(editor)) {
+            if (!(0, checker_1.isJoditObject)(editor)) {
                 return;
             }
             var command = cmd(control);
@@ -27242,7 +27245,7 @@ config_1.Config.prototype.controls.align = {
         var editor = button.j, control = button.control, current = editor.s.current();
         if (current) {
             var currentBox = modules_1.Dom.closest(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor) || editor.editor;
-            var currentValue = helpers_1.css(currentBox, 'text-align').toString();
+            var currentValue = (0, helpers_1.css)(currentBox, 'text-align').toString();
             if (control.defaultValue &&
                 control.defaultValue.indexOf(currentValue) !== -1) {
                 currentValue = 'left';
@@ -27265,7 +27268,7 @@ config_1.Config.prototype.controls.align = {
         var current = editor.s.current();
         if (current && btn.defaultValue) {
             var currentBox = modules_1.Dom.closest(current, function (node) { return modules_1.Dom.isBlock(node, editor.ew); }, editor.editor) || editor.editor;
-            return (btn.defaultValue.indexOf(helpers_1.css(currentBox, 'text-align').toString()) === -1);
+            return (btn.defaultValue.indexOf((0, helpers_1.css)(currentBox, 'text-align').toString()) === -1);
         }
         return false;
     },
@@ -27318,7 +27321,7 @@ var clearAlign = function (node, editor) {
 exports.clearAlign = clearAlign;
 var alignElement = function (command, box, editor) {
     if (modules_1.Dom.isNode(box, editor.ew) && modules_1.Dom.isElement(box)) {
-        exports.clearAlign(box, editor);
+        (0, exports.clearAlign)(box, editor);
         switch (command.toLowerCase()) {
             case 'justifyfull':
                 box.style.textAlign = 'justify';
@@ -27351,7 +27354,7 @@ function justify(editor) {
             if (!currentBox) {
                 currentBox = modules_1.Dom.wrapInline(current, editor.o.enterBlock, editor);
             }
-            exports.alignElement(command, currentBox, editor);
+            (0, exports.alignElement)(command, currentBox, editor);
         });
         return false;
     };
@@ -27440,7 +27443,7 @@ var limit = (function (_super) {
     limit.prototype.checkPreventChanging = function (newValue, oldValue) {
         var jodit = this.jodit;
         var _a = jodit.o, limitWords = _a.limitWords, limitChars = _a.limitChars;
-        var text = jodit.o.limitHTML ? newValue : helpers_1.stripTags(newValue), words = this.splitWords(text);
+        var text = jodit.o.limitHTML ? newValue : (0, helpers_1.stripTags)(newValue), words = this.splitWords(text);
         jodit.e.fire('onLengthWords', words.length);
         jodit.e.fire('onLengthChars', words.join('').length);
         if ((limitWords && words.length > limitWords) ||
@@ -27451,8 +27454,8 @@ var limit = (function (_super) {
     };
     limit.prototype.splitWords = function (text) {
         return text
-            .replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '')
-            .split(constants_1.SPACE_REG_EXP())
+            .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '')
+            .split((0, constants_1.SPACE_REG_EXP)())
             .filter(function (e) { return e.length; });
     };
     limit.prototype.beforeDestruct = function (jodit) {
@@ -27559,7 +27562,7 @@ var link = (function (_super) {
                 dialog.setContent(htmlForm);
                 dialog.open();
                 jodit.async.requestIdleCallback(function () {
-                    var url_input = helpers_1.refs(htmlForm.container).url_input;
+                    var url_input = (0, helpers_1.refs)(htmlForm.container).url_input;
                     url_input === null || url_input === void 0 ? void 0 : url_input.focus();
                 });
             },
@@ -27570,7 +27573,7 @@ var link = (function (_super) {
         if (!dom_1.Dom.isTag(e.target, 'a')) {
             return;
         }
-        var href = helpers_1.attr(e.target, 'href');
+        var href = (0, helpers_1.attr)(e.target, 'href');
         if (href) {
             location.href = href;
             e.preventDefault();
@@ -27578,9 +27581,9 @@ var link = (function (_super) {
     };
     link.prototype.onProcessPasteLink = function (ignore, html) {
         var jodit = this.jodit;
-        if (helpers_1.isURL(html)) {
+        if ((0, helpers_1.isURL)(html)) {
             if (jodit.o.link.processVideoLink) {
-                var embed = helpers_1.convertMediaUrlToVideoEmbed(html);
+                var embed = (0, helpers_1.convertMediaUrlToVideoEmbed)(html);
                 if (embed !== html) {
                     return jodit.createInside.fromHTML(embed);
                 }
@@ -27595,13 +27598,13 @@ var link = (function (_super) {
     link.prototype.generateForm = function (current, close) {
         var jodit = this.jodit;
         var i18n = jodit.i18n.bind(jodit), _a = jodit.o.link, showInNewTabCheckbox = _a.showInNewTabCheckbox, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, formTemplate = _a.formTemplate, formClassName = _a.formClassName, modeClassName = _a.modeClassName;
-        var html = formTemplate(jodit), form = helpers_1.isString(html)
+        var html = formTemplate(jodit), form = (0, helpers_1.isString)(html)
             ? jodit.c.fromHTML(html, {
                 target_checkbox_box: showInNewTabCheckbox,
                 nofollow_checkbox_box: noFollowCheckbox
             })
             : html, htmlForm = dom_1.Dom.isElement(form) ? form : form.container;
-        var elements = helpers_1.refs(htmlForm), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, currentElement = current, isImageContent = dom_1.Dom.isImage(currentElement, jodit.ew);
+        var elements = (0, helpers_1.refs)(htmlForm), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, currentElement = current, isImageContent = dom_1.Dom.isImage(currentElement, jodit.ew);
         var content_input = elements.content_input;
         var className_input = elements.className_input, className_select = elements.className_select;
         if (!content_input) {
@@ -27620,7 +27623,7 @@ var link = (function (_super) {
         var getSelectionText = function () {
             return link
                 ? link.innerText
-                : helpers_1.stripTags(jodit.s.range.cloneContents(), jodit.ed);
+                : (0, helpers_1.stripTags)(jodit.s.range.cloneContents(), jodit.ed);
         };
         if (current && dom_1.Dom.closest(current, 'a', jodit.editor)) {
             link = dom_1.Dom.closest(current, 'a', jodit.editor);
@@ -27632,12 +27635,12 @@ var link = (function (_super) {
             content_input.value = getSelectionText();
         }
         if (link) {
-            url_input.value = helpers_1.attr(link, 'href') || '';
+            url_input.value = (0, helpers_1.attr)(link, 'href') || '';
             if (modeClassName) {
                 switch (modeClassName) {
                     case 'input':
                         if (className_input) {
-                            className_input.value = helpers_1.attr(link, 'class') || '';
+                            className_input.value = (0, helpers_1.attr)(link, 'class') || '';
                         }
                         break;
                     case 'select':
@@ -27648,7 +27651,7 @@ var link = (function (_super) {
                                     option.selected = false;
                                 }
                             }
-                            var classNames = helpers_1.attr(link, 'class') || '';
+                            var classNames = (0, helpers_1.attr)(link, 'class') || '';
                             classNames.split(' ').forEach(function (className) {
                                 if (className) {
                                     for (var i = 0; i < className_select.options.length; i++) {
@@ -27665,10 +27668,10 @@ var link = (function (_super) {
                 }
             }
             if (openInNewTabCheckbox && target_checkbox) {
-                target_checkbox.checked = helpers_1.attr(link, 'target') === '_blank';
+                target_checkbox.checked = (0, helpers_1.attr)(link, 'target') === '_blank';
             }
             if (noFollowCheckbox && nofollow_checkbox) {
-                nofollow_checkbox.checked = helpers_1.attr(link, 'rel') === 'nofollow';
+                nofollow_checkbox.checked = (0, helpers_1.attr)(link, 'rel') === 'nofollow';
             }
             insert.textContent = i18n('Update');
         }
@@ -27711,20 +27714,20 @@ var link = (function (_super) {
             }
             links.forEach(function (a) {
                 var _a;
-                helpers_1.attr(a, 'href', url_input.value);
+                (0, helpers_1.attr)(a, 'href', url_input.value);
                 if (modeClassName && (className_input !== null && className_input !== void 0 ? className_input : className_select)) {
                     if (modeClassName === 'input') {
                         if (className_input.value === '' &&
                             a.hasAttribute('class')) {
-                            helpers_1.attr(a, 'class', null);
+                            (0, helpers_1.attr)(a, 'class', null);
                         }
                         if (className_input.value !== '') {
-                            helpers_1.attr(a, 'class', className_input.value);
+                            (0, helpers_1.attr)(a, 'class', className_input.value);
                         }
                     }
                     else if (modeClassName === 'select') {
                         if (a.hasAttribute('class')) {
-                            helpers_1.attr(a, 'class', null);
+                            (0, helpers_1.attr)(a, 'class', null);
                         }
                         for (var i = 0; i < className_select.selectedOptions.length; i++) {
                             var className = (_a = className_select.selectedOptions.item(i)) === null || _a === void 0 ? void 0 : _a.value;
@@ -27745,13 +27748,13 @@ var link = (function (_super) {
                     }
                 }
                 if (showInNewTabCheckbox && openInNewTabCheckbox && target_checkbox) {
-                    helpers_1.attr(a, 'target', target_checkbox.checked ? '_blank' : null);
+                    (0, helpers_1.attr)(a, 'target', target_checkbox.checked ? '_blank' : null);
                 }
                 else if (openInNewTabCheckbox) {
-                    helpers_1.attr(a, 'target', '_blank');
+                    (0, helpers_1.attr)(a, 'target', '_blank');
                 }
                 if (noFollowCheckbox && nofollow_checkbox) {
-                    helpers_1.attr(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
+                    (0, helpers_1.attr)(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
                 }
             });
             jodit.setEditorValue();
@@ -27928,11 +27931,11 @@ function media(editor) {
     var _a = editor.options, mediaFakeTag = _a.mediaFakeTag, mediaBlocks = _a.mediaBlocks, mediaInFakeBlock = _a.mediaInFakeBlock;
     var wrap = function (element) {
         if (element.parentNode &&
-            helpers_1.attr(element.parentNode, 'data-jodit_iframe_wrapper')) {
+            (0, helpers_1.attr)(element.parentNode, 'data-jodit_iframe_wrapper')) {
             element = element.parentNode;
         }
         else {
-            var wrapper = editor.createInside.fromHTML("<" + mediaFakeTag + " data-jodit-temp=\"1\" contenteditable=\"false\" draggable=\"true\" data-" + keyFake + "=\"1\"></" + mediaFakeTag + ">");
+            var wrapper = editor.createInside.fromHTML("<".concat(mediaFakeTag, " data-jodit-temp=\"1\" contenteditable=\"false\" draggable=\"true\" data-").concat(keyFake, "=\"1\"></").concat(mediaFakeTag, ">"));
             wrapper.style.display =
                 element.style.display === 'inline-block'
                     ? 'inline-block'
@@ -27954,7 +27957,7 @@ function media(editor) {
     if (mediaInFakeBlock) {
         editor.e
             .on('afterGetValueFromEditor', function (data) {
-            var rxp = new RegExp("<" + mediaFakeTag + "[^>]+data-" + keyFake + "[^>]+>(.+?)</" + mediaFakeTag + ">", 'ig');
+            var rxp = new RegExp("<".concat(mediaFakeTag, "[^>]+data-").concat(keyFake, "[^>]+>(.+?)</").concat(mediaFakeTag, ">"), 'ig');
             if (rxp.test(data.value)) {
                 data.value = data.value.replace(rxp, '$1');
             }
@@ -27962,9 +27965,9 @@ function media(editor) {
             .on('change afterInit afterSetMode changePlace', editor.async.debounce(function () {
             if (!editor.isDestructed &&
                 editor.getMode() !== consts.MODE_SOURCE) {
-                helpers_1.$$(mediaBlocks.join(','), editor.editor).forEach(function (elm) {
-                    if (!helpers_1.dataBind(elm, keyFake)) {
-                        helpers_1.dataBind(elm, keyFake, true);
+                (0, helpers_1.$$)(mediaBlocks.join(','), editor.editor).forEach(function (elm) {
+                    if (!(0, helpers_1.dataBind)(elm, keyFake)) {
+                        (0, helpers_1.dataBind)(elm, keyFake, true);
                         wrap(elm);
                     }
                 });
@@ -28028,7 +28031,7 @@ config_1.Config.prototype.controls.video = {
                 })
             ]),
             new form_1.UIBlock(editor, [
-                button_1.Button(editor, '', 'Insert', 'primary').onAction(function () {
+                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
                     return bylink.submit();
                 })
             ])
@@ -28041,7 +28044,7 @@ config_1.Config.prototype.controls.video = {
                 })
             ]),
             new form_1.UIBlock(editor, [
-                button_1.Button(editor, '', 'Insert', 'primary').onAction(function () {
+                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
                     return bycode.submit();
                 })
             ])
@@ -28060,12 +28063,12 @@ config_1.Config.prototype.controls.video = {
             content: bycode.container
         });
         bylink.onSubmit(function (data) {
-            insertCode(helpers_1.convertMediaUrlToVideoEmbed(data.url));
+            insertCode((0, helpers_1.convertMediaUrlToVideoEmbed)(data.url));
         });
         bycode.onSubmit(function (data) {
             insertCode(data.code);
         });
-        return widget_1.TabsWidget(editor, tabs);
+        return (0, widget_1.TabsWidget)(editor, tabs);
     },
     tags: ['iframe'],
     tooltip: 'Insert youtube/vimeo video'
@@ -28092,7 +28095,7 @@ config_1.Config.prototype.controls.file = {
     popup: function (editor, current, self, close) {
         var insert = function (url, title) {
             if (title === void 0) { title = ''; }
-            editor.s.insertNode(editor.createInside.fromHTML("<a href=\"" + url + "\" title=\"" + title + "\">" + (title || url) + "</a>"));
+            editor.s.insertNode(editor.createInside.fromHTML("<a href=\"".concat(url, "\" title=\"").concat(title, "\">").concat(title || url, "</a>")));
         };
         var sourceAnchor = null;
         if (current &&
@@ -28102,7 +28105,7 @@ config_1.Config.prototype.controls.file = {
                 ? current
                 : dom_1.Dom.closest(current, 'a', editor.editor);
         }
-        return widget_1.FileSelectorWidget(editor, {
+        return (0, widget_1.FileSelectorWidget)(editor, {
             filebrowser: function (data) {
                 data.files &&
                     data.files.forEach(function (file) { return insert(data.baseurl + file); });
@@ -28161,13 +28164,13 @@ config_1.Config.prototype.controls.dots = {
         var store = control.data;
         if (store === undefined) {
             store = {
-                toolbar: factory_1.makeCollection(editor),
+                toolbar: (0, factory_1.makeCollection)(editor),
                 rebuild: function () {
                     var _a;
                     if (button) {
                         var buttons = editor.e.fire('getDiffButtons.mobile', button.closest(ui_1.UIList));
                         if (buttons && store) {
-                            store.toolbar.build(helpers_1.splitArray(buttons));
+                            store.toolbar.build((0, helpers_1.splitArray)(buttons));
                             var w = ((_a = editor.toolbar.firstButton) === null || _a === void 0 ? void 0 : _a.container.offsetWidth) || 36;
                             store.toolbar.container.style.width =
                                 (w + 4) * 3 + 'px';
@@ -28183,7 +28186,7 @@ config_1.Config.prototype.controls.dots = {
     tooltip: 'Show all'
 };
 function mobile(editor) {
-    var timeout = 0, store = helpers_1.splitArray(editor.o.buttons);
+    var timeout = 0, store = (0, helpers_1.splitArray)(editor.o.buttons);
     editor.e
         .on('touchend', function (e) {
         if (e.changedTouches && e.changedTouches.length) {
@@ -28196,9 +28199,9 @@ function mobile(editor) {
     })
         .on('getDiffButtons.mobile', function (toolbar) {
         if (toolbar === editor.toolbar) {
-            var buttons = helpers_1.splitArray(editor.o.buttons), flatStore_1 = buttons_1.flatButtonsSet(store);
+            var buttons = (0, helpers_1.splitArray)(editor.o.buttons), flatStore_1 = (0, buttons_1.flatButtonsSet)(store);
             return buttons.reduce(function (acc, item) {
-                if (buttons_1.isButtonGroup(item)) {
+                if ((0, buttons_1.isButtonGroup)(item)) {
                     acc.push(tslib_1.__assign(tslib_1.__assign({}, item), { buttons: item.buttons.filter(function (btn) { return !flatStore_1.has(btn); }) }));
                 }
                 else if (!flatStore_1.has(item)) {
@@ -28217,15 +28220,15 @@ function mobile(editor) {
             var width = editor.container.offsetWidth;
             var newStore = (function () {
                 if (width >= editor.o.sizeLG) {
-                    return helpers_1.splitArray(editor.o.buttons);
+                    return (0, helpers_1.splitArray)(editor.o.buttons);
                 }
                 if (width >= editor.o.sizeMD) {
-                    return helpers_1.splitArray(editor.o.buttonsMD);
+                    return (0, helpers_1.splitArray)(editor.o.buttonsMD);
                 }
                 if (width >= editor.o.sizeSM) {
-                    return helpers_1.splitArray(editor.o.buttonsSM);
+                    return (0, helpers_1.splitArray)(editor.o.buttonsSM);
                 }
-                return helpers_1.splitArray(editor.o.buttonsXS);
+                return (0, helpers_1.splitArray)(editor.o.buttonsXS);
             })();
             if (newStore.toString() !== store.toString()) {
                 store = newStore;
@@ -28259,9 +28262,9 @@ var dom_1 = __webpack_require__(32);
 var helpers_1 = __webpack_require__(19);
 var exec = function (jodit, _, _a) {
     var control = _a.control;
-    var key = "button" + control.command;
-    var value = (control.args && control.args[0]) || helpers_1.dataBind(jodit, key);
-    helpers_1.dataBind(jodit, key, value);
+    var key = "button".concat(control.command);
+    var value = (control.args && control.args[0]) || (0, helpers_1.dataBind)(jodit, key);
+    (0, helpers_1.dataBind)(jodit, key, value);
     jodit.execCommand(control.command, false, value);
 };
 config_1.Config.prototype.controls.ul = {
@@ -28350,7 +28353,7 @@ function orderedList(editor) {
                 });
                 if (unwrapList_1.length) {
                     var selection = editor.s.save();
-                    helpers_1.toArray(ul.childNodes).forEach(function (li) {
+                    (0, helpers_1.toArray)(ul.childNodes).forEach(function (li) {
                         if (dom_1.Dom.isTag(li.lastChild, 'br')) {
                             dom_1.Dom.safeRemove(li.lastChild);
                         }
@@ -28425,7 +28428,7 @@ var placeholder = (function (_super) {
             if (editor.o.useInputsPlaceholder &&
                 editor.element.hasAttribute('placeholder')) {
                 _this.placeholderElm.innerHTML =
-                    helpers_1.attr(editor.element, 'placeholder') || '';
+                    (0, helpers_1.attr)(editor.element, 'placeholder') || '';
             }
             editor.e.fire('placeholder', _this.placeholderElm.innerHTML);
             editor.e
@@ -28444,7 +28447,7 @@ var placeholder = (function (_super) {
         if (!editor.o.showPlaceholder) {
             return;
         }
-        this.placeholderElm = editor.c.fromHTML("<span data-ref=\"placeholder\" style=\"display: none;\" class=\"jodit-placeholder\">" + editor.i18n(editor.o.placeholder) + "</span>");
+        this.placeholderElm = editor.c.fromHTML("<span data-ref=\"placeholder\" style=\"display: none;\" class=\"jodit-placeholder\">".concat(editor.i18n(editor.o.placeholder), "</span>"));
         if (editor.o.direction === 'rtl') {
             this.placeholderElm.style.right = '0px';
             this.placeholderElm.style.direction = 'rtl';
@@ -28485,7 +28488,7 @@ var placeholder = (function (_super) {
                 parseInt(style.getPropertyValue('font-size'), 10) + 'px';
             this.placeholderElm.style.lineHeight = style.getPropertyValue('line-height');
         }
-        helpers_1.css(this.placeholderElm, {
+        (0, helpers_1.css)(this.placeholderElm, {
             display: 'block',
             textAlign: style.getPropertyValue('text-align'),
             marginTop: Math.max(parseInt(style.getPropertyValue('margin-top'), 10), marginTop),
@@ -28516,7 +28519,7 @@ var placeholder = (function (_super) {
         jodit.e.off('.placeholder').off(window, 'load', this.toggle);
     };
     tslib_1.__decorate([
-        decorators_1.debounce(function (ctx) { return ctx.defaultTimeout / 10; }, true)
+        (0, decorators_1.debounce)(function (ctx) { return ctx.defaultTimeout / 10; }, true)
     ], placeholder.prototype, "toggle", null);
     return placeholder;
 }(plugin_1.Plugin));
@@ -28665,8 +28668,8 @@ var resizer = (function (_super) {
                                 (className.match(/top/) ? -1 : 1) * diff_y;
                         new_w = Math.round(new_h * _this.ratio);
                     }
-                    if (new_w > helpers_1.innerWidth(_this.j.editor, _this.j.ow)) {
-                        new_w = helpers_1.innerWidth(_this.j.editor, _this.j.ow);
+                    if (new_w > (0, helpers_1.innerWidth)(_this.j.editor, _this.j.ow)) {
+                        new_w = (0, helpers_1.innerWidth)(_this.j.editor, _this.j.ow);
                         new_h = Math.round(new_w / _this.ratio);
                     }
                 }
@@ -28678,14 +28681,14 @@ var resizer = (function (_super) {
                 }
                 if (new_w > _this.j.o.resizer.min_width) {
                     if (new_w < _this.rect.parentNode.offsetWidth) {
-                        helpers_1.css(_this.element, 'width', new_w);
+                        (0, helpers_1.css)(_this.element, 'width', new_w);
                     }
                     else {
-                        helpers_1.css(_this.element, 'width', '100%');
+                        (0, helpers_1.css)(_this.element, 'width', '100%');
                     }
                 }
                 if (new_h > _this.j.o.resizer.min_height) {
-                    helpers_1.css(_this.element, 'height', new_h);
+                    (0, helpers_1.css)(_this.element, 'height', new_h);
                 }
                 _this.updateSize();
                 _this.showSizeViewer(_this.element.offsetWidth, _this.element.offsetHeight);
@@ -28720,14 +28723,14 @@ var resizer = (function (_super) {
                 return;
             }
             if (_this.element && _this.rect) {
-                var workplacePosition = helpers_1.offset((_this.rect.parentNode ||
-                    _this.j.od.documentElement), _this.j, _this.j.od, true), pos = helpers_1.offset(_this.element, _this.j, _this.j.ed), left = parseInt(_this.rect.style.left || '0', 10), top_1 = parseInt(_this.rect.style.top || '0', 10), w = _this.rect.offsetWidth, h = _this.rect.offsetHeight;
+                var workplacePosition = (0, helpers_1.offset)((_this.rect.parentNode ||
+                    _this.j.od.documentElement), _this.j, _this.j.od, true), pos = (0, helpers_1.offset)(_this.element, _this.j, _this.j.ed), left = parseInt(_this.rect.style.left || '0', 10), top_1 = parseInt(_this.rect.style.top || '0', 10), w = _this.rect.offsetWidth, h = _this.rect.offsetHeight;
                 var newTop = pos.top - 1 - workplacePosition.top, newLeft = pos.left - 1 - workplacePosition.left;
                 if (top_1 !== newTop ||
                     left !== newLeft ||
                     w !== _this.element.offsetWidth ||
                     h !== _this.element.offsetHeight) {
-                    helpers_1.css(_this.rect, {
+                    (0, helpers_1.css)(_this.rect, {
                         top: newTop,
                         left: newLeft,
                         width: _this.element.offsetWidth,
@@ -28749,7 +28752,7 @@ var resizer = (function (_super) {
     }
     resizer.prototype.afterInit = function (editor) {
         var _this = this;
-        helpers_1.$$('i', this.rect).forEach(function (resizeHandle) {
+        (0, helpers_1.$$)('i', this.rect).forEach(function (resizeHandle) {
             editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', _this.onClickHandle.bind(_this, resizeHandle));
         });
         global_1.eventEmitter.on('hideHelpers', this.hide);
@@ -28836,7 +28839,7 @@ var resizer = (function (_super) {
             }
         }
         if (!editor.isDestructed) {
-            helpers_1.$$('img, table, iframe', editor.editor).forEach(function (elm) {
+            (0, helpers_1.$$)('img, table, iframe', editor.editor).forEach(function (elm) {
                 if (editor.getMode() === consts.MODE_SOURCE) {
                     return;
                 }
@@ -28858,7 +28861,7 @@ var resizer = (function (_super) {
         var wrapper;
         if (dom_1.Dom.isTag(element, 'iframe')) {
             var iframe_1 = element;
-            if (helpers_1.attr(element.parentNode, '-jodit_iframe_wrapper')) {
+            if ((0, helpers_1.attr)(element.parentNode, '-jodit_iframe_wrapper')) {
                 element = element.parentNode;
             }
             else {
@@ -28868,7 +28871,7 @@ var resizer = (function (_super) {
                     'draggable="true" ' +
                     'data-jodit_iframe_wrapper="1"' +
                     '></jodit>');
-                helpers_1.css(wrapper, {
+                (0, helpers_1.css)(wrapper, {
                     display: element.style.display === 'inline-block'
                         ? 'inline-block'
                         : 'block',
@@ -28911,7 +28914,7 @@ var resizer = (function (_super) {
             return;
         }
         this.sizeViewer.style.opacity = '1';
-        this.sizeViewer.textContent = w + " x " + h;
+        this.sizeViewer.textContent = "".concat(w, " x ").concat(h);
         this.j.async.setTimeout(this.hideSizeViewer, {
             timeout: this.j.o.resizer.hideSizeTimeout,
             label: 'hideSizeViewer'
@@ -28923,11 +28926,11 @@ var resizer = (function (_super) {
         }
         this.isShown = true;
         if (!this.rect.parentNode) {
-            helpers_1.markOwner(this.j, this.rect);
+            (0, helpers_1.markOwner)(this.j, this.rect);
             this.j.workplace.appendChild(this.rect);
         }
         if (this.j.isFullSize) {
-            this.rect.style.zIndex = helpers_1.css(this.j.container, 'zIndex').toString();
+            this.rect.style.zIndex = (0, helpers_1.css)(this.j.container, 'zIndex').toString();
         }
         this.updateSize();
     };
@@ -29021,7 +29024,7 @@ var search = (function (_super) {
                 group: 'search'
             }
         ];
-        _this.template = "<div class=\"jodit-search\">\n\t\t\t<div class=\"jodit-search__box\">\n\t\t\t\t<div class=\"jodit-search__inputs\">\n\t\t\t\t\t<input data-ref=\"query\" tabindex=\"0\" placeholder=\"" + _this.j.i18n('Search for') + "\" type=\"text\"/>\n\t\t\t\t\t<input data-ref=\"replace\" tabindex=\"0\" placeholder=\"" + _this.j.i18n('Replace with') + "\" type=\"text\"/>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"jodit-search__counts\">\n\t\t\t\t\t<span data-ref=\"counter-box\">0/0</span>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"jodit-search__buttons\">\n\t\t\t\t\t<button data-ref=\"next\" tabindex=\"0\" type=\"button\">" + ui_1.Icon.get('angle-down') + "</button>\n\t\t\t\t\t<button data-ref=\"prev\" tabindex=\"0\" type=\"button\">" + ui_1.Icon.get('angle-up') + "</button>\n\t\t\t\t\t<button data-ref=\"cancel\" tabindex=\"0\" type=\"button\">" + ui_1.Icon.get('cancel') + "</button>\n\t\t\t\t\t<button data-ref=\"replace-btn\" tabindex=\"0\" type=\"button\" class=\"jodit-ui-button\">" + _this.j.i18n('Replace') + "</button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>";
+        _this.template = "<div class=\"jodit-search\">\n\t\t\t<div class=\"jodit-search__box\">\n\t\t\t\t<div class=\"jodit-search__inputs\">\n\t\t\t\t\t<input data-ref=\"query\" tabindex=\"0\" placeholder=\"".concat(_this.j.i18n('Search for'), "\" type=\"text\"/>\n\t\t\t\t\t<input data-ref=\"replace\" tabindex=\"0\" placeholder=\"").concat(_this.j.i18n('Replace with'), "\" type=\"text\"/>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"jodit-search__counts\">\n\t\t\t\t\t<span data-ref=\"counter-box\">0/0</span>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"jodit-search__buttons\">\n\t\t\t\t\t<button data-ref=\"next\" tabindex=\"0\" type=\"button\">").concat(ui_1.Icon.get('angle-down'), "</button>\n\t\t\t\t\t<button data-ref=\"prev\" tabindex=\"0\" type=\"button\">").concat(ui_1.Icon.get('angle-up'), "</button>\n\t\t\t\t\t<button data-ref=\"cancel\" tabindex=\"0\" type=\"button\">").concat(ui_1.Icon.get('cancel'), "</button>\n\t\t\t\t\t<button data-ref=\"replace-btn\" tabindex=\"0\" type=\"button\" class=\"jodit-ui-button\">").concat(_this.j.i18n('Replace'), "</button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>");
         _this.isOpened = false;
         _this.selInfo = null;
         _this.current = null;
@@ -29130,12 +29133,12 @@ var search = (function (_super) {
                         if (part !== false) {
                             var currentPart = search.findSomePartOfString(query, value, next);
                             if (currentPart === true) {
-                                currentPart = helpers_1.trim(query);
+                                currentPart = (0, helpers_1.trim)(query);
                             }
                             else if (currentPart === false) {
                                 currentPart = search.findSomePartOfString(value, query, next);
                                 if (currentPart === true) {
-                                    currentPart = helpers_1.trim(value);
+                                    currentPart = (0, helpers_1.trim)(value);
                                 }
                             }
                             var currentPartIndex = search.getSomePartOfStringIndex(query, value, next) || 0;
@@ -29228,7 +29231,7 @@ var search = (function (_super) {
     search.findSomePartOfString = function (needle, haystack, start, getIndex) {
         if (start === void 0) { start = true; }
         if (getIndex === void 0) { getIndex = false; }
-        needle = helpers_1.trim(needle.toLowerCase().replace(consts.SPACE_REG_EXP(), ' '));
+        needle = (0, helpers_1.trim)(needle.toLowerCase().replace(consts.SPACE_REG_EXP(), ' '));
         haystack = haystack.toLowerCase();
         var i = start ? 0 : haystack.length - 1, needleStart = start ? 0 : needle.length - 1, tmpEqualLength = 0, startAtIndex = null;
         var inc = start ? 1 : -1, tmp = [];
@@ -29284,7 +29287,7 @@ var search = (function (_super) {
         if (editor.o.useSearch) {
             var self_1 = this;
             self_1.searchBox = editor.c.fromHTML(self_1.template);
-            var _a = helpers_1.refs(self_1.searchBox), query = _a.query, replace = _a.replace, cancel = _a.cancel, next = _a.next, prev = _a.prev, replaceBtn = _a.replaceBtn, counterBox = _a.counterBox;
+            var _a = (0, helpers_1.refs)(self_1.searchBox), query = _a.query, replace = _a.replace, cancel = _a.cancel, next = _a.next, prev = _a.prev, replaceBtn = _a.replaceBtn, counterBox = _a.counterBox;
             self_1.queryInput = query;
             self_1.replaceInput = replace;
             self_1.closeButton = cancel;
@@ -29411,14 +29414,14 @@ var search = (function (_super) {
         if (this.isOpened) {
             this.searchBox.classList.toggle('jodit-search_sticky', enabled);
             if (enabled) {
-                var pos = helpers_1.position(this.j.toolbarContainer);
-                helpers_1.css(this.searchBox, {
+                var pos = (0, helpers_1.position)(this.j.toolbarContainer);
+                (0, helpers_1.css)(this.searchBox, {
                     top: pos.top + pos.height,
                     left: pos.left + pos.width
                 });
             }
             else {
-                helpers_1.css(this.searchBox, {
+                (0, helpers_1.css)(this.searchBox, {
                     top: null,
                     left: null
                 });
@@ -29614,10 +29617,10 @@ var size = (function (_super) {
                 height = localHeight;
             }
         }
-        helpers_1.css(j.editor, {
+        (0, helpers_1.css)(j.editor, {
             minHeight: '100%'
         });
-        helpers_1.css(j.container, {
+        (0, helpers_1.css)(j.container, {
             minHeight: j.o.minHeight,
             maxHeight: j.o.maxHeight,
             minWidth: j.o.minWidth,
@@ -29627,32 +29630,32 @@ var size = (function (_super) {
         this.setWidth(j.o.width);
     };
     size.prototype.setHeight = function (height) {
-        if (helpers_1.isNumber(height)) {
+        if ((0, helpers_1.isNumber)(height)) {
             var _a = this.j.o, minHeight = _a.minHeight, maxHeight = _a.maxHeight;
-            if (helpers_1.isNumber(minHeight) && minHeight > height) {
+            if ((0, helpers_1.isNumber)(minHeight) && minHeight > height) {
                 height = minHeight;
             }
-            if (helpers_1.isNumber(maxHeight) && maxHeight < height) {
+            if ((0, helpers_1.isNumber)(maxHeight) && maxHeight < height) {
                 height = maxHeight;
             }
         }
-        helpers_1.css(this.j.container, 'height', height);
+        (0, helpers_1.css)(this.j.container, 'height', height);
         if (this.j.o.saveHeightInStorage) {
             this.j.storage.set('height', height);
         }
         this.resizeWorkspaceImd();
     };
     size.prototype.setWidth = function (width) {
-        if (helpers_1.isNumber(width)) {
+        if ((0, helpers_1.isNumber)(width)) {
             var _a = this.j.o, minWidth = _a.minWidth, maxWidth = _a.maxWidth;
-            if (helpers_1.isNumber(minWidth) && minWidth > width) {
+            if ((0, helpers_1.isNumber)(minWidth) && minWidth > width) {
                 width = minWidth;
             }
-            if (helpers_1.isNumber(maxWidth) && maxWidth < width) {
+            if ((0, helpers_1.isNumber)(maxWidth) && maxWidth < width) {
                 width = maxWidth;
             }
         }
-        helpers_1.css(this.j.container, 'width', width);
+        (0, helpers_1.css)(this.j.container, 'width', width);
         this.resizeWorkspaceImd();
     };
     size.prototype.getNotWorkHeight = function () {
@@ -29668,23 +29671,23 @@ var size = (function (_super) {
         if (!this.j.container || !this.j.container.parentNode) {
             return;
         }
-        var minHeight = (helpers_1.css(this.j.container, 'minHeight') || 0) -
+        var minHeight = ((0, helpers_1.css)(this.j.container, 'minHeight') || 0) -
             this.getNotWorkHeight();
-        if (helpers_1.isNumber(minHeight) && minHeight > 0) {
+        if ((0, helpers_1.isNumber)(minHeight) && minHeight > 0) {
             [this.j.workplace, this.j.iframe, this.j.editor].map(function (elm) {
-                elm && helpers_1.css(elm, 'minHeight', minHeight);
+                elm && (0, helpers_1.css)(elm, 'minHeight', minHeight);
             });
             this.j.e.fire('setMinHeight', minHeight);
         }
-        if (helpers_1.isNumber(this.j.o.maxHeight)) {
+        if ((0, helpers_1.isNumber)(this.j.o.maxHeight)) {
             var maxHeight_1 = this.j.o.maxHeight - this.getNotWorkHeight();
             [this.j.workplace, this.j.iframe, this.j.editor].map(function (elm) {
-                elm && helpers_1.css(elm, 'maxHeight', maxHeight_1);
+                elm && (0, helpers_1.css)(elm, 'maxHeight', maxHeight_1);
             });
             this.j.e.fire('setMaxHeight', maxHeight_1);
         }
         if (this.j.container) {
-            helpers_1.css(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
+            (0, helpers_1.css)(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
                 ? this.j.container.offsetHeight - this.getNotWorkHeight()
                 : 'auto');
         }
@@ -29941,7 +29944,7 @@ var source = (function (_super) {
                 }
                 if (!_this.j.o.editHTMLDocumentMode && _this.j.o.beautifyHTML) {
                     var html = _this.j.e.fire('beautifyHTML', value);
-                    if (helpers_1.isString(html)) {
+                    if ((0, helpers_1.isString)(html)) {
                         value = html;
                     }
                 }
@@ -29992,7 +29995,7 @@ var source = (function (_super) {
         var _this = this;
         var _a;
         if (editor.o.sourceEditor !== 'area') {
-            var sourceEditor_1 = factory_1.createSourceEditor(editor.o.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+            var sourceEditor_1 = (0, factory_1.createSourceEditor)(editor.o.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
             sourceEditor_1.onReadyAlways(function () {
                 var _a, _b;
                 (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.destruct();
@@ -30016,7 +30019,7 @@ var source = (function (_super) {
         editor.e.on('afterAddPlace changePlace afterInit', function () {
             editor.workplace.appendChild(_this.mirrorContainer);
         });
-        this.sourceEditor = factory_1.createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+        this.sourceEditor = (0, factory_1.createSourceEditor)('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
         var addListeners = function () {
             editor.e
                 .off('beforeSetMode.source afterSetMode.source')
@@ -30051,7 +30054,7 @@ var source = (function (_super) {
                 return false;
             };
             if (!addEventListener_1()) {
-                helpers_1.loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
+                (0, helpers_1.loadNext)(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
             }
         }
         this.fromWYSIWYG();
@@ -30165,7 +30168,7 @@ var TextAreaEditor = (function (_super) {
         editor.e
             .on(this.instance, 'mousedown keydown touchstart input', editor.async.debounce(this.toWYSIWYG, editor.defaultTimeout))
             .on('setMinHeight.source', function (minHeightD) {
-            helpers_1.css(_this.instance, 'minHeight', minHeightD);
+            (0, helpers_1.css)(_this.instance, 'minHeight', minHeightD);
         })
             .on(this.instance, 'change keydown mousedown touchstart input', this.autosize)
             .on('afterSetMode.source', this.autosize)
@@ -30421,7 +30424,7 @@ var AceEditor = (function (_super) {
         });
         tryInitAceEditor();
         if (!this.aceExists()) {
-            helpers_1.loadNext(editor, editor.o.sourceEditorCDNUrlsJS).then(function () {
+            (0, helpers_1.loadNext)(editor, editor.o.sourceEditorCDNUrlsJS).then(function () {
                 if (!editor.isInDestruct) {
                     tryInitAceEditor();
                 }
@@ -30439,7 +30442,7 @@ var AceEditor = (function (_super) {
     AceEditor.prototype.setValue = function (value) {
         if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
             var html = this.j.e.fire('beautifyHTML', value);
-            if (helpers_1.isString(html)) {
+            if ((0, helpers_1.isString)(html)) {
                 value = html;
             }
         }
@@ -30542,13 +30545,13 @@ var stat = (function (_super) {
             if (_this.j.o.showCharsCounter && _this.charCounter) {
                 var chars = _this.j.o.countHTMLChars
                     ? _this.j.value
-                    : text.replace(constants_1.SPACE_REG_EXP(), '');
+                    : text.replace((0, constants_1.SPACE_REG_EXP)(), '');
                 _this.charCounter.textContent = _this.j.i18n('Chars: %d', chars.length);
             }
             if (_this.j.o.showWordsCounter && _this.wordCounter) {
                 _this.wordCounter.textContent = _this.j.i18n('Words: %d', text
-                    .replace(constants_1.INVISIBLE_SPACE_REG_EXP(), '')
-                    .split(constants_1.SPACE_REG_EXP())
+                    .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '')
+                    .split((0, constants_1.SPACE_REG_EXP)())
                     .filter(function (e) { return e.length; }).length);
             }
         }, _this.j.defaultTimeout);
@@ -30613,19 +30616,19 @@ var sticky = (function (_super) {
                 _this.j.container.classList.add('jodit_sticky');
                 _this.isToolbarSticked = true;
             }
-            helpers_1.css(toolbar, {
+            (0, helpers_1.css)(toolbar, {
                 top: _this.j.o.toolbarStickyOffset || null,
                 width: _this.j.container.offsetWidth - 2
             });
             if (constants_1.IS_IE && _this.dummyBox) {
-                helpers_1.css(_this.dummyBox, {
+                (0, helpers_1.css)(_this.dummyBox, {
                     height: toolbar.offsetHeight
                 });
             }
         };
         _this.removeSticky = function (toolbar) {
             if (_this.isToolbarSticked) {
-                helpers_1.css(toolbar, {
+                (0, helpers_1.css)(toolbar, {
                     width: '',
                     top: ''
                 });
@@ -30646,7 +30649,7 @@ var sticky = (function (_super) {
         var scrollWindowTop = jodit.ow.pageYOffset ||
             (jodit.od.documentElement &&
                 jodit.od.documentElement.scrollTop) ||
-            0, offsetEditor = helpers_1.offset(jodit.container, jodit, jodit.od, true), doSticky = jodit.getMode() === constants_1.MODE_WYSIWYG &&
+            0, offsetEditor = (0, helpers_1.offset)(jodit.container, jodit, jodit.od, true), doSticky = jodit.getMode() === constants_1.MODE_WYSIWYG &&
             scrollWindowTop + jodit.o.toolbarStickyOffset >
                 offsetEditor.top &&
             scrollWindowTop + jodit.o.toolbarStickyOffset <
@@ -30677,7 +30680,7 @@ var sticky = (function (_super) {
             .off('.sticky');
     };
     tslib_1.__decorate([
-        decorators_1.throttle()
+        (0, decorators_1.throttle)()
     ], sticky.prototype, "onScroll", null);
     return sticky;
 }(modules_1.Plugin));
@@ -30735,7 +30738,7 @@ var symbols = (function (_super) {
             for (var i = 0; i < jodit.o.specialCharacters.length;) {
                 var tr = jodit.c.element('tr');
                 for (var j = 0; j < _this.countInRow && i < jodit.o.specialCharacters.length; j += 1, i += 1) {
-                    var td = jodit.c.element('td'), a = jodit.c.fromHTML("<a\n\t\t\t\t\t\t\t\t\tdata-index=\"" + i + "\"\n\t\t\t\t\t\t\t\t\tdata-index-j=\"" + j + "\"\n\t\t\t\t\t\t\t\t\thref=\"javascript:void(0)\"\n\t\t\t\t\t\t\t\t\trole=\"option\"\n\t\t\t\t\t\t\t\t\ttabindex=\"-1\"\n\t\t\t\t\t\t\t>" + jodit.o.specialCharacters[i] + "</a>");
+                    var td = jodit.c.element('td'), a = jodit.c.fromHTML("<a\n\t\t\t\t\t\t\t\t\tdata-index=\"".concat(i, "\"\n\t\t\t\t\t\t\t\t\tdata-index-j=\"").concat(j, "\"\n\t\t\t\t\t\t\t\t\thref=\"javascript:void(0)\"\n\t\t\t\t\t\t\t\t\trole=\"option\"\n\t\t\t\t\t\t\t\t\ttabindex=\"-1\"\n\t\t\t\t\t\t\t>").concat(jodit.o.specialCharacters[i], "</a>"));
                     chars.push(a);
                     td.appendChild(a);
                     tr.appendChild(td);
@@ -30764,7 +30767,7 @@ var symbols = (function (_super) {
                 .on(chars, 'keydown', function (e) {
                 var target = e.target;
                 if (modules_1.Dom.isTag(target, 'a')) {
-                    var index = parseInt(utils_1.attr(target, '-index') || '0', 10), jIndex = parseInt(utils_1.attr(target, 'data-index-j') || '0', 10);
+                    var index = parseInt((0, utils_1.attr)(target, '-index') || '0', 10), jIndex = parseInt((0, utils_1.attr)(target, 'data-index-j') || '0', 10);
                     var newIndex = void 0;
                     switch (e.key) {
                         case constants_1.KEY_UP:
@@ -31069,7 +31072,7 @@ config_1.Config.prototype.controls.symbol = {
                 return box_1;
             }
             else {
-                dialog_1.Alert(container, editor.i18n('Select Special Character'), undefined, 'jodit-symbols').bindDestruct(editor);
+                (0, dialog_1.Alert)(container, editor.i18n('Select Special Character'), undefined, 'jodit-symbols').bindDestruct(editor);
                 var a = container.querySelector('a');
                 a && a.focus();
             }
@@ -31140,7 +31143,7 @@ config_1.Config.prototype.controls.table = {
             if (control.data) {
                 var classList_1 = control.data.classList;
                 Object.keys(classList_1).forEach(function (classes) {
-                    out.push("<label class=\"jodit_vertical_middle\"><input class=\"jodit-checkbox\" value=\"" + classes + "\" type=\"checkbox\"/>" + classList_1[classes] + "</label>");
+                    out.push("<label class=\"jodit_vertical_middle\"><input class=\"jodit-checkbox\" value=\"".concat(classes, "\" type=\"checkbox\"/>").concat(classList_1[classes], "</label>"));
                 });
             }
             return out.join('');
@@ -31170,7 +31173,7 @@ config_1.Config.prototype.controls.table = {
                 return;
             }
             var k = index === undefined || isNaN(index)
-                ? parseInt(utils_1.attr(dv, '-index') || '0', 10)
+                ? parseInt((0, utils_1.attr)(dv, '-index') || '0', 10)
                 : index || 0;
             var rows_count = Math.ceil((k + 1) / default_cols_count), cols_count = (k % default_cols_count) + 1;
             for (var i = 0; i < cells.length; i += 1) {
@@ -31194,7 +31197,7 @@ config_1.Config.prototype.controls.table = {
             if (!dom_1.Dom.isTag(dv, 'span')) {
                 return;
             }
-            var k = parseInt(utils_1.attr(dv, '-index') || '0', 10);
+            var k = parseInt((0, utils_1.attr)(dv, '-index') || '0', 10);
             var rows_count = Math.ceil((k + 1) / default_cols_count), cols_count = (k % default_cols_count) + 1;
             var crt = editor.createInside, tbody = crt.element('tbody'), table = crt.element('table');
             table.appendChild(tbody);
@@ -31224,7 +31227,7 @@ config_1.Config.prototype.controls.table = {
                     editor.s.setCursorAfter(block);
                 }
             }
-            helpers_1.$$('input[type=checkbox]:checked', options).forEach(function (input) {
+            (0, helpers_1.$$)('input[type=checkbox]:checked', options).forEach(function (input) {
                 input.value
                     .split(/[\s]+/)
                     .forEach(function (className) {
@@ -31235,7 +31238,7 @@ config_1.Config.prototype.controls.table = {
             editor.s.insertNode(table, false);
             if (first_td) {
                 editor.s.setCursorIn(first_td);
-                helpers_1.scrollIntoViewIfNeeded(first_td, editor.editor, editor.ed);
+                (0, helpers_1.scrollIntoViewIfNeeded)(first_td, editor.editor, editor.ed);
             }
             close();
         });
@@ -31369,7 +31372,7 @@ var resizeCells = (function (_super) {
         }
         this.j.e.fire('closeAllPopups');
         var x = event.clientX;
-        var workplacePosition = helpers_1.offset((this.resizeHandler.parentNode ||
+        var workplacePosition = (0, helpers_1.offset)((this.resizeHandler.parentNode ||
             this.j.od.documentElement), this.j, this.j.od, true);
         if (x < this.minX) {
             x = this.minX;
@@ -31411,12 +31414,12 @@ var resizeCells = (function (_super) {
         var delta = this.resizeDelta;
         var marked = [];
         modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, this.workCell, true)[1], delta, true, marked);
-        var nextTD = helpers_1.call(this.isRTL ? modules_1.Dom.prev : modules_1.Dom.next, this.workCell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, this.workCell.parentNode);
+        var nextTD = (0, helpers_1.call)(this.isRTL ? modules_1.Dom.prev : modules_1.Dom.next, this.workCell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, this.workCell.parentNode);
         modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, nextTD)[1], -delta, false, marked);
     };
     resizeCells.prototype.resizeTable = function () {
         var delta = this.resizeDelta * (this.isRTL ? -1 : 1);
-        var width = this.workTable.offsetWidth, parentWidth = helpers_1.getContentWidth(this.workTable.parentNode, this.j.ew);
+        var width = this.workTable.offsetWidth, parentWidth = (0, helpers_1.getContentWidth)(this.workTable.parentNode, this.j.ew);
         var rightSide = !this.wholeTable;
         var needChangeWidth = this.isRTL ? !rightSide : rightSide;
         if (needChangeWidth) {
@@ -31442,12 +31445,12 @@ var resizeCells = (function (_super) {
         var _this = this;
         if (offsetX === void 0) { offsetX = 0; }
         if (delta === void 0) { delta = 0; }
-        var box = helpers_1.offset(cell, this.j, this.j.ed);
+        var box = (0, helpers_1.offset)(cell, this.j, this.j.ed);
         if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
             this.hideResizeHandle();
             return;
         }
-        var workplacePosition = helpers_1.offset(this.j.workplace, this.j, this.j.od, true), parentBox = helpers_1.offset(table, this.j, this.j.ed);
+        var workplacePosition = (0, helpers_1.offset)(this.j.workplace, this.j, this.j.od, true), parentBox = (0, helpers_1.offset)(table, this.j, this.j.ed);
         this.resizeHandler.style.left =
             (offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
                 workplacePosition.left +
@@ -31459,11 +31462,11 @@ var resizeCells = (function (_super) {
         });
         this.showResizeHandle();
         if (offsetX <= consts.NEARBY) {
-            var prevTD = helpers_1.call(this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, cell.parentNode);
+            var prevTD = (0, helpers_1.call)(this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, cell.parentNode);
             this.setWorkCell(prevTD || cell, prevTD ? null : true);
         }
         else {
-            var nextTD = helpers_1.call(!this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, cell.parentNode);
+            var nextTD = (0, helpers_1.call)(!this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, function (elm) { return modules_1.Dom.isCell(elm, _this.j.ew); }, cell.parentNode);
             this.setWorkCell(cell, !nextTD ? false : null);
         }
     };
@@ -31476,7 +31479,7 @@ var resizeCells = (function (_super) {
             .off(this.j.ow, '.resize-cells')
             .off('.resize-cells')
             .on('change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells', function () {
-            helpers_1.$$('table', editor.editor).forEach(_this.observe);
+            (0, helpers_1.$$)('table', editor.editor).forEach(_this.observe);
         })
             .on(this.j.ow, 'scroll.resize-cells', function () {
             if (!_this.drag) {
@@ -31497,10 +31500,10 @@ var resizeCells = (function (_super) {
     };
     resizeCells.prototype.observe = function (table) {
         var _this = this;
-        if (helpers_1.dataBind(table, key)) {
+        if ((0, helpers_1.dataBind)(table, key)) {
             return;
         }
-        helpers_1.dataBind(table, key, true);
+        (0, helpers_1.dataBind)(table, key, true);
         this.j.e
             .on(table, 'mouseleave.resize-cells', function (e) {
             if (_this.resizeHandler &&
@@ -31605,15 +31608,15 @@ var selectCells = (function (_super) {
             .split(' ')
             .map(function (e) { return e + '.select-cells'; })
             .join(' '), function () {
-            helpers_1.$$('table', jodit.editor).forEach(_this.observe);
+            (0, helpers_1.$$)('table', jodit.editor).forEach(_this.observe);
         });
     };
     selectCells.prototype.observe = function (table) {
-        if (helpers_1.dataBind(table, key)) {
+        if ((0, helpers_1.dataBind)(table, key)) {
             return;
         }
         this.onRemoveSelection();
-        helpers_1.dataBind(table, key, true);
+        (0, helpers_1.dataBind)(table, key, true);
         this.j.e.on(table, 'mousedown.select-cells touchstart.select-cells', this.onStartSelection.bind(this, table));
     };
     selectCells.prototype.onStartSelection = function (table, e) {
@@ -31634,7 +31637,7 @@ var selectCells = (function (_super) {
         this.j.e
             .on(table, 'mousemove.select-cells touchmove.select-cells', this.onMove.bind(this, table))
             .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
-        this.j.e.fire('showPopup', table, function () { return helpers_1.position(cell, _this.j); }, 'cells');
+        this.j.e.fire('showPopup', table, function () { return (0, helpers_1.position)(cell, _this.j); }, 'cells');
     };
     selectCells.prototype.onMove = function (table, e) {
         var _this = this;
@@ -31706,7 +31709,7 @@ var selectCells = (function (_super) {
         var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
         var max = box[bound[1][0]][bound[1][1]], min = box[bound[0][0]][bound[0][1]];
         this.j.e.fire('showPopup', table, function () {
-            var minOffset = helpers_1.position(min, _this.j), maxOffset = helpers_1.position(max, _this.j);
+            var minOffset = (0, helpers_1.position)(min, _this.j), maxOffset = (0, helpers_1.position)(max, _this.j);
             return {
                 left: minOffset.left,
                 top: minOffset.top,
@@ -31714,7 +31717,7 @@ var selectCells = (function (_super) {
                 height: maxOffset.top - minOffset.top + maxOffset.height
             };
         }, 'cells');
-        helpers_1.$$('table', this.j.editor).forEach(function (table) {
+        (0, helpers_1.$$)('table', this.j.editor).forEach(function (table) {
             _this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
         });
     };
@@ -31782,7 +31785,7 @@ var selectCells = (function (_super) {
         if (/^justify/.test(command)) {
             this.module
                 .getAllSelectedCells()
-                .forEach(function (elm) { return justify_1.alignElement(command, elm, _this.j); });
+                .forEach(function (elm) { return (0, justify_1.alignElement)(command, elm, _this.j); });
         }
     };
     selectCells.prototype.beforeDestruct = function (jodit) {
@@ -31993,7 +31996,7 @@ var tooltip = (function (_super) {
     tooltip.prototype.afterInit = function (jodit) {
         var _this = this;
         this.container = jodit.c.div('jodit-tooltip');
-        global_1.getContainer(this.j, tooltip).appendChild(this.container);
+        (0, global_1.getContainer)(this.j, tooltip).appendChild(this.container);
         var timeout = 0;
         jodit.e
             .off('.tooltip')
@@ -32025,7 +32028,7 @@ var tooltip = (function (_super) {
     };
     tooltip.prototype.setPosition = function (getPoint) {
         var point = getPoint();
-        helpers_1.css(this.container, {
+        (0, helpers_1.css)(this.container, {
             left: point.x,
             top: point.y
         });
@@ -32035,7 +32038,7 @@ var tooltip = (function (_super) {
         if (this.isOpened) {
             this.isOpened = false;
             this.container.classList.remove('jodit-tooltip_visible');
-            helpers_1.css(this.container, {
+            (0, helpers_1.css)(this.container, {
                 left: -5000
             });
         }
@@ -32106,12 +32109,12 @@ config_1.Config.prototype.controls.preview = {
             theme: editor.o.theme
         });
         var div = editor.c.div();
-        helpers_1.css(div, {
+        (0, helpers_1.css)(div, {
             padding: 16
         });
         if (editor.iframe) {
             var iframe = editor.create.element('iframe');
-            helpers_1.css(iframe, {
+            (0, helpers_1.css)(iframe, {
                 minWidth: 800,
                 minHeight: 600,
                 border: 0
@@ -32125,7 +32128,7 @@ config_1.Config.prototype.controls.preview = {
             }
         }
         else {
-            helpers_1.css(div, {
+            (0, helpers_1.css)(div, {
                 minWidth: 1024,
                 minHeight: 600,
                 border: 0
@@ -32175,7 +32178,7 @@ config_1.Config.prototype.controls.print = {
             height: 0,
             border: 0
         });
-        global_1.getContainer(editor, config_1.Config).appendChild(iframe);
+        (0, global_1.getContainer)(editor, config_1.Config).appendChild(iframe);
         var afterFinishPrint = function () {
             editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
             dom_1.Dom.safeRemove(iframe);
@@ -32191,7 +32194,7 @@ config_1.Config.prototype.controls.print = {
             }
             else {
                 mywindow.document.write('<!doctype html><html lang="' +
-                    helpers_1.defaultLanguage(editor.o.language) +
+                    (0, helpers_1.defaultLanguage)(editor.o.language) +
                     '"><head><title></title></head>' +
                     '<body>' +
                     editor.value +
@@ -32270,7 +32273,7 @@ var xpath = (function (_super) {
         };
         _this.onSelectPath = function (bindElement, event) {
             _this.j.s.focus();
-            var path = helpers_1.attr(event.target, '-path') || '/';
+            var path = (0, helpers_1.attr)(event.target, '-path') || '/';
             if (path === '/') {
                 _this.j.execCommand('selectall');
                 return false;
@@ -32289,7 +32292,7 @@ var xpath = (function (_super) {
             return false;
         };
         _this.tpl = function (bindElement, path, name, title) {
-            var item = _this.j.c.fromHTML("<span class=\"jodit-xpath__item\"><a role=\"button\" data-path=\"" + path + "\" href=\"javascript:void(0)\" title=\"" + title + "\" tabindex=\"-1\"'>" + helpers_1.trim(name) + "</a></span>");
+            var item = _this.j.c.fromHTML("<span class=\"jodit-xpath__item\"><a role=\"button\" data-path=\"".concat(path, "\" href=\"javascript:void(0)\" title=\"").concat(title, "\" tabindex=\"-1\"'>").concat((0, helpers_1.trim)(name), "</a></span>"));
             var a = item.firstChild;
             _this.j.e
                 .on(a, 'click', _this.onSelectPath.bind(_this, bindElement))
@@ -32304,7 +32307,7 @@ var xpath = (function (_super) {
         };
         _this.appendSelectAll = function () {
             _this.removeSelectAll();
-            _this.selectAllButton = factory_1.makeButton(_this.j, tslib_1.__assign({ name: 'selectall' }, _this.j.o.controls.selectall));
+            _this.selectAllButton = (0, factory_1.makeButton)(_this.j, tslib_1.__assign({ name: 'selectall' }, _this.j.o.controls.selectall));
             _this.selectAllButton.state.size = 'tiny';
             _this.container &&
                 _this.container.insertBefore(_this.selectAllButton.container, _this.container.firstChild);
@@ -32322,7 +32325,7 @@ var xpath = (function (_super) {
                 dom_1.Dom.up(current, function (elm) {
                     if (elm && _this.j.editor !== elm && !dom_1.Dom.isText(elm)) {
                         name_1 = elm.nodeName.toLowerCase();
-                        xpth_1 = helpers_1.getXPathByElement(elm, _this.j.editor).replace(/^\//, '');
+                        xpth_1 = (0, helpers_1.getXPathByElement)(elm, _this.j.editor).replace(/^\//, '');
                         li_1 = _this.tpl(elm, xpth_1, name_1, _this.j.i18n('Select %s', name_1));
                         _this.container &&
                             _this.container.insertBefore(li_1, _this.container.firstChild);
@@ -33056,8 +33059,9 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
