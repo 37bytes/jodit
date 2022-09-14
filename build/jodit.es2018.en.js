@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.20.3
+ * Version: v3.20.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -22,7 +22,7 @@ return /******/ (function() { // webpackBootstrap
 /***/ 11399:
 /***/ (function(module) {
 
-module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","Word Paste Detected","Clean","Insert className","Press Alt for custom resizing"]
+module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
 
 /***/ }),
 
@@ -1056,6 +1056,7 @@ class Config {
                 '#4C1130'
             ]
         };
+        this.showTabsColorPicker = false;
         this.colorPickerDefaultTab = 'background';
         this.imageDefaultWidth = 300;
         this.removeButtons = [];
@@ -4797,9 +4798,9 @@ function applyStyles(html) {
                         }
                         collection = (0,utils.$$)(rules[idx].selectorText, iframeDoc.body);
                         collection.forEach((elm) => {
-                            elm.style.cssText = normalizeCSS(rules[idx].style.cssText +
+                            elm.style.cssText = normalizeCSS(elm.style.cssText +
                                 ';' +
-                                elm.style.cssText);
+                                rules[idx].style.cssText);
                         });
                     }
                 }
@@ -8366,6 +8367,9 @@ class Select {
             this.focus();
             this.restore();
         }
+        if (node && node.nodeName === 'TABLE' && this.j.e) {
+            this.j.e.fire('onInsertingNodeIsTable');
+        }
         const sel = this.sel;
         if (!this.isCollapsed()) {
             this.j.execCommand('Delete');
@@ -8402,6 +8406,9 @@ class Select {
         }
         if (this.j.events) {
             this.j.e.fire('afterInsertNode', node);
+        }
+        if (node && node.nodeName === 'TABLE' && this.j.e) {
+            this.j.e && this.j.e.fire('stopKeepTable');
         }
     }
     insertHTML(html, insertCursorAfter = true) {
@@ -12323,7 +12330,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.20.3";
+        this.version = "3.20.4";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12404,10 +12411,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.20.3";
+        return "3.20.4";
     }
     static getVersion() {
-        return "3.20.3";
+        return "3.20.4";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -18093,8 +18100,11 @@ var component = __webpack_require__(26655);
 
 
 
-const TabsWidget = (jodit, tabs, state) => {
+const TabsWidget = (jodit, tabs, state, visibleTabs = true) => {
     const box = jodit.c.div('jodit-tabs'), tabBox = jodit.c.div('jodit-tabs__wrapper'), buttons = jodit.c.div('jodit-tabs__buttons'), nameToTab = {}, buttonList = [];
+    if (!visibleTabs) {
+        buttons.classList.add('jodit-tabs__buttons_hide');
+    }
     let firstTab = '', tabCount = 0;
     box.appendChild(buttons);
     box.appendChild(tabBox);
@@ -22165,6 +22175,9 @@ class backspace extends core_plugin/* Plugin */.S {
     safeRemoveEmptyNode(fakeNode) {
         var _a, _b;
         const { range } = this.j.s;
+        if (!this.checkRemoveCondition(fakeNode)) {
+            return;
+        }
         if (range.startContainer === fakeNode) {
             if (fakeNode.previousSibling) {
                 if (dom/* Dom.isText */.i.isText(fakeNode.previousSibling)) {
@@ -22186,6 +22199,17 @@ class backspace extends core_plugin/* Plugin */.S {
             this.j.s.selectRange(range);
         }
         dom/* Dom.safeRemove */.i.safeRemove(fakeNode);
+    }
+    checkRemoveCondition(fakeNode) {
+        var _a, _b;
+        const { range } = this.j.s;
+        const previousSiblingLength = (_b = (_a = fakeNode === null || fakeNode === void 0 ? void 0 : fakeNode.previousSibling) === null || _a === void 0 ? void 0 : _a.nodeValue) === null || _b === void 0 ? void 0 : _b.length;
+        if (!previousSiblingLength || previousSiblingLength === range.startOffset) {
+            range.collapse(true);
+            this.j.s.selectRange(range);
+            return false;
+        }
+        return true;
     }
 }
 global/* pluginSystem.add */.pw.add('backspace', backspace);
@@ -23054,7 +23078,7 @@ config/* Config.prototype.controls.brush */.D.prototype.controls.brush = {
         if (editor.o.colorPickerDefaultTab !== 'background') {
             tabs = tabs.reverse();
         }
-        return (0,widget/* TabsWidget */.IL)(editor, tabs, currentElement);
+        return (0,widget/* TabsWidget */.IL)(editor, tabs, currentElement, editor.o.showTabsColorPicker);
     },
     exec(jodit, current, { button }) {
         const mode = (0,helpers.dataBind)(button, 'color-mode'), color = (0,helpers.dataBind)(button, 'color');
@@ -26246,22 +26270,35 @@ class limit extends core_plugin/* Plugin */.S {
         const { limitWords, limitChars } = jodit.o;
         const text = inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
         const words = this.splitWords(text);
+        jodit.e.fire('onLengthWords', words.length);
+        jodit.e.fire('onLengthChars', words.join('').length);
+        if (event && constants.COMMAND_KEYS.includes(event.key)) {
+            return false;
+        }
         if (limitWords && words.length >= limitWords) {
             return true;
         }
         return Boolean(limitChars) && words.join('').length > limitChars;
     }
     checkPreventKeyPressOrPaste(event) {
+        const { jodit } = this;
         if (this.shouldPreventInsertHTML(event)) {
+            jodit.e.fire('onLimit', true);
             return false;
+        }
+        else {
+            jodit.e.fire('onLimit', false);
         }
     }
     checkPreventChanging(newValue, oldValue) {
         const { jodit } = this;
         const { limitWords, limitChars } = jodit.o;
         const text = jodit.o.limitHTML ? newValue : (0,helpers.stripTags)(newValue), words = this.splitWords(text);
+        jodit.e.fire('onLengthWords', words.length);
+        jodit.e.fire('onLengthChars', words.join('').length);
         if ((limitWords && words.length > limitWords) ||
             (Boolean(limitChars) && words.join('').length > limitChars)) {
+            jodit.e.fire('onLimitReplace', oldValue);
             jodit.value = oldValue;
         }
     }
@@ -26387,7 +26424,7 @@ var ui_form = __webpack_require__(1542);
 
 
 const formTemplate = (editor) => {
-    const { openInNewTabCheckbox, noFollowCheckbox, modeClassName, selectSizeClassName, selectMultipleClassName, selectOptionsClassName } = editor.o.link;
+    const { showInNewTabCheckbox, noFollowCheckbox, modeClassName, selectSizeClassName, selectMultipleClassName, selectOptionsClassName } = editor.o.link;
     return new ui_form/* UIForm */.x4(editor, [
         new ui_form/* UIBlock */.eC(editor, [
             new ui_form/* UIInput */.u3(editor, {
@@ -26432,7 +26469,7 @@ const formTemplate = (editor) => {
                 })()
             ])
             : null,
-        openInNewTabCheckbox
+        showInNewTabCheckbox
             ? new ui_form/* UICheckbox */.mA(editor, {
                 name: 'target',
                 ref: 'target_checkbox',
@@ -26481,6 +26518,7 @@ config/* Config.prototype.link */.D.prototype.link = {
     processPastedLink: true,
     noFollowCheckbox: true,
     openInNewTabCheckbox: true,
+    showInNewTabCheckbox: true,
     modeClassName: 'input',
     selectMultipleClassName: true,
     selectSizeClassName: 3,
@@ -26591,10 +26629,10 @@ class link_link extends core_plugin/* Plugin */.S {
     }
     generateForm(current, close) {
         const { jodit } = this;
-        const i18n = jodit.i18n.bind(jodit), { openInNewTabCheckbox, noFollowCheckbox, formTemplate, formClassName, modeClassName } = jodit.o.link;
+        const i18n = jodit.i18n.bind(jodit), { showInNewTabCheckbox, openInNewTabCheckbox, noFollowCheckbox, formTemplate, formClassName, modeClassName } = jodit.o.link;
         const html = formTemplate(jodit), form = (0,helpers.isString)(html)
             ? jodit.c.fromHTML(html, {
-                target_checkbox_box: openInNewTabCheckbox,
+                target_checkbox_box: showInNewTabCheckbox,
                 nofollow_checkbox_box: noFollowCheckbox
             })
             : html, htmlForm = dom/* Dom.isElement */.i.isElement(form) ? form : form.container;
@@ -26757,8 +26795,11 @@ class link_link extends core_plugin/* Plugin */.S {
                         a.textContent = newContent;
                     }
                 }
-                if (openInNewTabCheckbox && target_checkbox) {
+                if (showInNewTabCheckbox && openInNewTabCheckbox && target_checkbox) {
                     (0,helpers.attr)(a, 'target', target_checkbox.checked ? '_blank' : null);
+                }
+                else if (openInNewTabCheckbox) {
+                    (0,helpers.attr)(a, 'target', '_blank');
                 }
                 if (noFollowCheckbox && nofollow_checkbox) {
                     (0,helpers.attr)(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
@@ -27191,6 +27232,7 @@ config/* Config.prototype.pasteHTMLActionList */.D.prototype.pasteHTMLActionList
 ];
 config/* Config.prototype.memorizeChoiceWhenPasteFragment */.D.prototype.memorizeChoiceWhenPasteFragment = false;
 config/* Config.prototype.nl2brInPlainText */.D.prototype.nl2brInPlainText = true;
+config/* Config.prototype.cachedActionOnPaste */.D.prototype.cachedActionOnPaste = false;
 const psKey = 'pasteStorage';
 config/* Config.prototype.controls.paste */.D.prototype.controls.paste = {
     tooltip: 'Paste from clipboard',
@@ -27275,7 +27317,11 @@ class paste extends plugin_plugin/* Plugin */.S {
     afterInit(jodit) {
         jodit.e
             .on('paste.paste', this.onPaste)
-            .on('pasteStack.paste', (item) => this.pasteStack.push(item));
+            .on('pasteStack.paste', (item) => {
+            if (jodit.o.cachedActionOnPaste) {
+                this.pasteStack.push(item);
+            }
+        });
         if (jodit.o.nl2brInPlainText) {
             this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
         }
@@ -27336,10 +27382,12 @@ class paste extends plugin_plugin/* Plugin */.S {
     processHTML(e, html) {
         if (this.j.o.askBeforePasteHTML) {
             if (this.j.o.memorizeChoiceWhenPasteFragment) {
-                const cached = this.pasteStack.find(cachedItem => cachedItem.html === html);
-                if (cached) {
-                    this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
-                    return true;
+                if (this.j.o.cachedActionOnPaste) {
+                    const cached = this.pasteStack.find((cachedItem) => cachedItem.html === html);
+                    if (cached) {
+                        this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
+                        return true;
+                    }
                 }
             }
             if (this._isDialogOpened) {
@@ -27360,7 +27408,9 @@ class paste extends plugin_plugin/* Plugin */.S {
         return false;
     }
     insertByType(e, html, action) {
-        this.pasteStack.push({ html, action });
+        if (this.j.o.cachedActionOnPaste) {
+            this.pasteStack.push({ html, action });
+        }
         if ((0,helpers.isString)(html)) {
             this.j.buffer.set(constants.CLIPBOARD_ID, html);
             switch (action) {

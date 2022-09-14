@@ -56,8 +56,11 @@ export class paste extends Plugin {
 	protected afterInit(jodit: IJodit): void {
 		jodit.e
 			.on('paste.paste', this.onPaste)
-			.on('pasteStack.paste', (item: PastedValue) =>
-				this.pasteStack.push(item)
+			.on('pasteStack.paste', (item: PastedValue) => {
+					if (jodit.o.cachedActionOnPaste) {
+						this.pasteStack.push(item);
+					}
+				}
 			);
 
 		if (jodit.o.nl2brInPlainText) {
@@ -162,18 +165,17 @@ export class paste extends Plugin {
 	private processHTML(e: PasteEvent, html: string): boolean {
 		if (this.j.o.askBeforePasteHTML) {
 			if (this.j.o.memorizeChoiceWhenPasteFragment) {
-				const cached = this.pasteStack.find(
-					cachedItem => cachedItem.html === html
-				);
+				if (this.j.o.cachedActionOnPaste) {
+					const cached = this.pasteStack.find((cachedItem) => cachedItem.html === html);
 
-				if (cached) {
-					this.insertByType(
-						e,
-						html,
-						cached.action || this.j.o.defaultActionOnPaste
-					);
-
-					return true;
+					if (cached) {
+						this.insertByType(
+							e,
+							html,
+							cached.action || this.j.o.defaultActionOnPaste
+						);
+						return true;
+					}
 				}
 			}
 
@@ -209,7 +211,9 @@ export class paste extends Plugin {
 	 * Insert HTML by option type
 	 */
 	insertByType(e: PasteEvent, html: string | Node, action: InsertMode): void {
-		this.pasteStack.push({ html, action });
+		if (this.j.o.cachedActionOnPaste) {
+			this.pasteStack.push({ html, action });
+		}
 
 		if (isString(html)) {
 			this.j.buffer.set(CLIPBOARD_ID, html);

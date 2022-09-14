@@ -167,6 +167,10 @@ export class backspace extends Plugin {
 	private safeRemoveEmptyNode(fakeNode: Node): void {
 		const { range } = this.j.s;
 
+		if (!this.checkRemoveCondition(fakeNode)) {
+			return;
+		}
+
 		if (range.startContainer === fakeNode) {
 			if (fakeNode.previousSibling) {
 				if (Dom.isText(fakeNode.previousSibling)) {
@@ -190,6 +194,28 @@ export class backspace extends Plugin {
 		}
 
 		Dom.safeRemove(fakeNode);
+	}
+
+	/**
+	 * Исправляет проблему удаления символов через delete по логике backspace
+	 * Если длина текста совпадает с позицией курсора, то запрещаю удаление
+	 * Проверено на разных исходных данных: текст с форматированием, таблица
+	 */
+	private checkRemoveCondition(fakeNode: Node) {
+		const { range } = this.j.s;
+
+		const previousSiblingLength = fakeNode?.previousSibling?.nodeValue?.length;
+
+		// console.debug('length', previousSiblingLength);
+		// console.debug('startOffset', range.startOffset);
+
+		if (!previousSiblingLength || previousSiblingLength === range.startOffset) {
+			range.collapse(true);
+			this.j.s.selectRange(range);
+			return false;
+		}
+
+		return true;
 	}
 }
 

@@ -533,6 +533,8 @@ export class Config implements IViewOptions {
 		]
 	};
 
+	showTabsColorPicker: boolean = false;
+
 	/**
 	 * The default tab color picker
 	 * @example

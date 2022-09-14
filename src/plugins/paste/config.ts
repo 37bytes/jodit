@@ -47,6 +47,11 @@ declare module 'jodit/config' {
 		 * Options when inserting HTML string
 		 */
 		pasteHTMLActionList: IUIOption[];
+
+		/**
+		 * Флаг для кэширования способа вставки из буфера
+		 */
+		cachedActionOnPaste: boolean;
 	}
 }
 
@@ -62,6 +67,7 @@ Config.prototype.pasteHTMLActionList = [
 Config.prototype.memorizeChoiceWhenPasteFragment = false;
 
 Config.prototype.nl2brInPlainText = true;
+Config.prototype.cachedActionOnPaste = false;
 
 const psKey = 'pasteStorage';
 
