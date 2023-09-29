@@ -1,5 +1,5 @@
 /*!
- * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
+ * @37bytes/offer-builder-jodit-fork - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
  * Version: v3.20.4
  * Url: https://xdsoft.net/jodit/
@@ -17,7 +17,7 @@
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
 })(self, function() {
-return (self["webpackChunkjodit"] = self["webpackChunkjodit"] || []).push([[680],{
+return (self["webpackChunk_37bytes_offer_builder_jodit_fork"] = self["webpackChunk_37bytes_offer_builder_jodit_fork"] || []).push([[101],{
 
 /***/ 79816:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {

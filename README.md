@@ -1,6 +1,6 @@
 ![Jodit WYSIWYG editor](https://raw.githubusercontent.com/xdan/jodit/master/examples/assets/logo.png)
 
-# Jodit Editor 3
+# [Jodit Editor 3](https://github.com/xdan/jodit) fork
 
 An excellent WYSIWYG editor written in pure TypeScript without the use of additional libraries. Its file editor and image editor.
 
